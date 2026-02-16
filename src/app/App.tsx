@@ -1,27 +1,38 @@
 import { useState, useMemo, useEffect } from "react";
 import { NavigationBar } from "./components/NavigationBar";
 import { HeroSection } from "./components/HeroSection";
-import { OverviewSection } from "./components/OverviewSection";
-import { ExperienceSection } from "./components/ExperienceSection";
-import { WorkProjectsSection } from "./components/WorkProjectsSection";
 import { StatsSection } from "./components/StatsSection";
 import { FilterBar } from "./components/FilterBar";
 import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
-import { EducationSection } from "./components/EducationSection";
-import { CertificationsSection } from "./components/CertificationsSection";
-import { PublicationsSection } from "./components/PublicationsSection";
-import { SkillsSection } from "./components/SkillsSection";
-import { AwardsSection } from "./components/AwardsSection";
-import { AcademicProjectsSection } from "./components/AcademicProjectsSection";
-import { TeachingSection } from "./components/TeachingSection";
-import { SGRDetailSection } from "./components/SGRDetailSection";
 import { portfolioData as originalData } from "./data/portfolioData";
 import { AdminProvider } from "./contexts/AdminContext";
+import { CareerPage } from "./pages/CareerPage";
+import { ArrowRight } from "lucide-react";
 
 function AppContent() {
+  const [currentPage, setCurrentPage] = useState<"home" | "career">("home");
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [portfolioData, setPortfolioData] = useState<PortfolioItem[]>(originalData);
+
+  // Handle hash-based routing
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove the #
+      if (hash === "career") {
+        setCurrentPage("career");
+      } else {
+        setCurrentPage("home");
+      }
+    };
+
+    // Initial check
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   // Load edited projects from LocalStorage
   useEffect(() => {
@@ -103,17 +114,17 @@ function AppContent() {
     };
   }, [portfolioData]);
 
+  // Render career page if hash is #career
+  if (currentPage === "career") {
+    return <CareerPage />;
+  }
+
+  // Render home page
   return (
     <div className="min-h-screen bg-gray-50">
       <NavigationBar />
 
       <HeroSection />
-
-      <OverviewSection />
-
-      <ExperienceSection />
-
-      <WorkProjectsSection />
 
       <StatsSection stats={stats} />
 
@@ -159,27 +170,33 @@ function AppContent() {
         </div>
       </section>
 
-      <EducationSection />
-
-      <CertificationsSection />
-
-      <PublicationsSection />
-
-      <SkillsSection />
-
-      <AwardsSection />
-
-      <AcademicProjectsSection />
-
-      <TeachingSection />
-
-      <SGRDetailSection />
+      {/* View Full Career CTA */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            전체 경력 정보 보기
+          </h2>
+          <p className="text-lg text-gray-600 mb-8">
+            교육, 자격증, 출판물, 학술 프로젝트, 강의 경험 등 더 많은 정보를 확인하세요
+          </p>
+          <a
+            href="#career"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            <span>상세 경력 보기</span>
+            <ArrowRight className="w-5 h-5" />
+          </a>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p className="text-center text-gray-600 text-sm">
-            © 2024 Portfolio. 모든 작업물은 해당 저작권자의 소유입니다.
+            © 2026 Portfolio. 모든 작업물은 해당 저작권자의 소유입니다.
+          </p>
+          <p className="text-center text-gray-500 text-xs mt-2">
+            Last Updated: {new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         </div>
       </footer>
