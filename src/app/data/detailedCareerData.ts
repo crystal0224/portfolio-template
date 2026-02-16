@@ -741,38 +741,62 @@ export const mentoring: MentoringExperience[] = [
 
 // === Research Exchange (연구교류) ===
 
-export const researchExchange: ResearchExchange[] = [
-  {
-    institution: "Nagoya University",
-    program:
-      "Nagoya university Graduate School of Education and Human Development Partnership Exchange Program",
-    date: "2012-01",
-  },
-];
+export const researchExchange: ResearchExchange[] = [];
 
 // === Skills (스킬) ===
 
 export const skills: Skill[] = [
-  { name: "GenAI", category: "technical" },
+  // AI & Machine Learning (PandasAI, HybridRAG, 토픽모델링 등 AI 프로젝트 다수)
+  { name: "GenAI (Claude, OpenAI)", category: "technical" },
+  { name: "RAG (Retrieval-Augmented Generation)", category: "technical" },
+  { name: "NLP (자연어처리)", category: "technical" },
+  { name: "토픽모델링", category: "technical" },
+  { name: "텍스트 마이닝", category: "technical" },
+
+  // Programming & Development (GitHub 15개, HuggingFace 10개 프로젝트)
   { name: "Python", category: "technical" },
-  { name: "데이터분석", category: "technical" },
-  { name: "태블로", category: "technical" },
-  { name: "MS 엑셀", category: "technical" },
-  { name: "파워포인트", category: "technical" },
+  { name: "Streamlit", category: "technical" },
+  { name: "Gradio", category: "technical" },
+  { name: "Flask", category: "technical" },
+  { name: "Next.js", category: "technical" },
+  { name: "TypeScript", category: "technical" },
+
+  // Data Science & Analytics (통계 분석 및 연구방법론 전문)
+  { name: "데이터 분석", category: "technical" },
+  { name: "통계 분석", category: "technical" },
   { name: "Q-방법론", category: "technical" },
   { name: "다국면 라쉬 모형", category: "technical" },
-  { name: "텍스트 데이터 분석", category: "technical" },
+  { name: "데이터 시각화", category: "technical" },
+
+  // Tools & Platforms (일상 업무 및 인프라)
+  { name: "Tableau", category: "technical" },
+  { name: "MS Excel", category: "technical" },
+  { name: "PowerPoint", category: "technical" },
+  { name: "PostgreSQL", category: "technical" },
+  { name: "Redis", category: "technical" },
+  { name: "Docker", category: "technical" },
+
+  // HR & People Analytics (SK아카데미 주요 직무)
+  { name: "People Analytics", category: "domain" },
+  { name: "리더십 진단", category: "domain" },
+  { name: "역량 평가", category: "domain" },
+  { name: "다면 진단", category: "domain" },
+  { name: "조직 효과성 진단", category: "domain" },
+  { name: "석세션 플래닝", category: "domain" },
+  { name: "HR Analytics", category: "domain" },
+
+  // Psychology & Research (학위 배경: 인지심리학 박사)
   { name: "인지심리학", category: "domain" },
   { name: "계량심리학", category: "domain" },
-  { name: "리더십", category: "domain" },
-  { name: "진단개발", category: "domain" },
-  { name: "HR", category: "domain" },
-  { name: "심리학", category: "domain" },
-  { name: "People Analytics", category: "domain" },
-  { name: "조직문화 컨설팅", category: "domain" },
-  { name: "Communication", category: "soft" },
+  { name: "조직심리학", category: "domain" },
+  { name: "연구방법론", category: "domain" },
+
+  // Facilitation & Consulting (워크샵 디자인 및 코칭 경험)
+  { name: "워크샵 디자인", category: "soft" },
   { name: "퍼실리테이션", category: "soft" },
   { name: "코칭", category: "soft" },
+  { name: "인터뷰 기법", category: "soft" },
+  { name: "교육 설계", category: "soft" },
 ];
 
 // === Work Projects (93개 업무 프로젝트 - 연도/월 시간순 정렬) ===

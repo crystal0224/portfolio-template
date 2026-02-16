@@ -2,33 +2,34 @@ import { motion } from "motion/react";
 import { Search } from "lucide-react";
 
 interface FilterBarProps {
-  activePlatform: string;
-  onPlatformChange: (platform: string) => void;
+  activeDomain: string;
+  onDomainChange: (domain: string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
 
-const platforms = [
-  { id: "all", label: "전체", icon: "📚" },
-  { id: "HuggingFace", label: "HuggingFace", icon: "🤗" },
-  { id: "Netlify", label: "Netlify", icon: "🌐" },
-  { id: "Vercel", label: "Vercel", icon: "▲" },
-  { id: "GitHub", label: "GitHub", icon: "💻" },
+const domains = [
+  { id: "all", label: "전체" },
+  { id: "hr-analytics", label: "진단/분석" },
+  { id: "assessment", label: "평가/코칭" },
+  { id: "ai-tools", label: "AI 도구/자동화" },
+  { id: "workshop", label: "워크샵/협업" },
+  { id: "education", label: "교육/지식공유" },
 ];
 
-export function FilterBar({ activePlatform, onPlatformChange, searchQuery, onSearchChange }: FilterBarProps) {
+export function FilterBar({ activeDomain, onDomainChange, searchQuery, onSearchChange }: FilterBarProps) {
   return (
     <div className="bg-white border-b border-gray-200 sticky top-[89px] z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-          {/* Platforms */}
+          {/* Domain Filter */}
           <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto">
-            {platforms.map((platform, index) => (
+            {domains.map((domain, index) => (
               <motion.button
-                key={platform.id}
-                onClick={() => onPlatformChange(platform.id)}
+                key={domain.id}
+                onClick={() => onDomainChange(domain.id)}
                 className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all ${
-                  activePlatform === platform.id
+                  activeDomain === domain.id
                     ? "bg-blue-600 text-white shadow-lg"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
@@ -38,8 +39,7 @@ export function FilterBar({ activePlatform, onPlatformChange, searchQuery, onSea
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="mr-1">{platform.icon}</span>
-                {platform.label}
+                {domain.label}
               </motion.button>
             ))}
           </div>

@@ -14,7 +14,7 @@ import { ArrowRight } from "lucide-react";
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<"home" | "career" | "migrate">("home");
-  const [activePlatform, setActivePlatform] = useState("all");
+  const [activeDomain, setActiveDomain] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
 
@@ -60,6 +60,10 @@ function AppContent() {
         description: updatedProject.description,
         tags: updatedProject.tags,
         protected: updatedProject.protected,
+        problemStatement: updatedProject.problemStatement,
+        technicalDetails: updatedProject.technicalDetails,
+        impact: updatedProject.impact,
+        futureImprovements: updatedProject.futureImprovements,
       });
     }
   };
@@ -72,18 +76,18 @@ function AppContent() {
     }
   };
 
-  // Filter items based on platform and search
+  // Filter items based on domain and search
   const filteredItems = useMemo(() => {
     return portfolioData.filter((item) => {
-      const matchesPlatform = activePlatform === "all" || item.platform === activePlatform;
+      const matchesDomain = activeDomain === "all" || item.domain === activeDomain;
       const matchesSearch = searchQuery === "" ||
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      return matchesPlatform && matchesSearch;
+      return matchesDomain && matchesSearch;
     });
-  }, [activePlatform, searchQuery, portfolioData]);
+  }, [activeDomain, searchQuery, portfolioData]);
 
   // Render career page if hash is #career
   if (currentPage === "career") {
@@ -110,11 +114,14 @@ function AppContent() {
             <p className="text-lg text-gray-600">
               개인 프로젝트 및 기술 포트폴리오
             </p>
+            <span className="inline-block mt-3 px-4 py-1.5 bg-gradient-to-r from-blue-50 to-purple-50 text-sm font-medium text-blue-700 rounded-full border border-blue-200">
+              선별된 대표 프로젝트 모음
+            </span>
           </div>
 
           <FilterBar
-            activePlatform={activePlatform}
-            onPlatformChange={setActivePlatform}
+            activeDomain={activeDomain}
+            onDomainChange={setActiveDomain}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
           />

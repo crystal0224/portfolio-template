@@ -21,6 +21,10 @@ export function EditProjectModal({
   const [description, setDescription] = useState(project.description);
   const [tags, setTags] = useState(project.tags.join(", "));
   const [isProtected, setIsProtected] = useState(project.protected || false);
+  const [problemStatement, setProblemStatement] = useState(project.problemStatement || "");
+  const [technicalDetails, setTechnicalDetails] = useState((project.technicalDetails || []).join("\n"));
+  const [impact, setImpact] = useState(project.impact || "");
+  const [futureImprovements, setFutureImprovements] = useState((project.futureImprovements || []).join("\n"));
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
@@ -29,6 +33,10 @@ export function EditProjectModal({
       setDescription(project.description);
       setTags(project.tags.join(", "));
       setIsProtected(project.protected || false);
+      setProblemStatement(project.problemStatement || "");
+      setTechnicalDetails((project.technicalDetails || []).join("\n"));
+      setImpact(project.impact || "");
+      setFutureImprovements((project.futureImprovements || []).join("\n"));
     }
   }, [isOpen, project]);
 
@@ -39,6 +47,10 @@ export function EditProjectModal({
       description: description.trim(),
       tags: tags.split(",").map(t => t.trim()).filter(t => t),
       protected: isProtected,
+      problemStatement: problemStatement.trim() || undefined,
+      technicalDetails: technicalDetails.trim() ? technicalDetails.split("\n").map(s => s.trim()).filter(s => s) : undefined,
+      impact: impact.trim() || undefined,
+      futureImprovements: futureImprovements.trim() ? futureImprovements.split("\n").map(s => s.trim()).filter(s => s) : undefined,
     };
     onSave(updatedProject);
     onClose();
@@ -139,6 +151,67 @@ export function EditProjectModal({
               <br />
               <span className="text-gray-500">유료 API를 사용하는 프로젝트는 비밀번호로 보호합니다</span>
             </label>
+          </div>
+
+          {/* Extended Details Section */}
+          <div className="border-t border-gray-200 pt-4 mt-2">
+            <h4 className="text-sm font-semibold text-gray-800 mb-3">상세 설명 (확장 영역)</h4>
+
+            {/* Problem Statement */}
+            <div className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                왜 만들었나?
+              </label>
+              <textarea
+                value={problemStatement}
+                onChange={(e) => setProblemStatement(e.target.value)}
+                rows={2}
+                placeholder="이 프로젝트를 시작하게 된 문제 상황이나 동기를 작성하세요"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-sm"
+              />
+            </div>
+
+            {/* Technical Details */}
+            <div className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                기술적 구현 (줄바꿈으로 구분)
+              </label>
+              <textarea
+                value={technicalDetails}
+                onChange={(e) => setTechnicalDetails(e.target.value)}
+                rows={3}
+                placeholder={"React + TypeScript로 SPA 구현\nFirebase Firestore 실시간 동기화\nFramer Motion 애니메이션"}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-sm font-mono"
+              />
+            </div>
+
+            {/* Impact */}
+            <div className="mb-3">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                성과
+              </label>
+              <textarea
+                value={impact}
+                onChange={(e) => setImpact(e.target.value)}
+                rows={2}
+                placeholder="프로젝트의 성과, 영향, 결과를 작성하세요"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-sm"
+              />
+            </div>
+
+            {/* Future Improvements */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                향후 계획 (줄바꿈으로 구분)
+              </label>
+              <textarea
+                value={futureImprovements}
+                onChange={(e) => setFutureImprovements(e.target.value)}
+                rows={3}
+                placeholder={"다크모드 지원\n다국어 지원 추가\n성능 최적화"}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-sm font-mono"
+              />
+            </div>
           </div>
         </div>
 

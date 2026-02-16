@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
-import { ExternalLink, Github, Globe, Lock, Edit2 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { ExternalLink, Github, Globe, Lock, Edit2, ChevronDown } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ProtectedLinkModal } from "./ProtectedLinkModal";
 import { EditProjectModal } from "./EditProjectModal";
 import { useAdmin } from "../contexts/AdminContext";
+
+export type ProjectDomain =
+  | "hr-analytics"      // HR Analytics & Diagnostics
+  | "assessment"        // Assessment & Coaching
+  | "ai-tools"          // AI Tools & Automation
+  | "workshop"          // Workshop & Collaboration
+  | "education";        // Education & Knowledge Sharing
 
 export interface PortfolioItem {
   id: string;
@@ -13,6 +20,7 @@ export interface PortfolioItem {
   description: string;
   category: "projects" | "lectures" | "publications" | "articles";
   platform?: string;
+  domain?: ProjectDomain;
   image: string;
   tags: string[];
   links: {
@@ -22,6 +30,10 @@ export interface PortfolioItem {
   };
   date: string;
   protected?: boolean; // 유료 API 키 사용 프로젝트 보호
+  problemStatement?: string; // 왜 만들었나?
+  technicalDetails?: string[]; // 기술적 구현 포인트
+  impact?: string; // 성과/영향
+  futureImprovements?: string[]; // 향후 계획
 }
 
 interface PortfolioCardProps {
@@ -45,7 +57,10 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { isAdmin } = useAdmin();
+
+  const hasDetails = item.problemStatement || (item.technicalDetails && item.technicalDetails.length > 0) || item.impact || (item.futureImprovements && item.futureImprovements.length > 0);
 
   // Check authentication status from session storage
   useEffect(() => {
@@ -81,7 +96,7 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
       {/* Content */}
       <div className="p-5">
         <div className="flex items-start justify-between mb-3">
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2 flex-wrap">
               {item.code && (
                 <span className="px-2 py-0.5 rounded-md text-xs font-mono font-semibold bg-indigo-100 text-indigo-800">
@@ -99,15 +114,80 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
             </div>
             <p className="text-xs text-gray-500">{item.date}</p>
           </div>
-          {isAdmin && (
-            <button
-              onClick={() => setIsEditModalOpen(true)}
-              className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-              title="편집"
-            >
-              <Edit2 className="w-4 h-4" />
-            </button>
-          )}
+          <div className="flex items-center gap-1 ml-2 shrink-0">
+            {item.links.live && (
+              item.protected && !isAuthenticated && !isAdmin ? (
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+                  title="비밀번호 필요"
+                >
+                  <Lock className="w-4 h-4" />
+                </button>
+              ) : (
+                <a
+                  href={item.links.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                  title="보기"
+                >
+                  <Globe className="w-4 h-4" />
+                </a>
+              )
+            )}
+            {item.links.github && (
+              item.protected && !isAuthenticated && !isAdmin ? (
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+                  title="비밀번호 필요"
+                >
+                  <Lock className="w-4 h-4" />
+                </button>
+              ) : (
+                <a
+                  href={item.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
+                  title="GitHub"
+                >
+                  <Github className="w-4 h-4" />
+                </a>
+              )
+            )}
+            {item.links.external && (
+              item.protected && !isAuthenticated && !isAdmin ? (
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
+                  title="비밀번호 필요"
+                >
+                  <Lock className="w-4 h-4" />
+                </button>
+              ) : (
+                <a
+                  href={item.links.external}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 text-gray-500 hover:bg-gray-100 rounded-md transition-colors"
+                  title="외부 링크"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )
+            )}
+            {isAdmin && (
+              <button
+                onClick={() => setIsEditModalOpen(true)}
+                className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                title="편집"
+              >
+                <Edit2 className="w-4 h-4" />
+              </button>
+            )}
+          </div>
         </div>
 
         <p className="text-sm text-gray-600 mb-4 line-clamp-3">
@@ -131,72 +211,82 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
           )}
         </div>
 
-        {/* Links */}
-        <div className="flex gap-1.5 pt-3 border-t border-gray-100">
-          {item.links.live && (
-            item.protected && !isAuthenticated && !isAdmin ? (
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-1 px-2 py-1 bg-amber-600 text-white text-xs rounded-md hover:bg-amber-700 transition-colors"
-              >
-                <Lock className="w-3 h-3" />
-                <span>비밀번호</span>
-              </button>
-            ) : (
-              <a
-                href={item.links.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 px-2 py-1 bg-blue-600 text-white text-xs rounded-md hover:bg-blue-700 transition-colors"
-              >
-                <Globe className="w-3 h-3" />
-                <span>보기</span>
-              </a>
-            )
+        {/* Expand/Collapse Button */}
+        {hasDetails && (
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="w-full flex items-center justify-center gap-1 py-1.5 text-xs text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+          >
+            <span>{isExpanded ? "접기" : "자세히 보기"}</span>
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
+          </button>
+        )}
+
+        {/* Expanded Detail Section */}
+        <AnimatePresence>
+          {isExpanded && hasDetails && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="pt-3 mt-2 border-t border-gray-100 space-y-3">
+                {item.problemStatement && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                      <span>💡</span> 왜 만들었나?
+                    </h4>
+                    <p className="text-xs text-gray-600 leading-relaxed">{item.problemStatement}</p>
+                  </div>
+                )}
+
+                {item.technicalDetails && item.technicalDetails.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                      <span>🔧</span> 기술적 구현
+                    </h4>
+                    <ul className="space-y-0.5">
+                      {item.technicalDetails.map((detail, i) => (
+                        <li key={i} className="text-xs text-gray-600 leading-relaxed flex items-start gap-1.5">
+                          <span className="text-gray-400 mt-0.5 shrink-0">•</span>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {item.impact && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                      <span>📊</span> 성과
+                    </h4>
+                    <p className="text-xs text-gray-600 leading-relaxed">{item.impact}</p>
+                  </div>
+                )}
+
+                {item.futureImprovements && item.futureImprovements.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                      <span>🚀</span> 향후 계획
+                    </h4>
+                    <ul className="space-y-0.5">
+                      {item.futureImprovements.map((improvement, i) => (
+                        <li key={i} className="text-xs text-gray-600 leading-relaxed flex items-start gap-1.5">
+                          <span className="text-gray-400 mt-0.5 shrink-0">•</span>
+                          <span>{improvement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </motion.div>
           )}
-          {item.links.github && (
-            item.protected && !isAuthenticated && !isAdmin ? (
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-1 px-2 py-1 bg-amber-600 text-white text-xs rounded-md hover:bg-amber-700 transition-colors"
-              >
-                <Lock className="w-3 h-3" />
-                <span>GitHub</span>
-              </button>
-            ) : (
-              <a
-                href={item.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 px-2 py-1 bg-gray-800 text-white text-xs rounded-md hover:bg-gray-900 transition-colors"
-              >
-                <Github className="w-3 h-3" />
-                <span>GitHub</span>
-              </a>
-            )
-          )}
-          {item.links.external && (
-            item.protected && !isAuthenticated && !isAdmin ? (
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-1 px-2 py-1 bg-amber-600 text-white text-xs rounded-md hover:bg-amber-700 transition-colors"
-              >
-                <Lock className="w-3 h-3" />
-                <span>링크</span>
-              </button>
-            ) : (
-              <a
-                href={item.links.external}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 px-2 py-1 border border-gray-300 text-gray-700 text-xs rounded-md hover:bg-gray-50 transition-colors"
-              >
-                <ExternalLink className="w-3 h-3" />
-                <span>링크</span>
-              </a>
-            )
-          )}
-        </div>
+        </AnimatePresence>
+
       </div>
 
       {/* Protected Link Modal */}
