@@ -92,9 +92,11 @@ export function HeroSection() {
                     <div className="mt-1 p-2 rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 group-hover:from-blue-100 group-hover:to-purple-100 transition-colors">
                       <Briefcase className="w-4 h-4 text-blue-600" />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <div className="text-sm text-gray-500 mb-1">Current Position</div>
-                      <div className="font-medium text-gray-900">SK아카데미 리더십진단팀</div>
+                      <div className="font-medium text-gray-900 mb-2">SK아카데미 리더십진단팀</div>
+                      <div className="text-sm text-gray-500 mb-0.5">Past</div>
+                      <div className="text-sm text-gray-700">삼성경제연구소 People Analytics 팀 (2018-2023)</div>
                     </div>
                   </div>
                 </div>
