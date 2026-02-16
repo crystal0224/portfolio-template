@@ -15,11 +15,11 @@ export function MentoringSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Teaching Assistant & Mentoring
+            멘토링
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-6" />
           <p className="text-lg text-gray-600">
-            {mentoring.length}개 멘토링 및 TA 경험
+            {mentoring.length}개 멘토링 경험
           </p>
         </motion.div>
 

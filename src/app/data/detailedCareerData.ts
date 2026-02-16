@@ -666,12 +666,6 @@ export const groupActivities: GroupActivity[] = [
 
 export const mentoring: MentoringExperience[] = [
   {
-    title: "서울대학교 학부 핵심교양 : 마음의 탐구 TA",
-    organization: "서울대학교",
-    period: "2012-07 ~ 2014-02",
-    description: "좌석배치, 출석체크, 과제채점, 시험진행, 점수화",
-  },
-  {
     title: "구리시 진로체험 프로그램 멘토링",
     organization: "구리시",
     period: "2012-09",
