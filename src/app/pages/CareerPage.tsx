@@ -1,6 +1,5 @@
 import { motion } from "motion/react";
 import { NavigationBar } from "../components/NavigationBar";
-import { OverviewSection } from "../components/OverviewSection";
 import { ExperienceSection } from "../components/ExperienceSection";
 import { WorkProjectsSection } from "../components/WorkProjectsSection";
 import { EducationSection } from "../components/EducationSection";
@@ -36,7 +35,6 @@ export function CareerPage() {
 
       {/* Career Sections */}
       <div className="container mx-auto px-4 py-12">
-        <OverviewSection />
         <ExperienceSection />
         <WorkProjectsSection />
         <EducationSection />
