@@ -14,7 +14,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/PandasAI",
     },
     date: "2024.09",
-    protected: true, // OpenAI API 키 사용
+    protected: true,
   },
   {
     id: "hf-topicmodeling",
@@ -28,6 +28,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/topicmodelingadv",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "hf-leaders",
@@ -41,6 +42,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/Leaders",
     },
     date: "2025.11",
+    protected: true,
   },
   {
     id: "hf-workredesign",
@@ -54,6 +56,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/workredesign",
     },
     date: "2025.11",
+    protected: true,
   },
   {
     id: "hf-analysis",
@@ -67,6 +70,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/analysiss",
     },
     date: "2025.10",
+    protected: true,
   },
   {
     id: "hf-hybridrag",
@@ -80,7 +84,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/hybridRAG",
     },
     date: "2024.09",
-    protected: true, // AI API 키 사용
+    protected: true,
   },
   {
     id: "hf-sunispell",
@@ -94,6 +98,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/sunispell",
     },
     date: "2024.09",
+    protected: true,
   },
   {
     id: "hf-summarize",
@@ -107,6 +112,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/summarize",
     },
     date: "2024.09",
+    protected: true,
   },
   {
     id: "hf-rasch",
@@ -120,6 +126,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/rasch",
     },
     date: "2024.09",
+    protected: true,
   },
   {
     id: "hf-academy",
@@ -133,6 +140,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/academy",
     },
     date: "2024.12",
+    protected: true,
   },
 
   // === GitHub Projects ===
@@ -149,6 +157,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://github.com/crystal0224/my-day1",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "gh-work-redesign",
@@ -162,6 +171,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/work-redesign-platform",
     },
     date: "2025.12",
+    protected: true,
   },
   {
     id: "gh-org-report",
@@ -175,6 +185,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/organizational-effectiveness-report",
     },
     date: "2025.11",
+    protected: true,
   },
   {
     id: "gh-leadership-report",
@@ -188,6 +199,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/leadershipreport",
     },
     date: "2025.10",
+    protected: true,
   },
   {
     id: "gh-llama2",
@@ -201,6 +213,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/llama2",
     },
     date: "2024.03",
+    protected: true,
   },
   {
     id: "gh-py-hanspell",
@@ -214,6 +227,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/py-hanspell",
     },
     date: "2024.07",
+    protected: true,
   },
   {
     id: "gh-streamlit-folium",
@@ -227,6 +241,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/streamlit-folium",
     },
     date: "2024.03",
+    protected: true,
   },
   {
     id: "gh-leadership",
@@ -240,6 +255,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/leadership",
     },
     date: "2024.02",
+    protected: true,
   },
 
   // === Vercel Projects ===
@@ -256,7 +272,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/professor-interview-analysis",
     },
     date: "2026.02",
-    protected: true, // OpenAI API 키 사용
+    protected: true,
   },
   {
     id: "vc-claude-kg",
@@ -270,6 +286,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://claude-knowledge-graph.vercel.app",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "vc-query",
@@ -284,6 +301,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/query",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "vc-rawre",
@@ -298,6 +316,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/rawre",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "vc-asstf",
@@ -312,6 +331,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/asstf",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "vc-asstf-persona",
@@ -326,6 +346,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/asstf",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "vc-n8n-generator",
@@ -340,6 +361,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/n8n_generator",
     },
     date: "2025.11",
+    protected: true,
   },
 
   // === Netlify Projects ===
@@ -355,6 +377,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://ttimes-interview.netlify.app",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "nl-bdai",
@@ -368,6 +391,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://bdai0221.netlify.app",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "nl-successor-card",
@@ -381,6 +405,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://successor-card-lab.netlify.app",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "nl-ideaworkshop",
@@ -394,6 +419,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://ideaworkshop.netlify.app",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "nl-mysuniidea",
@@ -407,6 +433,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://mysuniidea.netlify.app",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "nl-academyessay",
@@ -420,6 +447,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://academyessay.netlify.app",
     },
     date: "2026.02",
+    protected: true,
   },
   {
     id: "nl-conceptbook",
@@ -433,6 +461,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://conceptbook.netlify.app",
     },
     date: "2025.11",
+    protected: true,
   },
   {
     id: "nl-ai-dna",
@@ -446,6 +475,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://ai-dna.netlify.app",
     },
     date: "2025.11",
+    protected: true,
   },
   {
     id: "nl-skacademyai",
@@ -459,6 +489,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://skacademyai.netlify.app",
     },
     date: "2025.11",
+    protected: true,
   },
   {
     id: "nl-leadershipcrystal",
@@ -472,5 +503,6 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://leadershipcrystal.netlify.app",
     },
     date: "2025.09",
+    protected: true,
   },
 ];

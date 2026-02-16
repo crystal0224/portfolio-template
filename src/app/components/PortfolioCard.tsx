@@ -114,7 +114,7 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
           </div>
         </div>
 
-        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+        <p className="text-sm text-gray-600 mb-4 line-clamp-4">
           {item.description}
         </p>
 
