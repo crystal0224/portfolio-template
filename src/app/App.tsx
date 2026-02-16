@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from "react";
-import { NavigationBar } from "./components/NavigationBar";
 import { HeroSection } from "./components/HeroSection";
 import { FilterBar } from "./components/FilterBar";
 import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
@@ -111,8 +110,6 @@ function AppContent() {
   // Render home page
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
-
       <HeroSection />
 
       {/* Tech Projects Section */}

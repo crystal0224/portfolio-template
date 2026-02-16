@@ -78,7 +78,7 @@ export function NavigationBar() {
                 onDoubleClick={() => setIsAdminModalOpen(true)}
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               >
-                SJ Bae
+                Crystal.Bae
               </h1>
             </motion.div>
 
@@ -151,7 +151,7 @@ export function NavigationBar() {
                   </SheetTrigger>
                   <SheetContent side="right" className="w-72">
                     <SheetTitle className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                      SJ Bae
+                      Crystal.Bae
                     </SheetTitle>
                     <nav className="flex flex-col gap-1 mt-6">
                       {navLinks.map((link) => (

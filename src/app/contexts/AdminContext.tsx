@@ -9,7 +9,7 @@ interface AdminContextType {
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
 // Admin password - change this to your secure password
-const ADMIN_PASSWORD = "admin2024";
+const ADMIN_PASSWORD = "sk1234";
 
 export function AdminProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
