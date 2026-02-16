@@ -2,6 +2,9 @@ import { motion } from "motion/react";
 import { Briefcase, Award, BookOpen, FolderOpen } from "lucide-react";
 import { workProjects, certifications, publications, positions } from "../data/detailedCareerData";
 
+// Calculate unique companies
+const uniqueCompanies = new Set(positions.map(p => p.company)).size;
+
 const highlights = [
   {
     icon: FolderOpen,
@@ -12,9 +15,9 @@ const highlights = [
   },
   {
     icon: Briefcase,
-    value: `${positions.length}개사`,
+    value: `10년+`,
     label: "경력",
-    detail: "SK, Samsung, MIDAS 등",
+    detail: `${uniqueCompanies}개 기관 (SK, Samsung 등)`,
     gradient: "from-purple-50 to-pink-50",
   },
   {
@@ -28,7 +31,7 @@ const highlights = [
     icon: BookOpen,
     value: publications.length.toString(),
     label: "출판물",
-    detail: "HR테크혁명, 학술 논문",
+    detail: "저서, 학술 논문 등",
     gradient: "from-orange-50 to-amber-50",
   },
 ];

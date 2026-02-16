@@ -2,33 +2,34 @@ import { motion } from "motion/react";
 import { Search } from "lucide-react";
 
 interface FilterBarProps {
-  activeCategory: string;
-  onCategoryChange: (category: string) => void;
+  activePlatform: string;
+  onPlatformChange: (platform: string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
 
-const categories = [
+const platforms = [
   { id: "all", label: "전체", icon: "📚" },
-  { id: "projects", label: "프로젝트", icon: "🚀" },
-  { id: "lectures", label: "강의", icon: "🎓" },
-  { id: "publications", label: "저서", icon: "📖" },
-  { id: "articles", label: "기고문", icon: "✍️" },
+  { id: "HuggingFace", label: "HuggingFace", icon: "🤗" },
+  { id: "Netlify", label: "Netlify", icon: "🌐" },
+  { id: "Vercel", label: "Vercel", icon: "▲" },
+  { id: "GitHub", label: "GitHub", icon: "💻" },
+  { id: "Medium", label: "Medium", icon: "📝" },
 ];
 
-export function FilterBar({ activeCategory, onCategoryChange, searchQuery, onSearchChange }: FilterBarProps) {
+export function FilterBar({ activePlatform, onPlatformChange, searchQuery, onSearchChange }: FilterBarProps) {
   return (
     <div className="bg-white border-b border-gray-200 sticky top-[89px] z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-          {/* Categories */}
+          {/* Platforms */}
           <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto">
-            {categories.map((category, index) => (
+            {platforms.map((platform, index) => (
               <motion.button
-                key={category.id}
-                onClick={() => onCategoryChange(category.id)}
+                key={platform.id}
+                onClick={() => onPlatformChange(platform.id)}
                 className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all ${
-                  activeCategory === category.id
+                  activePlatform === platform.id
                     ? "bg-blue-600 text-white shadow-lg"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
@@ -38,8 +39,8 @@ export function FilterBar({ activeCategory, onCategoryChange, searchQuery, onSea
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <span className="mr-1">{category.icon}</span>
-                {category.label}
+                <span className="mr-1">{platform.icon}</span>
+                {platform.label}
               </motion.button>
             ))}
           </div>

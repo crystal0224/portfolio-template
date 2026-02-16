@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { NavigationBar } from "./components/NavigationBar";
 import { HeroSection } from "./components/HeroSection";
-import { StatsSection } from "./components/StatsSection";
 import { FilterBar } from "./components/FilterBar";
 import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
 import { portfolioData as originalData } from "./data/portfolioData";
@@ -11,7 +10,7 @@ import { ArrowRight } from "lucide-react";
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<"home" | "career">("home");
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activePlatform, setActivePlatform] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [portfolioData, setPortfolioData] = useState<PortfolioItem[]>(originalData);
 
@@ -91,28 +90,18 @@ function AppContent() {
     localStorage.setItem("portfolio_deleted", JSON.stringify(Array.from(deletedSet)));
   };
 
-  // Filter items based on category and search
+  // Filter items based on platform and search
   const filteredItems = useMemo(() => {
     return portfolioData.filter((item) => {
-      const matchesCategory = activeCategory === "all" || item.category === activeCategory;
+      const matchesPlatform = activePlatform === "all" || item.platform === activePlatform;
       const matchesSearch = searchQuery === "" ||
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      return matchesCategory && matchesSearch;
+      return matchesPlatform && matchesSearch;
     });
-  }, [activeCategory, searchQuery, portfolioData]);
-
-  // Calculate stats
-  const stats = useMemo(() => {
-    return {
-      projects: portfolioData.filter(item => item.category === "projects").length,
-      lectures: portfolioData.filter(item => item.category === "lectures").length,
-      publications: portfolioData.filter(item => item.category === "publications").length,
-      articles: portfolioData.filter(item => item.category === "articles").length,
-    };
-  }, [portfolioData]);
+  }, [activePlatform, searchQuery, portfolioData]);
 
   // Render career page if hash is #career
   if (currentPage === "career") {
@@ -126,8 +115,6 @@ function AppContent() {
 
       <HeroSection />
 
-      <StatsSection stats={stats} />
-
       {/* Tech Projects Section */}
       <section id="tech-projects" className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -140,8 +127,8 @@ function AppContent() {
           </div>
 
           <FilterBar
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
+            activePlatform={activePlatform}
+            onPlatformChange={setActivePlatform}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
           />
