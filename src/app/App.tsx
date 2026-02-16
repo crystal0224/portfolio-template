@@ -1,28 +1,66 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { PortfolioHeader } from "./components/PortfolioHeader";
 import { HeroSection } from "./components/HeroSection";
 import { AboutSection } from "./components/AboutSection";
 import { StatsSection } from "./components/StatsSection";
 import { FilterBar } from "./components/FilterBar";
-import { PortfolioCard } from "./components/PortfolioCard";
-import { portfolioData } from "./data/portfolioData";
+import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
+import { portfolioData as originalData } from "./data/portfolioData";
+import { AdminProvider } from "./contexts/AdminContext";
 
-export default function App() {
+function AppContent() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [portfolioData, setPortfolioData] = useState<PortfolioItem[]>(originalData);
+
+  // Load edited projects from LocalStorage
+  useEffect(() => {
+    const savedEdits = localStorage.getItem("portfolio_edits");
+    if (savedEdits) {
+      try {
+        const edits = JSON.parse(savedEdits);
+        const updatedData = originalData.map(item => {
+          const editedItem = edits[item.id];
+          return editedItem ? { ...item, ...editedItem } : item;
+        });
+        setPortfolioData(updatedData);
+      } catch (error) {
+        console.error("Failed to load portfolio edits:", error);
+      }
+    }
+  }, []);
+
+  // Save project edits
+  const handleProjectUpdate = (updatedProject: PortfolioItem) => {
+    // Update state
+    setPortfolioData(prev =>
+      prev.map(item => item.id === updatedProject.id ? updatedProject : item)
+    );
+
+    // Save to LocalStorage
+    const savedEdits = localStorage.getItem("portfolio_edits");
+    const edits = savedEdits ? JSON.parse(savedEdits) : {};
+    edits[updatedProject.id] = {
+      title: updatedProject.title,
+      description: updatedProject.description,
+      tags: updatedProject.tags,
+      protected: updatedProject.protected,
+    };
+    localStorage.setItem("portfolio_edits", JSON.stringify(edits));
+  };
 
   // Filter items based on category and search
   const filteredItems = useMemo(() => {
     return portfolioData.filter((item) => {
       const matchesCategory = activeCategory === "all" || item.category === activeCategory;
-      const matchesSearch = searchQuery === "" || 
+      const matchesSearch = searchQuery === "" ||
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      
+
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, portfolioData]);
 
   // Calculate stats
   const stats = useMemo(() => {
@@ -32,7 +70,7 @@ export default function App() {
       publications: portfolioData.filter(item => item.category === "publications").length,
       articles: portfolioData.filter(item => item.category === "articles").length,
     };
-  }, []);
+  }, [portfolioData]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -56,7 +94,12 @@ export default function App() {
         {filteredItems.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredItems.map((item, index) => (
-              <PortfolioCard key={item.id} item={item} index={index} />
+              <PortfolioCard
+                key={item.id}
+                item={item}
+                index={index}
+                onEdit={handleProjectUpdate}
+              />
             ))}
           </div>
         ) : (
@@ -77,5 +120,13 @@ export default function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AdminProvider>
+      <AppContent />
+    </AdminProvider>
   );
 }

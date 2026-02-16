@@ -9,7 +9,7 @@ interface ProtectedLinkModalProps {
 }
 
 // Simple hash for client-side verification (not cryptographically secure)
-const PASSWORD_HASH = "portfolio2024"; // 실제 비밀번호
+const PASSWORD_HASH = "sk1234"; // 실제 비밀번호
 
 export function ProtectedLinkModal({
   isOpen,

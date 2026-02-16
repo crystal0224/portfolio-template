@@ -1,8 +1,15 @@
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { useState } from "react";
+import { Github, Linkedin, Mail, Twitter, Shield } from "lucide-react";
 import { motion } from "motion/react";
+import { useAdmin } from "../contexts/AdminContext";
+import { AdminLoginModal } from "./AdminLoginModal";
 
 export function PortfolioHeader() {
+  const { isAdmin } = useAdmin();
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+
   return (
+    <>
     <motion.header 
       className="border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50"
       initial={{ y: -100 }}
@@ -16,9 +23,25 @@ export function PortfolioHeader() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h1 className="text-2xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Portfolio
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1
+                className="text-2xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent cursor-pointer select-none"
+                onDoubleClick={() => setIsAdminModalOpen(true)}
+                title="더블클릭하여 관리자 로그인"
+              >
+                Portfolio
+              </h1>
+              {isAdmin && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium"
+                >
+                  <Shield className="w-3 h-3" />
+                  <span>관리자</span>
+                </motion.div>
+              )}
+            </div>
             <p className="text-sm text-gray-600 mt-1">작업물 & 기록 아카이브</p>
           </motion.div>
           
@@ -48,5 +71,11 @@ export function PortfolioHeader() {
         </div>
       </div>
     </motion.header>
+
+    <AdminLoginModal
+      isOpen={isAdminModalOpen}
+      onClose={() => setIsAdminModalOpen(false)}
+    />
+    </>
   );
 }

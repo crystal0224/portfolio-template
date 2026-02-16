@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { ExternalLink, Github, Globe, Lock } from "lucide-react";
+import { ExternalLink, Github, Globe, Lock, Edit2 } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ProtectedLinkModal } from "./ProtectedLinkModal";
+import { EditProjectModal } from "./EditProjectModal";
+import { useAdmin } from "../contexts/AdminContext";
 
 export interface PortfolioItem {
   id: string;
@@ -24,6 +26,7 @@ export interface PortfolioItem {
 interface PortfolioCardProps {
   item: PortfolioItem;
   index: number;
+  onEdit?: (updatedProject: PortfolioItem) => void;
 }
 
 const platformColors = {
@@ -35,10 +38,12 @@ const platformColors = {
   "Default": "bg-blue-100 text-blue-800"
 };
 
-export function PortfolioCard({ item, index }: PortfolioCardProps) {
+export function PortfolioCard({ item, index, onEdit }: PortfolioCardProps) {
   const platformColor = platformColors[item.platform as keyof typeof platformColors] || platformColors["Default"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const { isAdmin } = useAdmin();
 
   // Check authentication status from session storage
   useEffect(() => {
@@ -79,11 +84,22 @@ export function PortfolioCard({ item, index }: PortfolioCardProps) {
           alt={item.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
-        {item.platform && (
-          <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium ${platformColor}`}>
-            {item.platform}
-          </div>
-        )}
+        <div className="absolute top-3 right-3 flex gap-2">
+          {item.platform && (
+            <div className={`px-3 py-1 rounded-full text-xs font-medium ${platformColor}`}>
+              {item.platform}
+            </div>
+          )}
+          {isAdmin && (
+            <button
+              onClick={() => setIsEditModalOpen(true)}
+              className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-blue-500 hover:text-white transition-colors shadow-lg"
+              title="편집"
+            >
+              <Edit2 className="w-3 h-3" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Content */}
@@ -121,7 +137,7 @@ export function PortfolioCard({ item, index }: PortfolioCardProps) {
         {/* Links */}
         <div className="flex gap-2 pt-3 border-t border-gray-100">
           {item.links.live && (
-            item.protected && !isAuthenticated ? (
+            item.protected && !isAuthenticated && !isAdmin ? (
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="flex items-center gap-1 px-3 py-2 bg-amber-600 text-white text-sm rounded-lg hover:bg-amber-700 transition-colors flex-1 justify-center"
@@ -173,6 +189,16 @@ export function PortfolioCard({ item, index }: PortfolioCardProps) {
           onClose={() => setIsModalOpen(false)}
           onSuccess={handleAuthSuccess}
           projectTitle={item.title}
+        />
+      )}
+
+      {/* Edit Project Modal */}
+      {isAdmin && onEdit && (
+        <EditProjectModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          project={item}
+          onSave={onEdit}
         />
       )}
     </motion.div>
