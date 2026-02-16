@@ -14,7 +14,6 @@ const platforms = [
   { id: "Netlify", label: "Netlify", icon: "🌐" },
   { id: "Vercel", label: "Vercel", icon: "▲" },
   { id: "GitHub", label: "GitHub", icon: "💻" },
-  { id: "Medium", label: "Medium", icon: "📝" },
 ];
 
 export function FilterBar({ activePlatform, onPlatformChange, searchQuery, onSearchChange }: FilterBarProps) {
