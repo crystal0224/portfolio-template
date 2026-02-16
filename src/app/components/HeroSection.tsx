@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Briefcase, GraduationCap, BookOpen } from "lucide-react";
+import { Briefcase, GraduationCap, BookOpen, Linkedin, Phone, Mail } from "lucide-react";
 
 const profileImage = import.meta.env.BASE_URL + "profile.png";
 
@@ -123,6 +123,45 @@ export function HeroSection() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </motion.div>
+
+            {/* Contact Info */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="pt-6 space-y-3"
+            >
+              <div className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors">
+                <div className="p-2 rounded-lg bg-blue-50">
+                  <Linkedin className="w-4 h-4 text-blue-600" />
+                </div>
+                <a
+                  href="https://linkedin.com/in/crystal0224"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm"
+                >
+                  linkedin.com/in/crystal0224
+                </a>
+              </div>
+              <div className="flex items-center gap-3 text-gray-700">
+                <div className="p-2 rounded-lg bg-green-50">
+                  <Phone className="w-4 h-4 text-green-600" />
+                </div>
+                <span className="text-sm">010-4765-9568</span>
+              </div>
+              <div className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors">
+                <div className="p-2 rounded-lg bg-purple-50">
+                  <Mail className="w-4 h-4 text-purple-600" />
+                </div>
+                <a
+                  href="mailto:aaaaa124@naver.com"
+                  className="text-sm"
+                >
+                  aaaaa124@naver.com
+                </a>
               </div>
             </motion.div>
 
