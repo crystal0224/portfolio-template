@@ -10,7 +10,6 @@ import { SkillsSection } from "../components/SkillsSection";
 import { AwardsSection } from "../components/AwardsSection";
 import { AcademicProjectsSection } from "../components/AcademicProjectsSection";
 import { TeachingSection } from "../components/TeachingSection";
-import { SGRDetailSection } from "../components/SGRDetailSection";
 import { ArrowLeft } from "lucide-react";
 
 export function CareerPage() {
@@ -55,7 +54,6 @@ export function CareerPage() {
         <AwardsSection />
         <AcademicProjectsSection />
         <TeachingSection />
-        <SGRDetailSection />
       </div>
 
       {/* Footer */}
