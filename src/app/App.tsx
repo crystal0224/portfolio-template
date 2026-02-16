@@ -5,6 +5,7 @@ import { FilterBar } from "./components/FilterBar";
 import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
 import { portfolioData as originalData } from "./data/portfolioData";
 import { AdminProvider } from "./contexts/AdminContext";
+import { CareerDataProvider } from "./contexts/CareerDataContext";
 import { CareerPage } from "./pages/CareerPage";
 import { AdminLoginModal } from "./components/AdminLoginModal";
 import { ArrowRight } from "lucide-react";
@@ -201,7 +202,9 @@ function AppContent() {
 export default function App() {
   return (
     <AdminProvider>
-      <AppContent />
+      <CareerDataProvider>
+        <AppContent />
+      </CareerDataProvider>
     </AdminProvider>
   );
 }

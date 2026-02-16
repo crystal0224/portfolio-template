@@ -1,7 +1,15 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown, FolderOpen } from "lucide-react";
-import { workProjects } from "../data/detailedCareerData";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { useCareerData } from "../hooks/useCareerData";
+import { useCareerDragDrop } from "../hooks/useCareerDragDrop";
+import { useAdmin } from "../contexts/AdminContext";
+import { CareerItemCard } from "./career/CareerItemCard";
+import { BaseCareerEditModal } from "./career/BaseCareerEditModal";
+import { AddItemButton } from "./career/AddItemButton";
+import { workProjectFields } from "../config/careerFieldConfigs";
 import { ProjectFilterBar } from "./ProjectFilterBar";
 import { WorkProjectCard } from "./WorkProjectCard";
 import {
@@ -9,18 +17,29 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
+import type { WorkProject } from "../data/detailedCareerData";
+import type { WithId } from "../contexts/CareerDataContext";
 
 export function WorkProjectsSection() {
+  const { isAdmin } = useAdmin();
+  const { workProjects } = useCareerData();
+  const { handleDragEnd, itemIds } = useCareerDragDrop({
+    items: workProjects.items,
+    reorder: workProjects.reorder,
+  });
+
   const [activeCategory, setActiveCategory] = useState("전체");
   const [activeYear, setActiveYear] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [openYears, setOpenYears] = useState<Set<number>>(() => new Set());
+  const [editingItem, setEditingItem] = useState<WithId<WorkProject> | undefined>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Available years
   const years = useMemo(() => {
-    const yearSet = new Set(workProjects.map((p) => p.year));
+    const yearSet = new Set(workProjects.items.map((p) => p.year));
     return Array.from(yearSet).sort((a, b) => b - a);
-  }, []);
+  }, [workProjects.items]);
 
   // Initialize first year as open
   useMemo(() => {
@@ -31,7 +50,7 @@ export function WorkProjectsSection() {
 
   // Filtered projects
   const filteredProjects = useMemo(() => {
-    let result = workProjects;
+    let result = workProjects.items;
 
     if (activeCategory !== "전체") {
       result = result.filter((p) => p.category === activeCategory);
@@ -52,7 +71,7 @@ export function WorkProjectsSection() {
     }
 
     return result;
-  }, [activeCategory, activeYear, searchQuery]);
+  }, [workProjects.items, activeCategory, activeYear, searchQuery]);
 
   // Group by year
   const groupedByYear = useMemo(() => {
@@ -77,6 +96,28 @@ export function WorkProjectsSection() {
     });
   };
 
+  const handleEdit = (item: WithId<WorkProject>) => {
+    setEditingItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleAdd = () => {
+    setEditingItem(undefined);
+    setIsModalOpen(true);
+  };
+
+  const handleSave = (data: WorkProject) => {
+    if (editingItem) {
+      workProjects.update(editingItem._id, data);
+    } else {
+      workProjects.add(data);
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    workProjects.remove(id);
+  };
+
   return (
     <section id="projects" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,7 +134,7 @@ export function WorkProjectsSection() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-6" />
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {workProjects.length}개 업무 프로젝트 (2018-2022)
+            {workProjects.items.length}개 업무 프로젝트
           </p>
         </motion.div>
 
@@ -122,46 +163,57 @@ export function WorkProjectsSection() {
             <span className="font-semibold text-gray-900">
               {filteredProjects.length}
             </span>{" "}
-            of {workProjects.length} projects
+            of {workProjects.items.length} projects
           </span>
         </motion.div>
 
         {/* Year Groups */}
         <div className="space-y-6">
-          {groupedByYear.map(([year, projects]) => (
-            <Collapsible
-              key={year}
-              open={openYears.has(year)}
-              onOpenChange={() => toggleYear(year)}
-            >
-              <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between py-3 group">
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-xl font-bold text-gray-900">{year}</h3>
-                    <span className="px-2.5 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                      {projects.length} projects
-                    </span>
-                  </div>
-                  <ChevronDown
-                    className={`w-5 h-5 text-gray-400 transition-transform ${
-                      openYears.has(year) ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 pb-4">
-                  {projects.map((project, idx) => (
-                    <WorkProjectCard
-                      key={project.id}
-                      project={project}
-                      index={idx}
-                    />
-                  ))}
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          ))}
+          <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
+            <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
+              {groupedByYear.map(([year, projects]) => (
+                <Collapsible
+                  key={year}
+                  open={openYears.has(year)}
+                  onOpenChange={() => toggleYear(year)}
+                >
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full flex items-center justify-between py-3 group">
+                      <div className="flex items-center gap-3">
+                        <h3 className="text-xl font-bold text-gray-900">{year}</h3>
+                        <span className="px-2.5 py-0.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
+                          {projects.length} projects
+                        </span>
+                      </div>
+                      <ChevronDown
+                        className={`w-5 h-5 text-gray-400 transition-transform ${
+                          openYears.has(year) ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 pb-4">
+                      {projects.map((project, idx) => (
+                        <CareerItemCard
+                          key={project._id}
+                          id={project._id}
+                          isAdmin={isAdmin}
+                          onEdit={() => handleEdit(project)}
+                          onDelete={() => handleDelete(project._id)}
+                        >
+                          <WorkProjectCard
+                            project={project}
+                            index={idx}
+                          />
+                        </CareerItemCard>
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              ))}
+            </SortableContext>
+          </DndContext>
 
           {groupedByYear.length === 0 && (
             <div className="text-center py-16">
@@ -171,7 +223,21 @@ export function WorkProjectsSection() {
             </div>
           )}
         </div>
+
+        {isAdmin && <AddItemButton onClick={handleAdd} label="새 업무 프로젝트 추가" />}
       </div>
+
+      {/* Edit/Add Modal */}
+      <BaseCareerEditModal<WorkProject>
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        item={editingItem}
+        fieldConfig={workProjectFields}
+        onSave={handleSave}
+        onDelete={handleDelete}
+        title={editingItem ? "업무 프로젝트 편집" : "새 업무 프로젝트 추가"}
+        itemId={editingItem?._id}
+      />
     </section>
   );
 }
