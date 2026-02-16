@@ -96,6 +96,33 @@ export interface TeachingExperience {
   period: string;
 }
 
+export interface PartTimeJob {
+  title: string;
+  organization: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+}
+
+export interface GroupActivity {
+  title: string;
+  date: string;
+  description: string;
+}
+
+export interface MentoringExperience {
+  title: string;
+  organization: string;
+  period: string;
+  description?: string;
+}
+
+export interface ResearchExchange {
+  institution: string;
+  program: string;
+  date: string;
+}
+
 export interface DetailedCareer {
   positions: Position[];
   education: Education[];
@@ -107,6 +134,10 @@ export interface DetailedCareer {
   awards: Award[];
   academicProjects: AcademicProject[];
   teaching: TeachingExperience[];
+  partTimeJobs: PartTimeJob[];
+  groupActivities: GroupActivity[];
+  mentoring: MentoringExperience[];
+  researchExchange: ResearchExchange[];
   sgrActivitySummary: SGRActivitySummary;
 }
 
@@ -541,6 +572,163 @@ export const teaching: TeachingExperience[] = [
     institution: "서울대학교 학부 핵심교양",
     description: "좌석배치, 출석체크, 과제채점, 시험진행, 점수화",
     period: "2012-07 ~ 2014-02",
+  },
+];
+
+// === Part-time Job Experience (파트타임 경력) ===
+
+export const partTimeJobs: PartTimeJob[] = [
+  {
+    title: "관리자 (상시 업무), 실험참여시스템(R-point)",
+    organization: "서울대학교 사회과학대학 심리학과",
+    startDate: "2012-07",
+    endDate: "2013-02",
+    description:
+      "초기 시스템 도입 과정 진행, 운영 규칙 및 시스템 셋업, 학생용/관리자용 교육자료 제작 및 홍보, 학생/교수자 시스템 사용 지원 보조, 최종 보고서 작성 및 공유",
+  },
+  {
+    title: "박사급 보조연구원 (주 2회 출근), 한국콘텐츠진흥원 정책연구실 통계정보팀",
+    organization: "한국콘텐츠진흥원",
+    startDate: "2013-09",
+    endDate: "2013-12",
+    description:
+      "콘텐츠 시장 분석 및 보고 업무 보조. 국내 및 해외콘텐츠시장 동향조사, 원내 통계자료 검토 및 분석, 자료 해외 콘텐츠 보고 자료 번역",
+  },
+  {
+    title: "스토리보드 제작 (재택근무), KT innoedu 전략콘텐츠본부 (이전 Cyber MBA)",
+    organization: "KT innoedu",
+    startDate: "2012-09",
+    endDate: "2013-12",
+    description:
+      "온종일 MBA 교육을 위한 스토리보드 변환작업 (원교 → PPT 보조직). 관련: 마케팅 / 경영통계 / 인사의 사고 / 경영통계개 2 / 소비트웰라 워드로 작성한 원교를 보면서 이미지 심입 및 맨트 수정 및 프레임 구성하는 역할 (각 과목당 20차시 / 1차시당 약 1시간 수업 분량)",
+  },
+  {
+    title: "논술 1:1 첨삭 강사 (주 1회 학교 방문), Top edu 대일외국어고등학교, 명덕외국어고등학교",
+    organization: "Top edu",
+    startDate: "2011-06",
+    endDate: "2011-12",
+    description:
+      "논제에 따라 작성된 학생들의 논술 과제를 첨삭 후 1:1 로 학생들을 지도하는 업무. 매주 20명 정도의 학생들 논술과제를 첨삭하고, 온라인으로 해당사항을 제출 후 오프라인으로 학생 면담",
+  },
+  {
+    title: "근로장학생 (사사업무), 서울대학교 인문대학 국사학과 자료실",
+    organization: "서울대학교 국사학과",
+    startDate: "2009-03",
+    endDate: "2010-02",
+    description:
+      "자료실 역사 고문서 관리 및 도서대출업무. 문헌 입고 및 시각정보 입력, 국사학과 소장 도서 대출 및 반납 업무",
+  },
+  {
+    title: "근로장학생 (전산관리업무), 서울대학교 인문대학 전산실",
+    organization: "서울대학교 인문대학",
+    startDate: "2007-03",
+    endDate: "2009-02",
+    description:
+      "인문대학 6층 1종 전산실 30 여대 컴퓨터 관리 및 출력 업무 보조. 컴퓨터 전원 및 시스템 관리, 고장 및 장애 처리, 전산실 위생 및 보안 담당",
+  },
+];
+
+// === Group Activities (그룹 활동) ===
+
+export const groupActivities: GroupActivity[] = [
+  {
+    title: "McKinsey Korea \"Problem solving Bootcamp\"",
+    date: "2016-08",
+    description:
+      "문제해결 이론 공유 및 컨설팅 케이스 스터디, 마케팅 케이스스터디 팀별 경진 1위",
+  },
+  {
+    title: "CULP 문화마케팅 연합동아리",
+    date: "2010-09 ~ 2011-02",
+    description: "대학생 문화 컨텐츠 개발을 위한 아이디어 공유 및 팀별 경진",
+  },
+  {
+    title: "여성가족부, 2010 international youth exchange : 한국-베트남 국가간 문화 교류",
+    date: "2010-03 ~ 2010-05",
+    description:
+      "청소년 대표단 12인 중 1명으로 선발되어, 한국문화 소개 및 베트남 문화 체험과 교류활동",
+  },
+  {
+    title: "동북아역사재단, 항일유적지 탐방단 \"인증근장군 항일유적지를 찾아서\"",
+    date: "2009-07 ~ 2009-08",
+    description:
+      "중국, 러시아 지역 안중근 장군 유적지 탐방 및 역사 자료 이해를 위한 자료집 출간",
+  },
+  {
+    title: "서울대학교 인문대학 국사학과, 국사학과 학술답사 준비위원회 총무단",
+    date: "2009-03 ~ 2009-04",
+    description:
+      "학부생 답사를 위한, 유적지 조사 및 일정 계획, 활동 준비, 자료집 출간",
+  },
+];
+
+// === Mentoring Experience (멘토링 및 첨삭 경험) ===
+
+export const mentoring: MentoringExperience[] = [
+  {
+    title: "서울대학교 학부 핵심교양 : 마음의 탐구 TA",
+    organization: "서울대학교",
+    period: "2012-07 ~ 2014-02",
+    description: "좌석배치, 출석체크, 과제채점, 시험진행, 점수화",
+  },
+  {
+    title: "구리시 진로체험 프로그램 멘토링",
+    organization: "구리시",
+    period: "2012-09",
+    description: "심리학 진로 교육자료 제작",
+  },
+  {
+    title: "서울대학교 자유전공학부 12학번 심리학 전공 멘토링",
+    organization: "서울대학교",
+    period: "2012-07 ~ 2012-08",
+    description: "심리학 전공 소개 및 개인별 탐라",
+  },
+  {
+    title: "서울대학교 심리학과 신입생 멘토링",
+    organization: "서울대학교",
+    period: "2012-03 ~ 2012-06",
+    description: "학과 오리엔테이션 및 진로 연구활동 지원",
+  },
+  {
+    title: "중앙일보교육법인 서초구 '공부의 신' 캠프 멘토링",
+    organization: "중앙일보교육법인",
+    period: "2011-01 ~ 2011-06",
+    description: "초중등학생 대상 학습 컨설팅 캠프 활동 지도",
+  },
+  {
+    title: "조선일보 '맛있는 역사캠프' 보조교사",
+    organization: "조선일보",
+    period: "2010-05 ~ 2010-06",
+    description: "역사 유적지 탐방 및 초등학생 대상 설명",
+  },
+  {
+    title: "(주)EBS 고등학교 '사회문화' 교재 최종 학생검수단",
+    organization: "EBS",
+    period: "2009-08 ~ 2009-09",
+    description: "교재 편고 내용 검토 및 오탈자 확인",
+  },
+  {
+    title: "스터디코드: 조남호 대표, studycode.net",
+    organization: "studycode.net",
+    period: "2008-03 ~ 2008-09",
+    description: "학습법 상담 온라인 코치 활동 / 교육 자료 제작",
+  },
+  {
+    title: "(주)이투스 누드교과서 '한국사' 학생저자 집필단",
+    organization: "이투스",
+    period: "2007-03 ~ 2007-08",
+    description: "원교 작성 및 이미지 콘티 작성",
+  },
+];
+
+// === Research Exchange (연구교류) ===
+
+export const researchExchange: ResearchExchange[] = [
+  {
+    institution: "Nagoya University",
+    program:
+      "Nagoya university Graduate School of Education and Human Development Partnership Exchange Program",
+    date: "2012-01",
   },
 ];
 
@@ -1600,5 +1788,9 @@ export const detailedCareerData: DetailedCareer = {
   awards,
   academicProjects,
   teaching,
+  partTimeJobs,
+  groupActivities,
+  mentoring,
+  researchExchange,
   sgrActivitySummary,
 };

@@ -10,6 +10,10 @@ import { SkillsSection } from "../components/SkillsSection";
 import { AwardsSection } from "../components/AwardsSection";
 import { AcademicProjectsSection } from "../components/AcademicProjectsSection";
 import { TeachingSection } from "../components/TeachingSection";
+import { PartTimeJobSection } from "../components/PartTimeJobSection";
+import { GroupActivitySection } from "../components/GroupActivitySection";
+import { MentoringSection } from "../components/MentoringSection";
+import { ResearchExchangeSection } from "../components/ResearchExchangeSection";
 import { ArrowLeft } from "lucide-react";
 
 export function CareerPage() {
@@ -54,6 +58,10 @@ export function CareerPage() {
         <AwardsSection />
         <AcademicProjectsSection />
         <TeachingSection />
+        <PartTimeJobSection />
+        <GroupActivitySection />
+        <MentoringSection />
+        <ResearchExchangeSection />
       </div>
 
       {/* Footer */}
