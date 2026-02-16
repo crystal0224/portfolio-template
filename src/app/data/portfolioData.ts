@@ -4,12 +4,12 @@ export const portfolioData: PortfolioItem[] = [
   // === HuggingFace Spaces ===
   {
     id: "hf-pandasai",
-    title: "PandasAI",
-    description: "AI 기반 데이터 분석 및 시각화 도구. Streamlit으로 구현된 대화형 데이터 분석 플랫폼으로 자연어로 데이터를 질의하고 분석할 수 있습니다.",
+    title: "PandasAI 데이터 분석기 with RAG",
+    description: "AI 기반 대화형 데이터 분석 플랫폼. PandasAI SmartDataframe과 RAG(Retrieval-Augmented Generation)를 결합하여 Excel/CSV 데이터를 자연어로 질의하고 분석합니다. OpenAI GPT 모델을 활용한 지능형 데이터 인사이트 제공 및 자동 시각화 기능을 지원합니다. ⭐ 인기 프로젝트 (좋아요 2개)",
     category: "projects",
     platform: "HuggingFace",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
-    tags: ["Python", "Streamlit", "AI", "Data Analysis", "PandasAI"],
+    tags: ["Python", "Streamlit", "PandasAI", "RAG", "OpenAI", "Data Analysis"],
     links: {
       live: "https://huggingface.co/spaces/soojeongcrystal/PandasAI",
     },
@@ -136,12 +136,12 @@ export const portfolioData: PortfolioItem[] = [
   // === GitHub Projects ===
   {
     id: "gh-my-day1",
-    title: "My Day1 - Claude Code 온보딩",
-    description: "비개발자도 1.5시간이면 실무 투입 가능! Essential Path 기반의 개인화 Claude Code 온보딩 플러그인. 동기부여 스토리 63개, 용어 비유 150개 포함.",
+    title: "My Day1 - Claude Code 온보딩 플러그인",
+    description: "AI Native Camp 기반 비개발자 친화 Claude Code 온보딩 플러그인. 8가지 직업별 맞춤 학습(HR, 개발자, 디자이너, PM, 분석가 등), 150개 직무별 비유, 63개 동기부여 스토리로 구성된 Essential Path 제공. 터미널이 처음인 비개발자도 1~1.5시간 만에 실무 투입 가능하도록 설계. CLI를 Excel 수식, Figma 단축키 등 친숙한 개념으로 설명. ⭐ GitHub Star 3개",
     category: "projects",
     platform: "GitHub",
     image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800",
-    tags: ["Claude Code", "Plugin", "Onboarding", "Education", "AI"],
+    tags: ["Claude Code", "Plugin", "Onboarding", "Education", "Non-developer", "AI"],
     links: {
       github: "https://github.com/crystal0224/my-day1",
       live: "https://github.com/crystal0224/my-day1",
@@ -151,11 +151,11 @@ export const portfolioData: PortfolioItem[] = [
   {
     id: "gh-work-redesign",
     title: "Work Redesign Platform",
-    description: "SK 그룹 매니저를 위한 AI 기반 업무 재설계 워크샵 도구. Claude AI 통합으로 35분 워크플로우 구현. TypeScript + React 기반.",
+    description: "SK 신임 팀장을 위한 AI 기반 업무 재설계 워크샵 플랫폼 (연 500명 타겟). 35분 내 업무 재설계 완료, 칸반 보드 중심의 직관적 UI, Claude AI 기반 지능형 분석 제공. Next.js 14 + TypeScript 프론트엔드, Express + Socket.io 백엔드, PostgreSQL + Redis 기반 실시간 협업 시스템. Docker 컨테이너화로 확장 가능한 아키텍처 구현. 자동화 도구 및 워크플로우 최적화 솔루션 내장.",
     category: "projects",
     platform: "GitHub",
     image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800",
-    tags: ["TypeScript", "React", "Claude AI", "Workshop", "SK Group"],
+    tags: ["TypeScript", "Next.js", "Claude AI", "PostgreSQL", "Redis", "Socket.io", "Docker"],
     links: {
       github: "https://github.com/crystal0224/work-redesign-platform",
     },
@@ -176,12 +176,12 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-leadership-report",
-    title: "Leadership Report Generator",
-    description: "리더십 평가 리포트 자동 생성 시스템. Python 기반의 데이터 분석 및 시각화 도구입니다.",
+    title: "AI 진단 리포트 자동 생성 시스템",
+    description: "Flask 기반 웹 애플리케이션으로 Excel 데이터 업로드부터 AI 분석, PDF 리포트 생성까지 전 과정을 자동화. OpenAI GPT-4o-mini 모델을 활용한 지능형 데이터 분석 및 인사이트 생성, 병렬 처리 및 응답 캐시로 성능 최적화. WeasyPrint 기반 전문적인 PDF 리포트 자동 생성, matplotlib/seaborn으로 고해상도 차트 및 시각화 제공. 실시간 진행상황 모니터링, 자동 파일 정리, 보안 강화(파일 검증, 크기 제한) 기능 포함.",
     category: "projects",
     platform: "GitHub",
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
-    tags: ["Python", "Leadership", "Report", "Data Visualization"],
+    tags: ["Python", "Flask", "OpenAI", "PDF Generation", "Data Analysis", "AI"],
     links: {
       github: "https://github.com/crystal0224/leadershipreport",
     },
@@ -189,12 +189,12 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-llama2",
-    title: "Llama 2 Chatbot",
-    description: "Meta의 Llama 2 오픈소스 LLM을 활용한 챗봇 애플리케이션. Python과 Streamlit으로 구현된 대화형 AI 시스템입니다.",
+    title: "Llama 2 Chatbot Application",
+    description: "Meta의 오픈소스 Llama 2 LLM을 활용한 대화형 챗봇 애플리케이션. Llama2-7B 모델(70억 파라미터)을 Andreessen Horowitz(a16z) 팀이 배포하고 Replicate 플랫폼에서 호스팅. Streamlit Community Cloud 배포를 위해 a16z 구현을 경량화하여 리팩토링. Python + Streamlit으로 구현된 사용자 친화적 인터페이스. 13B, 70B 등 더 큰 모델로 업그레이드 가능한 확장성 제공.",
     category: "projects",
     platform: "GitHub",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800",
-    tags: ["Python", "Llama 2", "AI", "Chatbot", "LLM"],
+    tags: ["Python", "Llama 2", "Streamlit", "Replicate", "Open Source LLM", "a16z"],
     links: {
       github: "https://github.com/crystal0224/llama2",
     },
@@ -202,12 +202,12 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-py-hanspell",
-    title: "Py-Hanspell",
-    description: "파이썬 한글 맞춤법 검사 라이브러리. 네이버 맞춤법 검사기를 활용한 Python 패키지입니다.",
+    title: "Py-Hanspell - 한글 맞춤법 검사 라이브러리",
+    description: "네이버 맞춤법 검사기를 활용한 파이썬 한글 맞춤법 검사 라이브러리. Python 2.7 및 3.4+ 모두 호환. pip를 통한 간편한 설치 지원. 단일 문장 또는 리스트 형태의 다중 문장 검사 가능. 검사 결과를 dict 또는 Checked 객체로 반환하며, 교정된 문장, 오류 수, 교정 단어 목록, 요청 시간 등 상세 정보 제공. requests 라이브러리 기반으로 경량화된 의존성. Travis CI 빌드 및 PyPI 배포 완료.",
     category: "projects",
     platform: "GitHub",
     image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800",
-    tags: ["Python", "Korean", "Spell Check", "Library", "NLP"],
+    tags: ["Python", "Korean NLP", "Spell Checker", "Library", "PyPI", "Naver API"],
     links: {
       github: "https://github.com/crystal0224/py-hanspell",
     },
