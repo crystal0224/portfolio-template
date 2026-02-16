@@ -34,11 +34,11 @@ export function EducationSection() {
     setIsModalOpen(true);
   };
 
-  const handleSave = (data: Education) => {
+  const handleSave = async (data: Education) => {
     if (editingItem) {
-      education.update(editingItem._id, data);
+      await education.update(editingItem._id, data);
     } else {
-      education.add(data);
+      await education.add(data);
     }
   };
 
@@ -62,12 +62,17 @@ export function EducationSection() {
         </motion.div>
 
         {/* Education Cards */}
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
             <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
               <div className="grid md:grid-cols-2 gap-8">
                 {education.items.map((edu, index) => {
                   const isFeatured = index === 0;
+
+                  // Parse school name into Korean and English parts
+                  const schoolMatch = edu.school.match(/^(.+?)\s*\((.+?)\)$/);
+                  const schoolKorean = schoolMatch ? schoolMatch[1].trim() : edu.school;
+                  const schoolEnglish = schoolMatch ? schoolMatch[2].trim() : null;
 
                   return (
                     <motion.div
@@ -90,14 +95,6 @@ export function EducationSection() {
                               : ""
                           }`}
                         >
-                          {isFeatured && (
-                            <div className="mb-3">
-                              <span className="px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-medium rounded-full">
-                                Highest Degree
-                              </span>
-                            </div>
-                          )}
-
                           <div className="flex items-start gap-4">
                             <div
                               className={`inline-flex p-3 rounded-full shrink-0 ${
@@ -115,7 +112,12 @@ export function EducationSection() {
 
                             <div className="flex-1">
                               <h3 className="text-lg font-bold text-gray-900 mb-1">
-                                {edu.school}
+                                {schoolKorean}
+                                {schoolEnglish && (
+                                  <span className="text-sm text-gray-500 font-normal ml-2">
+                                    ({schoolEnglish})
+                                  </span>
+                                )}
                               </h3>
                               <p className="text-sm font-medium text-gray-700 mb-0.5">
                                 {edu.degree}

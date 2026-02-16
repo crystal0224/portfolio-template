@@ -42,7 +42,7 @@ async function migrateCollection(
 
   for (let i = 0; i < data.length; i++) {
     const item = data[i];
-    const docId = item[idField] || `${collectionName}-${i}`;
+    const docId = String(item[idField] || `${collectionName}-${i}`);
 
     try {
       const docRef = doc(collection(db, collectionName), docId);

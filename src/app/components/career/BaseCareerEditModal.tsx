@@ -9,7 +9,7 @@ export interface BaseCareerEditModalProps<T> {
   onClose: () => void;
   item?: T;
   fieldConfig: FieldConfig[];
-  onSave: (data: T) => void;
+  onSave: (data: T) => Promise<void> | void;
   onDelete?: (id: string) => void;
   title: string;
   itemId?: string;
@@ -29,6 +29,7 @@ export function BaseCareerEditModal<T extends Record<string, unknown>>({
   const [formData, setFormData] = useState<Record<string, unknown>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -90,30 +91,56 @@ export function BaseCareerEditModal<T extends Record<string, unknown>>({
     return Object.keys(newErrors).length === 0;
   }, [formData, fieldConfig]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!validate()) return;
 
-    // Convert number fields
-    const processedData: Record<string, unknown> = { ...formData };
-    fieldConfig.forEach((field) => {
-      if (field.type === "number" && processedData[field.name] !== "") {
-        processedData[field.name] = Number(processedData[field.name]);
-      }
-      // Convert empty strings to null for optional fields
-      if (!field.required && processedData[field.name] === "") {
-        processedData[field.name] = undefined;
-      }
-    });
+    setIsSaving(true);
+    try {
+      // Convert number fields
+      const processedData: Record<string, unknown> = { ...formData };
+      fieldConfig.forEach((field) => {
+        if (field.type === "number" && processedData[field.name] !== "") {
+          processedData[field.name] = Number(processedData[field.name]);
+        }
+        // Convert empty strings to null for optional fields (Firebase doesn't accept undefined)
+        if (!field.required && processedData[field.name] === "") {
+          processedData[field.name] = null;
+        }
+      });
 
-    onSave(processedData as T);
-    onClose();
+      // Remove undefined values (Firebase doesn't accept undefined)
+      Object.keys(processedData).forEach(key => {
+        if (processedData[key] === undefined) {
+          delete processedData[key];
+        }
+      });
+
+      console.log('💾 Saving data:', processedData);
+      await onSave(processedData as T);
+      console.log('✅ Save successful');
+      onClose();
+    } catch (error) {
+      console.error("❌ Save failed:", error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      alert(`저장에 실패했습니다.\n${errorMessage}\n\n콘솔을 확인해주세요.`);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (onDelete && itemId) {
-      onDelete(itemId);
-      onClose();
-      setShowDeleteConfirm(false);
+      try {
+        console.log('🗑️ Deleting item:', itemId);
+        await onDelete(itemId);
+        console.log('✅ Delete successful');
+        onClose();
+        setShowDeleteConfirm(false);
+      } catch (error) {
+        console.error("❌ Delete failed:", error);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        alert(`삭제에 실패했습니다.\n${errorMessage}`);
+      }
     }
   };
 
@@ -260,10 +287,11 @@ export function BaseCareerEditModal<T extends Record<string, unknown>>({
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+            disabled={isSaving}
+            className="flex-1 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Save className="w-4 h-4" />
-            {isEditMode ? "저장" : "추가"}
+            {isSaving ? "저장 중..." : isEditMode ? "저장" : "추가"}
           </button>
         </div>
       </div>

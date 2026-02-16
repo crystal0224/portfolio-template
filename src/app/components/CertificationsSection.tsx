@@ -69,7 +69,7 @@ export function CertificationsSection() {
         {/* Certification Grid */}
         <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
           <SortableContext items={itemIds} strategy={rectSortingStrategy}>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-stretch">
               {certifications.items.map((cert, index) => (
                 <motion.div
                   key={cert._id}
@@ -77,6 +77,7 @@ export function CertificationsSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.05 }}
+                  className="h-full"
                 >
                   <CareerItemCard
                     id={cert._id}

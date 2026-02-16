@@ -40,13 +40,13 @@ export function CareerItemCard({
     <div
       ref={setNodeRef}
       style={style}
-      className={`group relative rounded-lg border bg-white transition-shadow ${
+      className={`group relative rounded-lg border bg-white transition-shadow h-full ${
         isDragging
           ? "border-blue-400 shadow-lg z-10"
           : "border-gray-200 hover:shadow-md"
       }`}
     >
-      <div className="flex items-start gap-2 p-4">
+      <div className="flex items-start gap-2 p-3 h-full">
         {/* Drag Handle */}
         {isAdmin && (
           <button

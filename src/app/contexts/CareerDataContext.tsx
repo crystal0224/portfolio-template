@@ -24,10 +24,10 @@ export type WithId<T> = T & { _id: string };
 // CRUD functions type for a section
 interface SectionCRUD<T> {
   items: WithId<T>[];
-  add: (item: T) => void;
-  update: (id: string, data: Partial<T>) => void;
-  remove: (id: string) => void;
-  reorder: (oldIndex: number, newIndex: number) => void;
+  add: (item: T) => Promise<void>;
+  update: (id: string, data: Partial<T>) => Promise<void>;
+  remove: (id: string) => Promise<void>;
+  reorder: (oldIndex: number, newIndex: number) => Promise<void>;
 }
 
 export interface CareerDataContextType {
@@ -55,33 +55,33 @@ function useFirestoreSection<T extends Record<string, any>>(
   const firestore = useFirestore<WithId<T>>(collectionName, { orderByField: "order" });
 
   const add = useCallback(
-    (item: T) => {
+    async (item: T) => {
       const order = firestore.items.length;
-      firestore.addItem({ ...item, order } as any);
+      await firestore.addItem({ ...item, order } as any);
     },
     [firestore]
   );
 
   const update = useCallback(
-    (id: string, data: Partial<T>) => {
-      firestore.updateItem(id, data as any);
+    async (id: string, data: Partial<T>) => {
+      await firestore.updateItem(id, data as any);
     },
     [firestore]
   );
 
   const remove = useCallback(
-    (id: string) => {
-      firestore.deleteItem(id);
+    async (id: string) => {
+      await firestore.deleteItem(id);
     },
     [firestore]
   );
 
   const reorder = useCallback(
-    (oldIndex: number, newIndex: number) => {
+    async (oldIndex: number, newIndex: number) => {
       const reordered = [...firestore.items];
       const [moved] = reordered.splice(oldIndex, 1);
       reordered.splice(newIndex, 0, moved);
-      firestore.reorderItems(reordered);
+      await firestore.reorderItems(reordered);
     },
     [firestore]
   );

@@ -29,12 +29,8 @@ export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
   const monthStr = project.month.toString().padStart(2, "0");
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
-      className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+    <div
+      className="cursor-pointer"
       onClick={() => setIsExpanded(!isExpanded)}
     >
       <div className="flex items-start justify-between gap-3">
@@ -114,6 +110,6 @@ export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 }

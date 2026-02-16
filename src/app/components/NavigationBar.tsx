@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { Menu, Github, Linkedin, Mail } from "lucide-react";
+import { Menu, Linkedin, Mail } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -11,7 +11,7 @@ import {
 import { useAdmin } from "../contexts/AdminContext";
 import { AdminLoginModal } from "./AdminLoginModal";
 
-const navLinks = [
+const defaultNavLinks = [
   { id: "overview", label: "Overview" },
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
@@ -22,14 +22,31 @@ const navLinks = [
   { id: "skills", label: "Skills" },
 ];
 
+export const careerNavLinks = [
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "education", label: "Education" },
+  { id: "certifications", label: "Certifications" },
+  { id: "publications", label: "Publications" },
+  { id: "awards", label: "Awards" },
+  { id: "academic", label: "Academic" },
+  { id: "teaching", label: "Teaching" },
+  { id: "parttime", label: "Part-time" },
+  { id: "groups", label: "Groups" },
+  { id: "mentoring", label: "Mentoring" },
+];
+
 interface NavigationBarProps {
   showNavLinks?: boolean; // 네비게이션 링크 표시 여부
+  navLinks?: { id: string; label: string }[]; // 커스텀 네비게이션 링크
 }
 
-export function NavigationBar({ showNavLinks = true }: NavigationBarProps = {}) {
+export function NavigationBar({ showNavLinks = true, navLinks: customNavLinks }: NavigationBarProps = {}) {
   const [activeSection, setActiveSection] = useState("");
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const { isAdmin } = useAdmin();
+
+  const navLinks = customNavLinks || defaultNavLinks;
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -52,7 +69,7 @@ export function NavigationBar({ showNavLinks = true }: NavigationBarProps = {}) 
     });
 
     return () => observers.forEach((obs) => obs.disconnect());
-  }, []);
+  }, [navLinks]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -125,15 +142,7 @@ export function NavigationBar({ showNavLinks = true }: NavigationBarProps = {}) 
                   transition={{ delay: 0.2 }}
                 >
                   <a
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-500 hover:text-gray-900 transition-colors"
-                  >
-                    <Github className="w-4 h-4" />
-                  </a>
-                  <a
-                    href="https://linkedin.com"
+                    href="https://linkedin.com/in/crystal0224"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-500 hover:text-gray-900 transition-colors"
@@ -141,7 +150,7 @@ export function NavigationBar({ showNavLinks = true }: NavigationBarProps = {}) 
                     <Linkedin className="w-4 h-4" />
                   </a>
                   <a
-                    href="mailto:your@email.com"
+                    href="mailto:aaaaa124@naver.com"
                     className="text-gray-500 hover:text-gray-900 transition-colors"
                   >
                     <Mail className="w-4 h-4" />
@@ -178,15 +187,7 @@ export function NavigationBar({ showNavLinks = true }: NavigationBarProps = {}) 
                       </nav>
                       <div className="mt-8 pt-6 border-t border-gray-200 flex gap-4 px-4">
                         <a
-                          href="https://github.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-gray-900 transition-colors"
-                        >
-                          <Github className="w-5 h-5" />
-                        </a>
-                        <a
-                          href="https://linkedin.com"
+                          href="https://linkedin.com/in/crystal0224"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-gray-500 hover:text-gray-900 transition-colors"
@@ -194,7 +195,7 @@ export function NavigationBar({ showNavLinks = true }: NavigationBarProps = {}) 
                           <Linkedin className="w-5 h-5" />
                         </a>
                         <a
-                          href="mailto:your@email.com"
+                          href="mailto:aaaaa124@naver.com"
                           className="text-gray-500 hover:text-gray-900 transition-colors"
                         >
                           <Mail className="w-5 h-5" />

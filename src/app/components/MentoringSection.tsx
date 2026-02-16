@@ -34,16 +34,16 @@ export function MentoringSection() {
     setIsModalOpen(true);
   };
 
-  const handleSave = (data: MentoringExperience) => {
+  const handleSave = async (data: MentoringExperience) => {
     if (editingItem) {
-      mentoring.update(editingItem._id, data);
+      await mentoring.update(editingItem._id, data);
     } else {
-      mentoring.add(data);
+      await mentoring.add(data);
     }
   };
 
-  const handleDelete = (id: string) => {
-    mentoring.remove(id);
+  const handleDelete = async (id: string) => {
+    await mentoring.remove(id);
   };
 
   return (
@@ -58,11 +58,11 @@ export function MentoringSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            멘토링
+            멘토링 & 교육 경험
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-6" />
           <p className="text-lg text-gray-600">
-            {mentoring.items.length}개 멘토링 경험
+            {mentoring.items.length}개 멘토링 & 교육 경험
           </p>
         </motion.div>
 

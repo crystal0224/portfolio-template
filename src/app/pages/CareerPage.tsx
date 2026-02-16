@@ -1,11 +1,10 @@
 import { motion } from "motion/react";
-import { NavigationBar } from "../components/NavigationBar";
+import { NavigationBar, careerNavLinks } from "../components/NavigationBar";
 import { ExperienceSection } from "../components/ExperienceSection";
 import { WorkProjectsSection } from "../components/WorkProjectsSection";
 import { EducationSection } from "../components/EducationSection";
 import { CertificationsSection } from "../components/CertificationsSection";
 import { PublicationsSection } from "../components/PublicationsSection";
-import { SkillsSection } from "../components/SkillsSection";
 import { AwardsSection } from "../components/AwardsSection";
 import { AcademicProjectsSection } from "../components/AcademicProjectsSection";
 import { TeachingSection } from "../components/TeachingSection";
@@ -17,7 +16,7 @@ import { ArrowLeft } from "lucide-react";
 export function CareerPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <NavigationBar navLinks={careerNavLinks} />
 
       {/* Page Header */}
       <section className="py-4 bg-white border-b border-gray-200">
@@ -39,7 +38,6 @@ export function CareerPage() {
         <EducationSection />
         <CertificationsSection />
         <PublicationsSection />
-        <SkillsSection />
         <AwardsSection />
         <AcademicProjectsSection />
         <TeachingSection />
@@ -51,10 +49,7 @@ export function CareerPage() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8 mt-12">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-gray-400">
-            © 2026 Portfolio. 모든 작업물은 해당 저작권자의 소유입니다.
-          </p>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-gray-500">
             Last Updated: {new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         </div>

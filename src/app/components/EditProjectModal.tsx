@@ -5,8 +5,8 @@ import { PortfolioItem } from "./PortfolioCard";
 interface EditProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
-  project: PortfolioItem;
-  onSave: (updatedProject: PortfolioItem) => void;
+  project?: PortfolioItem;
+  onSave: (updatedProject: PortfolioItem) => Promise<void> | void;
   onDelete?: (projectId: string) => void;
 }
 
@@ -17,47 +17,102 @@ export function EditProjectModal({
   onSave,
   onDelete
 }: EditProjectModalProps) {
-  const [title, setTitle] = useState(project.title);
-  const [description, setDescription] = useState(project.description);
-  const [tags, setTags] = useState(project.tags.join(", "));
-  const [isProtected, setIsProtected] = useState(project.protected || false);
-  const [problemStatement, setProblemStatement] = useState(project.problemStatement || "");
-  const [technicalDetails, setTechnicalDetails] = useState((project.technicalDetails || []).join("\n"));
-  const [impact, setImpact] = useState(project.impact || "");
-  const [futureImprovements, setFutureImprovements] = useState((project.futureImprovements || []).join("\n"));
+  const isEditMode = !!project;
+  const [title, setTitle] = useState(project?.title || "");
+  const [description, setDescription] = useState(project?.description || "");
+  const [domain, setDomain] = useState(project?.domain || "");
+  const [tags, setTags] = useState(project?.tags.join(", ") || "");
+  const [isProtected, setIsProtected] = useState(project?.protected || false);
+  const [problemStatement, setProblemStatement] = useState(project?.problemStatement || "");
+  const [technicalDetails, setTechnicalDetails] = useState((project?.technicalDetails || []).join("\n"));
+  const [impact, setImpact] = useState(project?.impact || "");
+  const [futureImprovements, setFutureImprovements] = useState((project?.futureImprovements || []).join("\n"));
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      setTitle(project.title);
-      setDescription(project.description);
-      setTags(project.tags.join(", "));
-      setIsProtected(project.protected || false);
-      setProblemStatement(project.problemStatement || "");
-      setTechnicalDetails((project.technicalDetails || []).join("\n"));
-      setImpact(project.impact || "");
-      setFutureImprovements((project.futureImprovements || []).join("\n"));
+      if (project) {
+        // Edit mode: populate with existing data
+        setTitle(project.title);
+        setDescription(project.description);
+        setDomain(project.domain || "");
+        setTags(project.tags.join(", "));
+        setIsProtected(project.protected || false);
+        setProblemStatement(project.problemStatement || "");
+        setTechnicalDetails((project.technicalDetails || []).join("\n"));
+        setImpact(project.impact || "");
+        setFutureImprovements((project.futureImprovements || []).join("\n"));
+      } else {
+        // Add mode: reset to empty
+        setTitle("");
+        setDescription("");
+        setDomain("");
+        setTags("");
+        setIsProtected(false);
+        setProblemStatement("");
+        setTechnicalDetails("");
+        setImpact("");
+        setFutureImprovements("");
+      }
+      setShowDeleteConfirm(false);
     }
   }, [isOpen, project]);
 
-  const handleSave = () => {
-    const updatedProject: PortfolioItem = {
-      ...project,
-      title: title.trim(),
-      description: description.trim(),
-      tags: tags.split(",").map(t => t.trim()).filter(t => t),
-      protected: isProtected,
-      problemStatement: problemStatement.trim() || undefined,
-      technicalDetails: technicalDetails.trim() ? technicalDetails.split("\n").map(s => s.trim()).filter(s => s) : undefined,
-      impact: impact.trim() || undefined,
-      futureImprovements: futureImprovements.trim() ? futureImprovements.split("\n").map(s => s.trim()).filter(s => s) : undefined,
-    };
-    onSave(updatedProject);
-    onClose();
+  const handleSave = async () => {
+    // Validation
+    if (!title.trim()) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+    if (!description.trim()) {
+      alert("설명을 입력해주세요.");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const projectData: PortfolioItem = isEditMode && project ? {
+        ...project,
+        title: title.trim(),
+        description: description.trim(),
+        domain: domain as any,
+        tags: tags.split(",").map(t => t.trim()).filter(t => t),
+        protected: isProtected,
+        problemStatement: problemStatement.trim() || undefined,
+        technicalDetails: technicalDetails.trim() ? technicalDetails.split("\n").map(s => s.trim()).filter(s => s) : undefined,
+        impact: impact.trim() || undefined,
+        futureImprovements: futureImprovements.trim() ? futureImprovements.split("\n").map(s => s.trim()).filter(s => s) : undefined,
+      } : {
+        id: `project-${Date.now()}`,
+        title: title.trim(),
+        description: description.trim(),
+        category: "projects" as const,
+        domain: domain as any,
+        platform: "Custom",
+        image: "/placeholder.png",
+        tags: tags.split(",").map(t => t.trim()).filter(t => t),
+        links: {},
+        date: new Date().toISOString().split('T')[0].slice(0, 7).replace('-', '.'),
+        protected: isProtected,
+        problemStatement: problemStatement.trim() || undefined,
+        technicalDetails: technicalDetails.trim() ? technicalDetails.split("\n").map(s => s.trim()).filter(s => s) : undefined,
+        impact: impact.trim() || undefined,
+        futureImprovements: futureImprovements.trim() ? futureImprovements.split("\n").map(s => s.trim()).filter(s => s) : undefined,
+      };
+
+      await onSave(projectData);
+      onClose();
+    } catch (error) {
+      console.error("Save failed:", error);
+      alert("저장에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleDelete = () => {
-    if (onDelete) {
+    if (onDelete && project) {
       onDelete(project.id);
       onClose();
       setShowDeleteConfirm(false);
@@ -77,11 +132,13 @@ export function EditProjectModal({
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900">
-                프로젝트 편집
+                {isEditMode ? "프로젝트 편집" : "새 프로젝트 추가"}
               </h3>
-              <p className="text-sm text-gray-600 mt-1">
-                {project.platform} · {project.id}
-              </p>
+              {isEditMode && project && (
+                <p className="text-sm text-gray-600 mt-1">
+                  {project.platform} · {project.id}
+                </p>
+              )}
             </div>
           </div>
           <button
@@ -121,6 +178,25 @@ export function EditProjectModal({
             <p className="text-xs text-gray-500 mt-1">
               {description.length} 자
             </p>
+          </div>
+
+          {/* Domain */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              도메인 유형
+            </label>
+            <select
+              value={domain}
+              onChange={(e) => setDomain(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">선택 안함</option>
+              <option value="hr-analytics">진단/분석</option>
+              <option value="assessment">평가/코칭</option>
+              <option value="ai-tools">AI 도구</option>
+              <option value="workshop">워크샵</option>
+              <option value="education">교육</option>
+            </select>
           </div>
 
           {/* Tags */}
@@ -224,7 +300,7 @@ export function EditProjectModal({
 
         {/* Buttons */}
         <div className="flex gap-3 pt-6 mt-6 border-t border-gray-200">
-          {onDelete && (
+          {isEditMode && onDelete && (
             <button
               onClick={() => setShowDeleteConfirm(true)}
               className="px-4 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors flex items-center gap-2"
@@ -241,10 +317,11 @@ export function EditProjectModal({
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+            disabled={isSaving}
+            className="flex-1 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Save className="w-4 h-4" />
-            저장
+            {isSaving ? "저장 중..." : (isEditMode ? "저장" : "추가")}
           </button>
         </div>
       </div>

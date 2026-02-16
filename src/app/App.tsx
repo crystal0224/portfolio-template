@@ -5,23 +5,28 @@ import { FilterBar } from "./components/FilterBar";
 import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
 import { portfolioData as originalData } from "./data/portfolioData";
 import { useFirestore, FirestoreItem } from "./hooks/useFirestore";
-import { AdminProvider } from "./contexts/AdminContext";
+import { AdminProvider, useAdmin } from "./contexts/AdminContext";
 import { CareerDataProvider } from "./contexts/CareerDataContext";
 import { CareerPage } from "./pages/CareerPage";
 import { MigratePage } from "./pages/MigratePage";
 import { AdminLoginModal } from "./components/AdminLoginModal";
+import { EditProjectModal } from "./components/EditProjectModal";
+import { AddItemButton } from "./components/career/AddItemButton";
 import { ArrowRight } from "lucide-react";
 
 function AppContent() {
+  const { isAdmin } = useAdmin();
   const [currentPage, setCurrentPage] = useState<"home" | "career" | "migrate">("home");
   const [activeDomain, setActiveDomain] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
 
   // Firebase Firestore for portfolio items
   const {
     items: firestoreItems,
     loading,
+    addItem,
     updateItem,
     deleteItem,
   } = useFirestore<PortfolioItem & FirestoreItem>('portfolio_items', { orderByField: 'order' });
@@ -55,16 +60,40 @@ function AppContent() {
     // Find the Firestore document by matching the project id
     const firestoreDoc = firestoreItems.find(item => item.id === updatedProject.id);
     if (firestoreDoc) {
-      await updateItem(firestoreDoc._id, {
-        title: updatedProject.title,
-        description: updatedProject.description,
-        tags: updatedProject.tags,
-        protected: updatedProject.protected,
-        problemStatement: updatedProject.problemStatement,
-        technicalDetails: updatedProject.technicalDetails,
-        impact: updatedProject.impact,
-        futureImprovements: updatedProject.futureImprovements,
-      });
+      try {
+        await updateItem(firestoreDoc._id, {
+          title: updatedProject.title,
+          description: updatedProject.description,
+          domain: updatedProject.domain,
+          tags: updatedProject.tags,
+          protected: updatedProject.protected,
+          problemStatement: updatedProject.problemStatement,
+          technicalDetails: updatedProject.technicalDetails,
+          impact: updatedProject.impact,
+          futureImprovements: updatedProject.futureImprovements,
+        });
+        console.log('✅ Firebase update successful:', firestoreDoc._id);
+      } catch (error) {
+        console.error('❌ Firebase update failed:', error);
+        alert('저장 실패: ' + (error instanceof Error ? error.message : String(error)));
+      }
+    } else {
+      console.error('❌ Document not found for project:', updatedProject.id);
+    }
+  };
+
+  // Add new project to Firebase
+  const handleProjectAdd = async (newProject: PortfolioItem) => {
+    try {
+      const order = firestoreItems.length;
+      await addItem({
+        ...newProject,
+        order,
+      } as any);
+      console.log('✅ Project added successfully');
+    } catch (error) {
+      console.error('❌ Failed to add project:', error);
+      alert('프로젝트 추가 실패: ' + (error instanceof Error ? error.message : String(error)));
     }
   };
 
@@ -111,12 +140,13 @@ function AppContent() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Tech & Side Projects</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-6" />
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-600 mb-2">
               개인 프로젝트 및 기술 포트폴리오
             </p>
-            <span className="inline-block mt-3 px-4 py-1.5 bg-gradient-to-r from-blue-50 to-purple-50 text-sm font-medium text-blue-700 rounded-full border border-blue-200">
-              선별된 대표 프로젝트 모음
-            </span>
+            <p className="text-sm text-gray-500 max-w-4xl mx-auto leading-relaxed">
+              Canva, Google Sheets/Apps Script, Google AI Studio, GPTs, 로컬 Python 프로그램 등은 제외하였습니다.<br />
+              API 과금 방지를 위해 일부 프로젝트는 잠금 처리하였으며, 필요 시 공유 가능합니다.
+            </p>
           </div>
 
           <FilterBar
@@ -128,7 +158,7 @@ function AppContent() {
 
           <div className="mt-8">
             {filteredItems.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                 {filteredItems.map((item, index) => (
                   <PortfolioCard
                     key={item.id}
@@ -147,6 +177,12 @@ function AppContent() {
               </div>
             )}
           </div>
+
+          {isAdmin && (
+            <div className="mt-8 flex justify-center">
+              <AddItemButton onClick={() => setIsAddProjectModalOpen(true)} label="새 프로젝트 추가" />
+            </div>
+          )}
         </div>
       </section>
 
@@ -172,10 +208,7 @@ function AppContent() {
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <p className="text-center text-gray-600 text-sm">
-            © 2026 Portfolio. 모든 작업물은 해당 저작권자의 소유입니다.
-          </p>
-          <p className="text-center text-gray-500 text-xs mt-2">
+          <p className="text-center text-gray-500 text-xs">
             Last Updated: {new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         </div>
@@ -185,6 +218,13 @@ function AppContent() {
       <AdminLoginModal
         isOpen={isAdminModalOpen}
         onClose={() => setIsAdminModalOpen(false)}
+      />
+
+      {/* Add Project Modal */}
+      <EditProjectModal
+        isOpen={isAddProjectModalOpen}
+        onClose={() => setIsAddProjectModalOpen(false)}
+        onSave={handleProjectAdd}
       />
     </div>
   );

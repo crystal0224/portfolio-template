@@ -43,17 +43,16 @@ interface PortfolioCardProps {
   onDelete?: (projectId: string) => void;
 }
 
-const platformColors = {
-  "HuggingFace": "bg-yellow-100 text-yellow-800",
-  "Netlify": "bg-teal-100 text-teal-800",
-  "Vercel": "bg-black text-white",
-  "GitHub": "bg-gray-100 text-gray-800",
-  "Medium": "bg-green-100 text-green-800",
-  "Default": "bg-blue-100 text-blue-800"
+const domainConfig = {
+  "hr-analytics": { label: "진단/분석", color: "bg-blue-100 text-blue-700" },
+  "assessment": { label: "평가/코칭", color: "bg-green-100 text-green-700" },
+  "ai-tools": { label: "AI 도구", color: "bg-purple-100 text-purple-700" },
+  "workshop": { label: "워크샵", color: "bg-orange-100 text-orange-700" },
+  "education": { label: "교육", color: "bg-teal-100 text-teal-700" }
 };
 
 export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardProps) {
-  const platformColor = platformColors[item.platform as keyof typeof platformColors] || platformColors["Default"];
+  const domainInfo = item.domain ? domainConfig[item.domain] : null;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -88,33 +87,30 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
   return (
     <>
     <motion.div
-      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-200"
+      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-200 flex flex-col h-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
     >
       {/* Content */}
-      <div className="p-5">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
-              {item.code && (
-                <span className="px-2 py-0.5 rounded-md text-xs font-mono font-semibold bg-indigo-100 text-indigo-800">
-                  {item.code}
-                </span>
-              )}
-              <h3 className="font-semibold text-lg text-gray-900">
-                {item.title}
-              </h3>
-              {item.platform && (
-                <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${platformColor}`}>
-                  {item.platform}
-                </span>
-              )}
-            </div>
-            <p className="text-xs text-gray-500">{item.date}</p>
+      <div className="p-5 flex flex-col h-full">
+        {/* Badge, Date, and Buttons Line */}
+        <div className="flex items-center justify-between gap-2 mb-1.5">
+          <div className="flex items-center gap-2">
+            {item.code && (
+              <span className="px-2 py-0.5 rounded-md text-xs font-mono font-semibold bg-indigo-100 text-indigo-800">
+                {item.code}
+              </span>
+            )}
+            {domainInfo && (
+              <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${domainInfo.color}`}>
+                {domainInfo.label}
+              </span>
+            )}
           </div>
-          <div className="flex items-center gap-1 ml-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-xs text-gray-500">{item.date}</span>
+            <div className="flex items-center gap-1">
             {item.links.live && (
               item.protected && !isAuthenticated && !isAdmin ? (
                 <button
@@ -187,35 +183,27 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
                 <Edit2 className="w-4 h-4" />
               </button>
             )}
+            </div>
           </div>
         </div>
 
-        <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+        {/* Title Line */}
+        <h3 className="font-semibold text-lg text-gray-900 mb-3">
+          {item.title}
+        </h3>
+
+        <p className="text-sm text-gray-600 mb-4 line-clamp-4">
           {item.description}
         </p>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {item.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md"
-            >
-              {tag}
-            </span>
-          ))}
-          {item.tags.length > 3 && (
-            <span className="px-2 py-1 text-gray-400 text-xs">
-              +{item.tags.length - 3}
-            </span>
-          )}
-        </div>
+        {/* Spacer to push button to bottom */}
+        <div className="flex-grow"></div>
 
         {/* Expand/Collapse Button */}
         {hasDetails && (
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full flex items-center justify-center gap-1 py-1.5 text-xs text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+            className="w-full flex items-center justify-center gap-1 py-2 text-xs font-medium text-gray-600 bg-gray-50 hover:bg-blue-50 hover:text-blue-600 border border-gray-200 hover:border-blue-300 rounded-md transition-all"
           >
             <span>{isExpanded ? "접기" : "자세히 보기"}</span>
             <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
@@ -232,25 +220,25 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="pt-3 mt-2 border-t border-gray-100 space-y-3">
+              <div className="pt-4 mt-3 border-t border-gray-200 space-y-4 font-['Pretendard',_'Apple_SD_Gothic_Neo',_sans-serif]">
                 {item.problemStatement && (
-                  <div>
-                    <h4 className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                  <div className="p-3 bg-blue-50 rounded-lg">
+                    <h4 className="text-xs font-bold text-gray-800 mb-1.5 flex items-center gap-1.5 tracking-tight">
                       <span>💡</span> 왜 만들었나?
                     </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed">{item.problemStatement}</p>
+                    <p className="text-xs text-gray-700 leading-normal tracking-tight">{item.problemStatement}</p>
                   </div>
                 )}
 
                 {item.technicalDetails && item.technicalDetails.length > 0 && (
-                  <div>
-                    <h4 className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                  <div className="p-3 bg-purple-50 rounded-lg">
+                    <h4 className="text-xs font-bold text-gray-800 mb-1.5 flex items-center gap-1.5 tracking-tight">
                       <span>🔧</span> 기술적 구현
                     </h4>
-                    <ul className="space-y-0.5">
+                    <ul className="space-y-1">
                       {item.technicalDetails.map((detail, i) => (
-                        <li key={i} className="text-xs text-gray-600 leading-relaxed flex items-start gap-1.5">
-                          <span className="text-gray-400 mt-0.5 shrink-0">•</span>
+                        <li key={i} className="text-xs text-gray-700 leading-normal tracking-tight flex items-start gap-2">
+                          <span className="text-purple-400 mt-0.5 shrink-0">•</span>
                           <span>{detail}</span>
                         </li>
                       ))}
@@ -259,23 +247,23 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
                 )}
 
                 {item.impact && (
-                  <div>
-                    <h4 className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                  <div className="p-3 bg-green-50 rounded-lg">
+                    <h4 className="text-xs font-bold text-gray-800 mb-1.5 flex items-center gap-1.5 tracking-tight">
                       <span>📊</span> 성과
                     </h4>
-                    <p className="text-xs text-gray-600 leading-relaxed">{item.impact}</p>
+                    <p className="text-xs text-gray-700 leading-normal tracking-tight">{item.impact}</p>
                   </div>
                 )}
 
                 {item.futureImprovements && item.futureImprovements.length > 0 && (
-                  <div>
-                    <h4 className="text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
+                  <div className="p-3 bg-amber-50 rounded-lg">
+                    <h4 className="text-xs font-bold text-gray-800 mb-1.5 flex items-center gap-1.5 tracking-tight">
                       <span>🚀</span> 향후 계획
                     </h4>
-                    <ul className="space-y-0.5">
+                    <ul className="space-y-1">
                       {item.futureImprovements.map((improvement, i) => (
-                        <li key={i} className="text-xs text-gray-600 leading-relaxed flex items-start gap-1.5">
-                          <span className="text-gray-400 mt-0.5 shrink-0">•</span>
+                        <li key={i} className="text-xs text-gray-700 leading-normal tracking-tight flex items-start gap-2">
+                          <span className="text-amber-400 mt-0.5 shrink-0">•</span>
                           <span>{improvement}</span>
                         </li>
                       ))}
