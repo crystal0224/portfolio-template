@@ -16,17 +16,26 @@ function AppContent() {
   // Load edited projects from LocalStorage
   useEffect(() => {
     const savedEdits = localStorage.getItem("portfolio_edits");
+    const deletedIds = localStorage.getItem("portfolio_deleted");
+    const deletedSet = deletedIds ? new Set(JSON.parse(deletedIds)) : new Set();
+
     if (savedEdits) {
       try {
         const edits = JSON.parse(savedEdits);
-        const updatedData = originalData.map(item => {
-          const editedItem = edits[item.id];
-          return editedItem ? { ...item, ...editedItem } : item;
-        });
+        const updatedData = originalData
+          .filter(item => !deletedSet.has(item.id)) // Filter out deleted items
+          .map(item => {
+            const editedItem = edits[item.id];
+            return editedItem ? { ...item, ...editedItem } : item;
+          });
         setPortfolioData(updatedData);
       } catch (error) {
         console.error("Failed to load portfolio edits:", error);
       }
+    } else if (deletedIds) {
+      // Only deleted items, no edits
+      const updatedData = originalData.filter(item => !deletedSet.has(item.id));
+      setPortfolioData(updatedData);
     }
   }, []);
 
@@ -47,6 +56,18 @@ function AppContent() {
       protected: updatedProject.protected,
     };
     localStorage.setItem("portfolio_edits", JSON.stringify(edits));
+  };
+
+  // Delete project
+  const handleProjectDelete = (projectId: string) => {
+    // Update state - remove from display
+    setPortfolioData(prev => prev.filter(item => item.id !== projectId));
+
+    // Save to LocalStorage
+    const deletedIds = localStorage.getItem("portfolio_deleted");
+    const deletedSet = deletedIds ? new Set(JSON.parse(deletedIds)) : new Set();
+    deletedSet.add(projectId);
+    localStorage.setItem("portfolio_deleted", JSON.stringify(Array.from(deletedSet)));
   };
 
   // Filter items based on category and search
@@ -99,6 +120,7 @@ function AppContent() {
                 item={item}
                 index={index}
                 onEdit={handleProjectUpdate}
+                onDelete={handleProjectDelete}
               />
             ))}
           </div>

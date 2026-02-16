@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Edit3, Save, X } from "lucide-react";
+import { Edit3, Save, X, Trash2 } from "lucide-react";
 import { PortfolioItem } from "./PortfolioCard";
 
 interface EditProjectModalProps {
@@ -7,18 +7,21 @@ interface EditProjectModalProps {
   onClose: () => void;
   project: PortfolioItem;
   onSave: (updatedProject: PortfolioItem) => void;
+  onDelete?: (projectId: string) => void;
 }
 
 export function EditProjectModal({
   isOpen,
   onClose,
   project,
-  onSave
+  onSave,
+  onDelete
 }: EditProjectModalProps) {
   const [title, setTitle] = useState(project.title);
   const [description, setDescription] = useState(project.description);
   const [tags, setTags] = useState(project.tags.join(", "));
   const [isProtected, setIsProtected] = useState(project.protected || false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -39,6 +42,14 @@ export function EditProjectModal({
     };
     onSave(updatedProject);
     onClose();
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(project.id);
+      onClose();
+      setShowDeleteConfirm(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -141,6 +152,15 @@ export function EditProjectModal({
 
         {/* Buttons */}
         <div className="flex gap-3 pt-6 mt-6 border-t border-gray-200">
+          {onDelete && (
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="px-4 py-2 text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors flex items-center gap-2"
+            >
+              <Trash2 className="w-4 h-4" />
+              삭제
+            </button>
+          )}
           <button
             onClick={onClose}
             className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
@@ -156,6 +176,46 @@ export function EditProjectModal({
           </button>
         </div>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      {showDeleteConfirm && (
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-xl flex items-center justify-center p-4 z-10">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full shadow-2xl">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="p-2 bg-red-100 rounded-lg">
+                <Trash2 className="w-5 h-5 text-red-600" />
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold text-gray-900">프로젝트 삭제</h4>
+                <p className="text-sm text-gray-600 mt-1">정말로 이 프로젝트를 삭제하시겠습니까?</p>
+              </div>
+            </div>
+
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
+              <p className="text-sm text-red-800">
+                <strong>{project.title}</strong>
+                <br />
+                포트폴리오에서 제거됩니다. (실제 파일은 삭제되지 않음)
+              </p>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              >
+                취소
+              </button>
+              <button
+                onClick={handleDelete}
+                className="flex-1 px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

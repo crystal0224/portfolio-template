@@ -27,6 +27,7 @@ interface PortfolioCardProps {
   item: PortfolioItem;
   index: number;
   onEdit?: (updatedProject: PortfolioItem) => void;
+  onDelete?: (projectId: string) => void;
 }
 
 const platformColors = {
@@ -38,7 +39,7 @@ const platformColors = {
   "Default": "bg-blue-100 text-blue-800"
 };
 
-export function PortfolioCard({ item, index, onEdit }: PortfolioCardProps) {
+export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardProps) {
   const platformColor = platformColors[item.platform as keyof typeof platformColors] || platformColors["Default"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -199,6 +200,7 @@ export function PortfolioCard({ item, index, onEdit }: PortfolioCardProps) {
           onClose={() => setIsEditModalOpen(false)}
           project={item}
           onSave={onEdit}
+          onDelete={onDelete}
         />
       )}
     </motion.div>

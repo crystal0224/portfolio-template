@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { MapPin, Briefcase, Mail, GraduationCap, BookOpen } from "lucide-react";
 
-const profileImage = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800&h=1000&fit=crop";
+const profileImage = "/profile.png";
 
 export function HeroSection() {
   return (
