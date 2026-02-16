@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { ExternalLink, Github, Globe } from "lucide-react";
+import { ExternalLink, Github, Globe, Lock } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ProtectedLinkModal } from "./ProtectedLinkModal";
 
 export interface PortfolioItem {
   id: string;
@@ -16,6 +18,7 @@ export interface PortfolioItem {
     external?: string;
   };
   date: string;
+  protected?: boolean; // 유료 API 키 사용 프로젝트 보호
 }
 
 interface PortfolioCardProps {
@@ -34,8 +37,34 @@ const platformColors = {
 
 export function PortfolioCard({ item, index }: PortfolioCardProps) {
   const platformColor = platformColors[item.platform as keyof typeof platformColors] || platformColors["Default"];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Check authentication status from session storage
+  useEffect(() => {
+    if (item.protected) {
+      const authStatus = sessionStorage.getItem("portfolio_auth");
+      const authTime = sessionStorage.getItem("portfolio_auth_time");
+
+      if (authStatus === "true" && authTime) {
+        // Session expires after 24 hours
+        const elapsed = Date.now() - parseInt(authTime);
+        if (elapsed < 24 * 60 * 60 * 1000) {
+          setIsAuthenticated(true);
+        } else {
+          sessionStorage.removeItem("portfolio_auth");
+          sessionStorage.removeItem("portfolio_auth_time");
+        }
+      }
+    }
+  }, [item.protected]);
+
+  const handleAuthSuccess = () => {
+    setIsAuthenticated(true);
+  };
 
   return (
+    <>
     <motion.div
       className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-200 group"
       initial={{ opacity: 0, y: 20 }}
@@ -92,15 +121,25 @@ export function PortfolioCard({ item, index }: PortfolioCardProps) {
         {/* Links */}
         <div className="flex gap-2 pt-3 border-t border-gray-100">
           {item.links.live && (
-            <a
-              href={item.links.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors flex-1 justify-center"
-            >
-              <Globe className="w-4 h-4" />
-              <span>보기</span>
-            </a>
+            item.protected && !isAuthenticated ? (
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="flex items-center gap-1 px-3 py-2 bg-amber-600 text-white text-sm rounded-lg hover:bg-amber-700 transition-colors flex-1 justify-center"
+              >
+                <Lock className="w-4 h-4" />
+                <span>비밀번호 필요</span>
+              </button>
+            ) : (
+              <a
+                href={item.links.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors flex-1 justify-center"
+              >
+                <Globe className="w-4 h-4" />
+                <span>보기</span>
+              </a>
+            )
           )}
           {item.links.github && (
             <a
@@ -126,6 +165,17 @@ export function PortfolioCard({ item, index }: PortfolioCardProps) {
           )}
         </div>
       </div>
+
+      {/* Protected Link Modal */}
+      {item.protected && (
+        <ProtectedLinkModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={handleAuthSuccess}
+          projectTitle={item.title}
+        />
+      )}
     </motion.div>
+    </>
   );
 }

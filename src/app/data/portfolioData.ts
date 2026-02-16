@@ -14,6 +14,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/PandasAI",
     },
     date: "2024.09",
+    protected: true, // OpenAI API 키 사용
   },
   {
     id: "hf-topicmodeling",
@@ -79,6 +80,7 @@ export const portfolioData: PortfolioItem[] = [
       live: "https://huggingface.co/spaces/soojeongcrystal/hybridRAG",
     },
     date: "2024.09",
+    protected: true, // AI API 키 사용
   },
   {
     id: "hf-sunispell",
@@ -254,6 +256,7 @@ export const portfolioData: PortfolioItem[] = [
       github: "https://github.com/crystal0224/professor-interview-analysis",
     },
     date: "2026.02",
+    protected: true, // OpenAI API 키 사용
   },
   {
     id: "vc-claude-kg",
