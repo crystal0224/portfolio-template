@@ -8,11 +8,12 @@ import { useFirestore, FirestoreItem } from "./hooks/useFirestore";
 import { AdminProvider } from "./contexts/AdminContext";
 import { CareerDataProvider } from "./contexts/CareerDataContext";
 import { CareerPage } from "./pages/CareerPage";
+import { MigratePage } from "./pages/MigratePage";
 import { AdminLoginModal } from "./components/AdminLoginModal";
 import { ArrowRight } from "lucide-react";
 
 function AppContent() {
-  const [currentPage, setCurrentPage] = useState<"home" | "career">("home");
+  const [currentPage, setCurrentPage] = useState<"home" | "career" | "migrate">("home");
   const [activePlatform, setActivePlatform] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
@@ -34,6 +35,8 @@ function AppContent() {
       const hash = window.location.hash.slice(1); // Remove the #
       if (hash === "career") {
         setCurrentPage("career");
+      } else if (hash === "migrate") {
+        setCurrentPage("migrate");
       } else {
         setCurrentPage("home");
       }
@@ -85,6 +88,11 @@ function AppContent() {
   // Render career page if hash is #career
   if (currentPage === "career") {
     return <CareerPage />;
+  }
+
+  // Render migrate page if hash is #migrate
+  if (currentPage === "migrate") {
+    return <MigratePage />;
   }
 
   // Render home page
