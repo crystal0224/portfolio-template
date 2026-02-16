@@ -4,16 +4,28 @@ import { GraduationCap, Briefcase, BookOpen, Award, Target, Lightbulb } from "lu
 export function AboutSection() {
   const experiences = [
     {
-      period: "2019 - Present",
-      title: "SK아카데미 리더십진단팀",
+      period: "2023.05 - Present",
+      title: "SK Group - SK Academy",
       role: "Research Fellow",
-      description: "리더십 진단 및 분석 연구, People Analytics 기반 조직 효과성 향상 프로젝트 수행"
+      description: "Leadership Assessment Team | 리더십 진단 및 분석 연구, People Analytics 기반 조직 효과성 향상, 심리학·데이터 분석 기반 진단 도구 개발"
     },
     {
-      period: "2015 - 2019",
-      title: "서울대학교 인지심리학",
-      role: "박사 과정",
-      description: "인지심리학 전공, 학습자 질문 및 측정 방법론 연구"
+      period: "2018.08 - 2023.05",
+      title: "Samsung Global Research (전 삼성경제연구소)",
+      role: "Research Fellow",
+      description: "People Analytics Team | HR 데이터 기반 조직 분석 및 인사 의사결정 지원, 심리학·데이터 분석 기반 HR 솔루션 개발"
+    },
+    {
+      period: "2017.03 - 2018.06",
+      title: "MIDAS IT",
+      role: "Assistant Manager",
+      description: "행복기획팀 | 긍정의 조직문화 조성, 경영철학 연구(뇌신경과학·심리학·경영학), 온오프라인 콘텐츠 기획 및 실행, 이론서·대중서 출판(사람경영)"
+    },
+    {
+      period: "2014.03 - 2016.08",
+      title: "서울대학교 심리학과",
+      role: "대학원 조교 & 연구소 조교",
+      description: "학사 및 학술행사 관리, 청소년을 위한 심리학교실 운영, 연구소 행정업무"
     }
   ];
 
@@ -52,8 +64,8 @@ export function AboutSection() {
     },
     {
       icon: Award,
-      title: "서울대학교 인지심리학 박사",
-      description: "학습자 질문 및 측정 방법론 전문성"
+      title: "서울대학교 인지심리학 박사 (통합과정)",
+      description: "2011-2017 | GPA 4.20/4.30 | 학습자 질문 및 측정 방법론 전문성"
     },
     {
       icon: Briefcase,
