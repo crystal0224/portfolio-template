@@ -22,27 +22,15 @@ export function CareerPage() {
       <NavigationBar />
 
       {/* Page Header */}
-      <section className="pt-24 pb-12 bg-white border-b border-gray-200">
+      <section className="py-4 bg-white border-b border-gray-200">
         <div className="container mx-auto px-4">
           <a
             href="#"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>메인으로 돌아가기</span>
           </a>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              상세 경력
-            </h1>
-            <p className="text-xl text-gray-600">
-              전체 커리어 여정과 성과를 확인하세요
-            </p>
-          </motion.div>
         </div>
       </section>
 

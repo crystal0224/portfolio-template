@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Briefcase, GraduationCap, BookOpen, Linkedin, Phone, Mail } from "lucide-react";
+import { Briefcase, GraduationCap, BookOpen, Linkedin, Mail } from "lucide-react";
 
 const profileImage = import.meta.env.BASE_URL + "profile.png";
 
@@ -72,12 +72,12 @@ export function HeroSection({ onTitleDoubleClick }: HeroSectionProps = {}) {
               </div>
 
               <h1
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight cursor-pointer select-none"
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight cursor-pointer select-none"
                 onDoubleClick={onTitleDoubleClick}
                 title="관리자 로그인: 더블클릭"
               >
                 배수정
-                <span className="block text-2xl sm:text-3xl lg:text-4xl font-light text-gray-600 mt-4">
+                <span className="block text-xl sm:text-2xl lg:text-3xl font-light text-gray-600 mt-4">
                   Psychologist & People Analyst
                 </span>
               </h1>
@@ -139,7 +139,7 @@ export function HeroSection({ onTitleDoubleClick }: HeroSectionProps = {}) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="pt-6 space-y-3"
+              className="pt-6 flex items-center gap-6"
             >
               <div className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors">
                 <div className="p-2 rounded-lg bg-blue-50">
@@ -153,12 +153,6 @@ export function HeroSection({ onTitleDoubleClick }: HeroSectionProps = {}) {
                 >
                   linkedin.com/in/crystal0224
                 </a>
-              </div>
-              <div className="flex items-center gap-3 text-gray-700">
-                <div className="p-2 rounded-lg bg-green-50">
-                  <Phone className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="text-sm">010-4765-9568</span>
               </div>
               <div className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors">
                 <div className="p-2 rounded-lg bg-purple-50">
