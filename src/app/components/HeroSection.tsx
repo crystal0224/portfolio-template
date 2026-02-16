@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Briefcase, GraduationCap, BookOpen, Linkedin, Mail } from "lucide-react";
+import { Briefcase, GraduationCap, Linkedin, Mail } from "lucide-react";
 
 const profileImage = import.meta.env.BASE_URL + "profile.png";
 
@@ -117,17 +117,6 @@ export function HeroSection({ onTitleDoubleClick }: HeroSectionProps = {}) {
                     <div>
                       <div className="text-sm text-gray-500 mb-1">Education</div>
                       <div className="font-medium text-gray-900">서울대학교 인지심리학 박사</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="group">
-                  <div className="flex items-start gap-3">
-                    <div className="mt-1 p-2 rounded-lg bg-gradient-to-br from-pink-50 to-orange-50 group-hover:from-pink-100 group-hover:to-orange-100 transition-colors">
-                      <BookOpen className="w-4 h-4 text-pink-600" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-1">Publication</div>
-                      <div className="font-medium text-gray-900">『HR테크혁명』 공저</div>
                     </div>
                   </div>
                 </div>
