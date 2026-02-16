@@ -4,6 +4,7 @@ import { HeroSection } from "./components/HeroSection";
 import { FilterBar } from "./components/FilterBar";
 import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
 import { portfolioData as originalData } from "./data/portfolioData";
+import { useFirestore, FirestoreItem } from "./hooks/useFirestore";
 import { AdminProvider } from "./contexts/AdminContext";
 import { CareerDataProvider } from "./contexts/CareerDataContext";
 import { CareerPage } from "./pages/CareerPage";
@@ -14,8 +15,18 @@ function AppContent() {
   const [currentPage, setCurrentPage] = useState<"home" | "career">("home");
   const [activePlatform, setActivePlatform] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [portfolioData, setPortfolioData] = useState<PortfolioItem[]>(originalData);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+
+  // Firebase Firestore for portfolio items
+  const {
+    items: firestoreItems,
+    loading,
+    updateItem,
+    deleteItem,
+  } = useFirestore<PortfolioItem & FirestoreItem>('portfolio_items', { orderByField: 'order' });
+
+  // Use Firestore data when available, fall back to static data while loading
+  const portfolioData: PortfolioItem[] = loading ? originalData : firestoreItems;
 
   // Handle hash-based routing
   useEffect(() => {
@@ -36,61 +47,26 @@ function AppContent() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  // Load edited projects from LocalStorage
-  useEffect(() => {
-    const savedEdits = localStorage.getItem("portfolio_edits");
-    const deletedIds = localStorage.getItem("portfolio_deleted");
-    const deletedSet = deletedIds ? new Set(JSON.parse(deletedIds)) : new Set();
-
-    if (savedEdits) {
-      try {
-        const edits = JSON.parse(savedEdits);
-        const updatedData = originalData
-          .filter(item => !deletedSet.has(item.id)) // Filter out deleted items
-          .map(item => {
-            const editedItem = edits[item.id];
-            return editedItem ? { ...item, ...editedItem } : item;
-          });
-        setPortfolioData(updatedData);
-      } catch (error) {
-        console.error("Failed to load portfolio edits:", error);
-      }
-    } else if (deletedIds) {
-      // Only deleted items, no edits
-      const updatedData = originalData.filter(item => !deletedSet.has(item.id));
-      setPortfolioData(updatedData);
+  // Save project edits to Firebase
+  const handleProjectUpdate = async (updatedProject: PortfolioItem) => {
+    // Find the Firestore document by matching the project id
+    const firestoreDoc = firestoreItems.find(item => item.id === updatedProject.id);
+    if (firestoreDoc) {
+      await updateItem(firestoreDoc._id, {
+        title: updatedProject.title,
+        description: updatedProject.description,
+        tags: updatedProject.tags,
+        protected: updatedProject.protected,
+      });
     }
-  }, []);
-
-  // Save project edits
-  const handleProjectUpdate = (updatedProject: PortfolioItem) => {
-    // Update state
-    setPortfolioData(prev =>
-      prev.map(item => item.id === updatedProject.id ? updatedProject : item)
-    );
-
-    // Save to LocalStorage
-    const savedEdits = localStorage.getItem("portfolio_edits");
-    const edits = savedEdits ? JSON.parse(savedEdits) : {};
-    edits[updatedProject.id] = {
-      title: updatedProject.title,
-      description: updatedProject.description,
-      tags: updatedProject.tags,
-      protected: updatedProject.protected,
-    };
-    localStorage.setItem("portfolio_edits", JSON.stringify(edits));
   };
 
-  // Delete project
-  const handleProjectDelete = (projectId: string) => {
-    // Update state - remove from display
-    setPortfolioData(prev => prev.filter(item => item.id !== projectId));
-
-    // Save to LocalStorage
-    const deletedIds = localStorage.getItem("portfolio_deleted");
-    const deletedSet = deletedIds ? new Set(JSON.parse(deletedIds)) : new Set();
-    deletedSet.add(projectId);
-    localStorage.setItem("portfolio_deleted", JSON.stringify(Array.from(deletedSet)));
+  // Delete project from Firebase
+  const handleProjectDelete = async (projectId: string) => {
+    const firestoreDoc = firestoreItems.find(item => item.id === projectId);
+    if (firestoreDoc) {
+      await deleteItem(firestoreDoc._id);
+    }
   };
 
   // Filter items based on platform and search

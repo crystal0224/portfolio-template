@@ -143,10 +143,9 @@ export function EditProjectModal({
         </div>
 
         {/* Info */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mt-4">
-          <p className="text-sm text-yellow-800">
-            💡 변경사항은 LocalStorage에 저장되며, 실제 파일은 수정되지 않습니다.
-            영구적으로 적용하려면 코드를 직접 수정해야 합니다.
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-4">
+          <p className="text-sm text-blue-800">
+            변경사항은 Firebase에 저장되며 실시간으로 반영됩니다.
           </p>
         </div>
 
@@ -195,7 +194,7 @@ export function EditProjectModal({
               <p className="text-sm text-red-800">
                 <strong>{project.title}</strong>
                 <br />
-                포트폴리오에서 제거됩니다. (실제 파일은 삭제되지 않음)
+                Firebase에서 영구적으로 삭제됩니다.
               </p>
             </div>
 
