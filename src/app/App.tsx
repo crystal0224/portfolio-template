@@ -1,10 +1,20 @@
 import { useState, useMemo, useEffect } from "react";
-import { PortfolioHeader } from "./components/PortfolioHeader";
+import { NavigationBar } from "./components/NavigationBar";
 import { HeroSection } from "./components/HeroSection";
-import { AboutSection } from "./components/AboutSection";
+import { OverviewSection } from "./components/OverviewSection";
+import { ExperienceSection } from "./components/ExperienceSection";
+import { WorkProjectsSection } from "./components/WorkProjectsSection";
 import { StatsSection } from "./components/StatsSection";
 import { FilterBar } from "./components/FilterBar";
 import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
+import { EducationSection } from "./components/EducationSection";
+import { CertificationsSection } from "./components/CertificationsSection";
+import { PublicationsSection } from "./components/PublicationsSection";
+import { SkillsSection } from "./components/SkillsSection";
+import { AwardsSection } from "./components/AwardsSection";
+import { AcademicProjectsSection } from "./components/AcademicProjectsSection";
+import { TeachingSection } from "./components/TeachingSection";
+import { SGRDetailSection } from "./components/SGRDetailSection";
 import { portfolioData as originalData } from "./data/portfolioData";
 import { AdminProvider } from "./contexts/AdminContext";
 
@@ -95,43 +105,75 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <PortfolioHeader />
+      <NavigationBar />
 
       <HeroSection />
 
-      <AboutSection />
+      <OverviewSection />
+
+      <ExperienceSection />
+
+      <WorkProjectsSection />
 
       <StatsSection stats={stats} />
-      
-      <FilterBar
-        activeCategory={activeCategory}
-        onCategoryChange={setActiveCategory}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
 
-      {/* Portfolio Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {filteredItems.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item, index) => (
-              <PortfolioCard
-                key={item.id}
-                item={item}
-                index={index}
-                onEdit={handleProjectUpdate}
-                onDelete={handleProjectDelete}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20">
-            <p className="text-gray-500 text-lg">
-              {searchQuery ? `"${searchQuery}"에 대한 검색 결과가 없습니다.` : "해당 카테고리에 항목이 없습니다."}
+      {/* Tech Projects Section */}
+      <section id="tech-projects" className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Tech & Side Projects</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-6" />
+            <p className="text-lg text-gray-600">
+              개인 프로젝트 및 기술 포트폴리오
             </p>
           </div>
-        )}
-      </main>
+
+          <FilterBar
+            activeCategory={activeCategory}
+            onCategoryChange={setActiveCategory}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
+
+          <div className="mt-8">
+            {filteredItems.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredItems.map((item, index) => (
+                  <PortfolioCard
+                    key={item.id}
+                    item={item}
+                    index={index}
+                    onEdit={handleProjectUpdate}
+                    onDelete={handleProjectDelete}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20">
+                <p className="text-gray-500 text-lg">
+                  {searchQuery ? `"${searchQuery}"에 대한 검색 결과가 없습니다.` : "해당 카테고리에 항목이 없습니다."}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <EducationSection />
+
+      <CertificationsSection />
+
+      <PublicationsSection />
+
+      <SkillsSection />
+
+      <AwardsSection />
+
+      <AcademicProjectsSection />
+
+      <TeachingSection />
+
+      <SGRDetailSection />
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 mt-20">
