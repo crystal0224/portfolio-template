@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { PortfolioHeader } from "./components/PortfolioHeader";
 import { HeroSection } from "./components/HeroSection";
+import { AboutSection } from "./components/AboutSection";
 import { StatsSection } from "./components/StatsSection";
 import { FilterBar } from "./components/FilterBar";
 import { PortfolioCard } from "./components/PortfolioCard";
@@ -36,9 +37,11 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <PortfolioHeader />
-      
+
       <HeroSection />
-      
+
+      <AboutSection />
+
       <StatsSection stats={stats} />
       
       <FilterBar
