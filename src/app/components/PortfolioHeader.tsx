@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Github, Linkedin, Mail, Twitter, Shield } from "lucide-react";
+import { Github, Linkedin, Mail, Twitter, Shield, RefreshCw } from "lucide-react";
 import { motion } from "motion/react";
 import { useAdmin } from "../contexts/AdminContext";
 import { AdminLoginModal } from "./AdminLoginModal";
+import { SyncProjectsModal } from "./SyncProjectsModal";
 
 export function PortfolioHeader() {
   const { isAdmin } = useAdmin();
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [isSyncModalOpen, setIsSyncModalOpen] = useState(false);
 
   return (
     <>
@@ -32,14 +34,26 @@ export function PortfolioHeader() {
                 Portfolio
               </h1>
               {isAdmin && (
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium"
-                >
-                  <Shield className="w-3 h-3" />
-                  <span>관리자</span>
-                </motion.div>
+                <>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium"
+                  >
+                    <Shield className="w-3 h-3" />
+                    <span>관리자</span>
+                  </motion.div>
+                  <motion.button
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    onClick={() => setIsSyncModalOpen(true)}
+                    className="flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
+                    title="프로젝트 동기화"
+                  >
+                    <RefreshCw className="w-3 h-3" />
+                    <span>동기화</span>
+                  </motion.button>
+                </>
               )}
             </div>
             <p className="text-sm text-gray-600 mt-1">작업물 & 기록 아카이브</p>
@@ -75,6 +89,21 @@ export function PortfolioHeader() {
     <AdminLoginModal
       isOpen={isAdminModalOpen}
       onClose={() => setIsAdminModalOpen(false)}
+    />
+
+    <SyncProjectsModal
+      isOpen={isSyncModalOpen}
+      onClose={() => setIsSyncModalOpen(false)}
+      onSync={async () => {
+        // TODO: Implement actual sync logic
+        // For now, show a message to use Claude directly
+        alert("동기화 기능을 사용하려면 채팅창에서 '프로젝트 동기화해줘'라고 요청해주세요!");
+        return [];
+      }}
+      onAdd={(projects) => {
+        console.log("Adding projects:", projects);
+        // TODO: Implement add logic
+      }}
     />
     </>
   );
