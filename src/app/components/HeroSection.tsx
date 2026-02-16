@@ -73,8 +73,8 @@ export function HeroSection() {
                 </span>
               </h1>
 
-              <p className="text-lg text-gray-600 leading-relaxed max-w-xl">
-                심리학을 베이스로 학습자 질문, 측정 및 분석 방법론, Tech 및 AI 활용에 관심이 많으며 
+              <p className="text-lg text-gray-600 leading-relaxed max-w-xl tracking-tight">
+                심리학을 베이스로 학습자 질문, 측정 및 분석 방법론, Tech 및 AI 활용에 관심이 많으며
                 HRM과 HRD를 교차한 경력으로 데이터 분석 영역을 확대해 나가고 있습니다.
               </p>
             </motion.div>
