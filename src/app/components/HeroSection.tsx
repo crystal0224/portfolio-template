@@ -96,7 +96,7 @@ export function HeroSection() {
                       <div className="text-sm text-gray-500 mb-1">Current Position</div>
                       <div className="font-medium text-gray-900 mb-2">SK아카데미 리더십진단팀</div>
                       <div className="text-sm text-gray-500 mb-0.5">Past</div>
-                      <div className="text-sm text-gray-700">삼성경제연구소 People Analytics 팀 (2018-2023)</div>
+                      <div className="text-sm text-gray-700">삼성경제연구소 People Analytics 팀</div>
                     </div>
                   </div>
                 </div>
