@@ -113,7 +113,7 @@ function AppContent() {
   // Render home page
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavigationBar />
+      <NavigationBar showNavLinks={false} />
       <HeroSection onTitleDoubleClick={() => setIsAdminModalOpen(true)} />
 
       {/* Tech Projects Section */}

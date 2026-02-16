@@ -8,6 +8,7 @@ import { useAdmin } from "../contexts/AdminContext";
 
 export interface PortfolioItem {
   id: string;
+  code?: string; // 프로젝트 코드 번호 (예: P001, P002)
   title: string;
   description: string;
   category: "projects" | "lectures" | "publications" | "articles";
@@ -82,6 +83,11 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2 flex-wrap">
+              {item.code && (
+                <span className="px-2 py-0.5 rounded-md text-xs font-mono font-semibold bg-indigo-100 text-indigo-800">
+                  {item.code}
+                </span>
+              )}
               <h3 className="font-semibold text-lg text-gray-900">
                 {item.title}
               </h3>

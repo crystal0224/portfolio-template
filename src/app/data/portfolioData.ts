@@ -4,6 +4,7 @@ export const portfolioData: PortfolioItem[] = [
   // === HuggingFace Spaces ===
   {
     id: "hf-pandasai",
+    code: "P001",
     title: "PandasAI 데이터 분석기 with RAG",
     description: "AI 기반 대화형 데이터 분석 플랫폼. PandasAI SmartDataframe과 RAG(Retrieval-Augmented Generation)를 결합하여 Excel/CSV 데이터를 자연어로 질의하고 분석합니다. OpenAI GPT 모델을 활용한 지능형 데이터 인사이트 제공 및 자동 시각화 기능을 지원합니다. ⭐ 인기 프로젝트 (좋아요 2개)",
     category: "projects",
@@ -18,6 +19,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-topicmodeling",
+    code: "P002",
     title: "토픽모델링 for SK",
     description: "CSV 데이터에서 한국어 토픽 모델을 생성하고 시각적 인사이트를 제공하는 고급 분석 도구. SK 그룹 맞춤형 토픽 모델링 솔루션입니다.",
     category: "projects",
@@ -32,6 +34,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-leaders",
+    code: "P003",
     title: "AI 업무 분석 Tool",
     description: "리더를 위한 AI 기반 워크플로우 분석 도구. 업무 프로세스를 분석하고 개선 방안을 제시합니다.",
     category: "projects",
@@ -46,6 +49,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-workredesign",
+    code: "P004",
     title: "Work Redesign Workshop",
     description: "AI 기반 업무 재설계 워크샵 플랫폼. Docker로 구현되어 확장 가능하고 안정적인 워크샵 환경을 제공합니다.",
     category: "projects",
@@ -60,6 +64,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-analysis",
+    code: "P005",
     title: "Integrated Analysis",
     description: "통합 데이터 분석 도구. 다양한 데이터 소스를 통합하여 종합적인 인사이트를 제공하는 Streamlit 기반 플랫폼입니다.",
     category: "projects",
@@ -74,6 +79,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-hybridrag",
+    code: "P006",
     title: "HybridRAG",
     description: "하이브리드 RAG (Retrieval-Augmented Generation) 시스템. 벡터 검색과 키워드 검색을 결합한 고급 AI 검색 솔루션입니다.",
     category: "projects",
@@ -88,6 +94,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-sunispell",
+    code: "P007",
     title: "Suni Spell Checker",
     description: "한국어 맞춤법 검사 도구. Gradio 인터페이스로 실시간 맞춤법 교정 및 제안을 제공합니다.",
     category: "projects",
@@ -102,6 +109,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-summarize",
+    code: "P008",
     title: "AI Summarizer",
     description: "AI 기반 텍스트 요약 도구. 긴 문서를 핵심 내용으로 압축하여 제공하는 자동 요약 시스템입니다.",
     category: "projects",
@@ -116,6 +124,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-rasch",
+    code: "P009",
     title: "Rasch Analysis Tool",
     description: "교육 평가를 위한 Rasch 모델 분석 도구. 문항 반응 이론(IRT)을 활용한 통계 분석 플랫폼입니다.",
     category: "projects",
@@ -130,6 +139,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "hf-academy",
+    code: "P010",
     title: "Academy Platform",
     description: "교육 리소스 관리 플랫폼. 학습 콘텐츠를 체계적으로 관리하고 제공하는 교육용 웹 애플리케이션입니다.",
     category: "projects",
@@ -146,6 +156,7 @@ export const portfolioData: PortfolioItem[] = [
   // === GitHub Projects ===
   {
     id: "gh-my-day1",
+    code: "P011",
     title: "My Day1 - Claude Code 온보딩 플러그인",
     description: "AI Native Camp 기반 비개발자 친화 Claude Code 온보딩 플러그인. 8가지 직업별 맞춤 학습(HR, 개발자, 디자이너, PM, 분석가 등), 150개 직무별 비유, 63개 동기부여 스토리로 구성된 Essential Path 제공. 터미널이 처음인 비개발자도 1~1.5시간 만에 실무 투입 가능하도록 설계. CLI를 Excel 수식, Figma 단축키 등 친숙한 개념으로 설명. ⭐ GitHub Star 3개",
     category: "projects",
@@ -161,6 +172,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-work-redesign",
+    code: "P012",
     title: "Work Redesign Platform",
     description: "SK 신임 팀장을 위한 AI 기반 업무 재설계 워크샵 플랫폼 (연 500명 타겟). 35분 내 업무 재설계 완료, 칸반 보드 중심의 직관적 UI, Claude AI 기반 지능형 분석 제공. Next.js 14 + TypeScript 프론트엔드, Express + Socket.io 백엔드, PostgreSQL + Redis 기반 실시간 협업 시스템. Docker 컨테이너화로 확장 가능한 아키텍처 구현. 자동화 도구 및 워크플로우 최적화 솔루션 내장.",
     category: "projects",
@@ -175,6 +187,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-org-report",
+    code: "P013",
     title: "Organizational Effectiveness Report",
     description: "조직 효과성 리포트 자동화 도구. Python을 활용한 데이터 분석 및 리포트 생성 자동화 시스템입니다.",
     category: "projects",
@@ -189,6 +202,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-leadership-report",
+    code: "P014",
     title: "AI 진단 리포트 자동 생성 시스템",
     description: "Flask 기반 웹 애플리케이션으로 Excel 데이터 업로드부터 AI 분석, PDF 리포트 생성까지 전 과정을 자동화. OpenAI GPT-4o-mini 모델을 활용한 지능형 데이터 분석 및 인사이트 생성, 병렬 처리 및 응답 캐시로 성능 최적화. WeasyPrint 기반 전문적인 PDF 리포트 자동 생성, matplotlib/seaborn으로 고해상도 차트 및 시각화 제공. 실시간 진행상황 모니터링, 자동 파일 정리, 보안 강화(파일 검증, 크기 제한) 기능 포함.",
     category: "projects",
@@ -203,6 +217,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-llama2",
+    code: "P015",
     title: "Llama 2 Chatbot Application",
     description: "Meta의 오픈소스 Llama 2 LLM을 활용한 대화형 챗봇 애플리케이션. Llama2-7B 모델(70억 파라미터)을 Andreessen Horowitz(a16z) 팀이 배포하고 Replicate 플랫폼에서 호스팅. Streamlit Community Cloud 배포를 위해 a16z 구현을 경량화하여 리팩토링. Python + Streamlit으로 구현된 사용자 친화적 인터페이스. 13B, 70B 등 더 큰 모델로 업그레이드 가능한 확장성 제공.",
     category: "projects",
@@ -217,6 +232,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-py-hanspell",
+    code: "P016",
     title: "Py-Hanspell - 한글 맞춤법 검사 라이브러리",
     description: "네이버 맞춤법 검사기를 활용한 파이썬 한글 맞춤법 검사 라이브러리. Python 2.7 및 3.4+ 모두 호환. pip를 통한 간편한 설치 지원. 단일 문장 또는 리스트 형태의 다중 문장 검사 가능. 검사 결과를 dict 또는 Checked 객체로 반환하며, 교정된 문장, 오류 수, 교정 단어 목록, 요청 시간 등 상세 정보 제공. requests 라이브러리 기반으로 경량화된 의존성. Travis CI 빌드 및 PyPI 배포 완료.",
     category: "projects",
@@ -231,6 +247,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-streamlit-folium",
+    code: "P017",
     title: "Streamlit Folium Component",
     description: "Streamlit에서 Folium 지도를 렌더링하는 컴포넌트. 지리 데이터 시각화를 위한 Python 라이브러리입니다.",
     category: "projects",
@@ -245,6 +262,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "gh-leadership",
+    code: "P018",
     title: "Leadership Problem Solver",
     description: "리더십 고민 해결 도구. AI를 활용하여 리더십 관련 고민과 문제에 대한 솔루션을 제공하는 Python 애플리케이션입니다.",
     category: "projects",
@@ -261,6 +279,7 @@ export const portfolioData: PortfolioItem[] = [
   // === Vercel Projects ===
   {
     id: "vc-professor-interview",
+    code: "P019",
     title: "SK Leadership Interview Analysis",
     description: "SK 리더십 인터뷰 분석 시스템. DIC/RRS/ICF 프레임워크 기반 면접 데이터 분석 및 평가 자동화. Python 기반 데이터 처리, 머신러닝을 활용한 인터뷰 응답 분석, 리더십 역량 평가 지표 자동 생성. 실시간 분석 결과 대시보드 제공. Vercel로 배포된 웹 애플리케이션.",
     category: "projects",
@@ -276,6 +295,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "vc-claude-kg",
+    code: "P020",
     title: "Claude Knowledge Graph Builder",
     description: "Claude AI 기반 지식 그래프 자동 구축 도구. 비구조화 데이터에서 엔티티 및 관계 추출, 자동 온톨로지 생성, 시맨틱 검색 지원. Neo4j 또는 GraphDB 연동, 실시간 그래프 시각화, 지식 베이스 쿼리 인터페이스 제공. Next.js + TypeScript로 구현된 모던 웹 애플리케이션.",
     category: "projects",
@@ -290,6 +310,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "vc-query",
+    code: "P021",
     title: "Advanced Query Interface",
     description: "고급 데이터 쿼리 인터페이스. SQL, NoSQL, GraphQL 등 다양한 데이터베이스에 대한 통합 쿼리 환경 제공. 쿼리 빌더, 자동 완성, 실행 결과 시각화 기능 포함. React 기반 인터랙티브 UI로 복잡한 데이터 탐색을 직관적으로 지원.",
     category: "projects",
@@ -305,6 +326,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "vc-rawre",
+    code: "P022",
     title: "RAWRE - Research Analysis Web & Report Engine",
     description: "연구 분석 및 리포트 생성 엔진. 연구 데이터 수집, 통계 분석, 자동 리포트 생성을 하나의 플랫폼에서 제공. Python 기반 백엔드 분석 엔진, React 프론트엔드 대시보드, PDF/HTML 리포트 자동 생성, 협업 기능 지원. 학술 연구 및 비즈니스 분석에 활용 가능한 올인원 솔루션.",
     category: "projects",
@@ -320,6 +342,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "vc-asstf",
+    code: "P023",
     title: "ASSTF - Advanced Assessment Platform",
     description: "고급 평가 플랫폼. 역량 평가, 성격 검사, 리더십 진단 등 다양한 Assessment 도구 통합. 적응형 테스트 알고리즘, 실시간 결과 분석, 개인화된 피드백 생성. TypeScript + React로 구현된 확장 가능한 평가 시스템. 기업 HR 및 교육 기관에서 활용 가능.",
     category: "projects",
@@ -335,6 +358,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "vc-asstf-persona",
+    code: "P024",
     title: "ASSTF Persona Pilot",
     description: "ASSTF 플랫폼의 페르소나 파일럿 모듈. 사용자 페르소나 기반 맞춤형 평가 경험 제공. 행동 패턴 분석, 개인화된 질문 시퀀싱, 동적 난이도 조정. 머신러닝을 활용한 페르소나 프로파일링으로 평가 정확도 향상. A/B 테스팅 및 피드백 루프 내장.",
     category: "projects",
@@ -350,6 +374,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "vc-n8n-generator",
+    code: "P025",
     title: "n8n Workflow Generator",
     description: "n8n 워크플로우 자동 생성 도구. 자연어 설명에서 n8n 워크플로우 JSON 자동 생성, 템플릿 라이브러리, 드래그 앤 드롭 에디터 통합. Claude AI를 활용한 지능형 워크플로우 제안, 노드 연결 최적화, 에러 처리 로직 자동 삽입. 노코드 자동화를 더욱 쉽게 만드는 메타 도구.",
     category: "projects",
@@ -367,6 +392,7 @@ export const portfolioData: PortfolioItem[] = [
   // === Netlify Projects ===
   {
     id: "nl-ttimes-interview",
+    code: "P026",
     title: "TTimes Interview Analysis",
     description: "TTimes 인터뷰 분석 시스템. 인터뷰 데이터 수집, 분석 및 시각화 도구. AI 기반 응답 분석 및 평가 자동화.",
     category: "projects",
@@ -381,6 +407,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-bdai",
+    code: "P027",
     title: "BDAI - Business Data AI",
     description: "비즈니스 데이터 AI 분석 플랫폼. 데이터 기반 의사결정 지원 시스템.",
     category: "projects",
@@ -395,6 +422,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-successor-card",
+    code: "P028",
     title: "Successor Card Lab",
     description: "후계자 카드 실험실. 리더십 후계자 선정 및 육성 시스템. 카드 기반 인터랙티브 인터페이스.",
     category: "projects",
@@ -409,6 +437,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-ideaworkshop",
+    code: "P029",
     title: "Idea Workshop",
     description: "아이디어 워크샵 플랫폼. 브레인스토밍 및 아이디어 관리 도구. 협업 기반 창의성 촉진 시스템.",
     category: "projects",
@@ -423,6 +452,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-mysuniidea",
+    code: "P030",
     title: "My Suni Idea",
     description: "수니 아이디어 플랫폼. SK 그룹 임직원 아이디어 제안 및 공유 시스템. AI 기반 아이디어 평가 및 매칭.",
     category: "projects",
@@ -437,6 +467,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-academyessay",
+    code: "P031",
     title: "Academy Essay",
     description: "아카데미 에세이 작성 및 평가 시스템. AI 기반 피드백 제공. 글쓰기 실력 향상 도구.",
     category: "projects",
@@ -451,6 +482,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-conceptbook",
+    code: "P032",
     title: "Concept Book",
     description: "개념서 플랫폼. 학습 개념 정리 및 공유 시스템. 인터랙티브 학습 자료 생성 도구.",
     category: "projects",
@@ -465,6 +497,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-ai-dna",
+    code: "P033",
     title: "AI DNA",
     description: "AI DNA 분석 시스템. 개인의 AI 활용 패턴 및 역량 분석. AI 리터러시 진단 및 학습 경로 제안.",
     category: "projects",
@@ -479,6 +512,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-skacademyai",
+    code: "P034",
     title: "SK Academy AI",
     description: "SK아카데미 AI 학습 플랫폼. AI 교육 콘텐츠 및 실습 환경 제공. 맞춤형 학습 경로 추천 시스템.",
     category: "projects",
@@ -493,6 +527,7 @@ export const portfolioData: PortfolioItem[] = [
   },
   {
     id: "nl-leadershipcrystal",
+    code: "P035",
     title: "Leadership Crystal",
     description: "리더십 역량 진단 및 개발 시스템. 다면 평가 기반 리더십 분석. 개인화된 리더십 개발 계획 제공.",
     category: "projects",
