@@ -5,6 +5,7 @@ import { PortfolioCard, PortfolioItem } from "./components/PortfolioCard";
 import { portfolioData as originalData } from "./data/portfolioData";
 import { AdminProvider } from "./contexts/AdminContext";
 import { CareerPage } from "./pages/CareerPage";
+import { AdminLoginModal } from "./components/AdminLoginModal";
 import { ArrowRight } from "lucide-react";
 
 function AppContent() {
@@ -12,6 +13,7 @@ function AppContent() {
   const [activePlatform, setActivePlatform] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [portfolioData, setPortfolioData] = useState<PortfolioItem[]>(originalData);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
 
   // Handle hash-based routing
   useEffect(() => {
@@ -110,7 +112,7 @@ function AppContent() {
   // Render home page
   return (
     <div className="min-h-screen bg-gray-50">
-      <HeroSection />
+      <HeroSection onTitleDoubleClick={() => setIsAdminModalOpen(true)} />
 
       {/* Tech Projects Section */}
       <section id="tech-projects" className="py-12 bg-white">
@@ -184,6 +186,12 @@ function AppContent() {
           </p>
         </div>
       </footer>
+
+      {/* Admin Login Modal */}
+      <AdminLoginModal
+        isOpen={isAdminModalOpen}
+        onClose={() => setIsAdminModalOpen(false)}
+      />
     </div>
   );
 }

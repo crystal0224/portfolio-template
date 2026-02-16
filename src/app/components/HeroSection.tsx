@@ -3,7 +3,11 @@ import { Briefcase, GraduationCap, BookOpen, Linkedin, Phone, Mail } from "lucid
 
 const profileImage = import.meta.env.BASE_URL + "profile.png";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  onTitleDoubleClick?: () => void;
+}
+
+export function HeroSection({ onTitleDoubleClick }: HeroSectionProps = {}) {
   return (
     <section className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
       {/* Background decoration */}
@@ -67,7 +71,11 @@ export function HeroSection() {
                 </div>
               </div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+              <h1
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight cursor-pointer select-none"
+                onDoubleClick={onTitleDoubleClick}
+                title="관리자 로그인: 더블클릭"
+              >
                 배수정
                 <span className="block text-2xl sm:text-3xl lg:text-4xl font-light text-gray-600 mt-4">
                   Psychologist & People Analyst
