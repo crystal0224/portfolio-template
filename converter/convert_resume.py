@@ -9,6 +9,7 @@
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -138,43 +139,53 @@ DEFAULT_SECTIONS = {
 
 
 def extract_text_from_pdf(pdf_path: str) -> str:
-    text = ""
-    with pdfplumber.open(pdf_path) as pdf:
-        for page in pdf.pages:
-            page_text = page.extract_text()
-            if page_text:
-                text += page_text + "\n"
-    return text.strip()
+    try:
+        text = ""
+        with pdfplumber.open(pdf_path) as pdf:
+            for page in pdf.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text += page_text + "\n"
+        return text.strip()
+    except Exception as e:
+        print(f"❌ PDF 읽기 실패: {e}", file=sys.stderr)
+        print("   PDF 파일이 손상되었거나 텍스트 추출이 불가능한 형식일 수 있습니다.", file=sys.stderr)
+        sys.exit(1)
 
 
 def extract_text_from_csv(csv_path: str) -> str:
-    df = pd.read_csv(csv_path)
-    return df.to_string(index=False)
+    try:
+        df = pd.read_csv(csv_path)
+        return df.to_string(index=False)
+    except Exception as e:
+        print(f"❌ CSV 읽기 실패: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 def call_claude(prompt: str) -> str:
-    result = subprocess.run(
-        ["claude", "-p", prompt],
-        capture_output=True,
-        text=True,
-        timeout=120,
-    )
+    try:
+        result = subprocess.run(
+            ["claude", "-p", prompt],
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+    except FileNotFoundError:
+        print("❌ Claude CLI를 찾을 수 없습니다.", file=sys.stderr)
+        print("   Claude Code가 설치·로그인된 환경에서 실행해주세요.", file=sys.stderr)
+        print("   설치: https://claude.ai/code", file=sys.stderr)
+        sys.exit(1)
     if result.returncode != 0:
-        print(f"Claude CLI 오류:\n{result.stderr}", file=sys.stderr)
+        print(f"❌ Claude CLI 오류:\n{result.stderr}", file=sys.stderr)
         sys.exit(1)
     return result.stdout.strip()
 
 
 def parse_json_from_claude(response: str) -> dict:
-    # JSON 블록이 있으면 추출
-    if "```json" in response:
-        start = response.index("```json") + 7
-        end = response.index("```", start)
-        response = response[start:end].strip()
-    elif "```" in response:
-        start = response.index("```") + 3
-        end = response.index("```", start)
-        response = response[start:end].strip()
+    # 코드 블록 추출 시도
+    match = re.search(r"```(?:json)?\s*([\s\S]*?)```", response)
+    if match:
+        response = match.group(1).strip()
     return json.loads(response)
 
 
@@ -241,8 +252,11 @@ def main():
         print("❌ 파일에서 텍스트를 추출할 수 없습니다.", file=sys.stderr)
         sys.exit(1)
 
+    MAX_RESUME_CHARS = 8000  # Claude context 제한을 고려한 최대 문자 수
+    if len(resume_text) > MAX_RESUME_CHARS:
+        print(f"⚠️  이력서가 길어서 앞부분 {MAX_RESUME_CHARS}자만 분석합니다. (전체: {len(resume_text)}자)")
     print("🤖 Claude가 이력서를 분석 중... (30초~1분 소요)")
-    prompt = EXTRACT_PROMPT.format(resume_text=resume_text[:8000])
+    prompt = EXTRACT_PROMPT.format(resume_text=resume_text[:MAX_RESUME_CHARS])
     response = call_claude(prompt)
 
     try:
@@ -250,6 +264,11 @@ def main():
     except json.JSONDecodeError as e:
         print(f"❌ JSON 파싱 실패: {e}", file=sys.stderr)
         print("Claude 응답 (처음 500자):", response[:500], file=sys.stderr)
+        sys.exit(1)
+
+    if not isinstance(data, dict) or "profile" not in data or "careerData" not in data:
+        print("❌ Claude 응답이 예상한 형식이 아닙니다.", file=sys.stderr)
+        print("   응답 내용:", str(data)[:300], file=sys.stderr)
         sys.exit(1)
 
     output_path = Path(args.output)
