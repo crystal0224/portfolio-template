@@ -56,6 +56,8 @@ AskUserQuestion으로 질문합니다:
 
 ```
 이력서 파일을 converter/ 폴더로 복사해주세요.
+CSV 파일인 경우: 쉼표(,)가 포함된 값(예: "Python, SQL, Spark")은
+반드시 큰따옴표로 감싸야 합니다 → "Python, SQL, Spark"
 그 다음 아래 명령어를 터미널에서 실행하세요:
 
 PDF인 경우:
@@ -66,6 +68,7 @@ CSV인 경우:
 
 실행이 완료되면 "완료"라고 알려주세요.
 (처음 실행 시 pip install -r converter/requirements.txt 가 필요할 수 있습니다.)
+⚠️ 주의: 이 명령어는 Claude Code 세션 밖의 별도 터미널에서 실행해야 합니다.
 ```
 
 그 다음 AskUserQuestion으로 확인합니다:
@@ -102,7 +105,7 @@ CSV인 경우:
 `src/config.ts`를 읽어서 아직 플레이스홀더 값인 필드를 찾습니다.
 플레이스홀더 판별 기준:
 - name이 "홍길동" 이면 플레이스홀더
-- email이 "hong@example.com" 또는 "@example.com"을 포함하면 플레이스홀더
+- email이 "hong@example.com" 과 정확히 일치하거나 "your-" 로 시작하면 플레이스홀더
 - github가 "your-id"를 포함하면 플레이스홀더
 - linkedin이 "your-id"를 포함하면 플레이스홀더
 
