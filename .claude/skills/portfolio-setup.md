@@ -245,7 +245,7 @@ AskUserQuestion:
 **질문:** "프로젝트를 추가할까요?"
 **header:** "프로젝트 추가"
 **options:**
-- "추가할 프로젝트가 있어요" → 아래 Path B 방식으로 프로젝트 1개씩 추가
+- "추가할 프로젝트가 있어요" → Path B의 프로젝트 수 질문부터 시작해서 1개씩 추가
 - "괜찮아요, 넘어갈게요" → `projects` 배열은 컨버터 결과 유지
 
 ### converter_used = false (Path B)
@@ -329,6 +329,7 @@ options:
 
 **Write 도구에 넣을 완성된 config.ts 내용 (템플릿):**
 
+```typescript
 // ============================================================
 // config.ts — 포트폴리오 설정 파일
 // 이 파일만 수정하면 포트폴리오가 업데이트됩니다.
@@ -390,7 +391,7 @@ export const projects: Project[] = [
 // false로 바꾸면 해당 섹션이 Career 페이지에서 사라집니다.
 // ============================================================
 export const sections = {
-  experience: [sections.experience],
+  experience: [sections.experience],       // true 또는 false
   education: [sections.education],
   certifications: [sections.certifications],
   publications: [sections.publications],
@@ -497,6 +498,7 @@ export const careerData = {
   groupActivities: [] as GroupActivity[],
   mentoring: [] as MentoringExperience[],
 };
+```
 
 ---
 
@@ -549,10 +551,10 @@ AskUserQuestion으로 확인합니다:
 미리보기가 잘 보이면, 내용을 더 수정하고 싶을 때는
 src/config.ts 파일을 직접 열어서 수정하면 됩니다.
 
-주요 수정 위치:
-  • 이름/직함/이메일 등 기본 정보: 10~18번째 줄 (profile 객체)
-  • 프로젝트 추가/수정:           44~55번째 줄 (projects 배열)
-  • Career 섹션 표시 여부:        61~72번째 줄 (sections 객체)
+주요 수정 위치 (파일에서 Ctrl+F 또는 Cmd+F로 검색하세요):
+  • 이름/직함/이메일 등 기본 정보: `export const profile` 검색
+  • 프로젝트 추가/수정:           `export const projects` 검색
+  • Career 섹션 표시 여부:        `export const sections` 검색
 
 💡 파일을 저장하면 브라우저가 자동으로 새로고침됩니다.
    npm run dev를 다시 실행할 필요 없습니다.
