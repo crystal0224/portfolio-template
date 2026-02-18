@@ -185,3 +185,115 @@ CSV인 경우:
 - "직접 설정할게요" — description: "Other 선택 후 원하는 비밀번호 입력"
 
 → 답변을 `profile_password`으로 저장 (기본값이면 `"1234"`)
+
+---
+
+## Step 3: Career 섹션 on/off 선택
+
+AskUserQuestion으로 물어봅니다 (multiSelect: true):
+
+**질문:** "Career 페이지에 어떤 섹션을 표시할까요? (여러 개 선택 가능)"
+**header:** "Career 섹션"
+**multiSelect: true**
+**options:**
+- "경력 (experience)" — description: "직장 경력, 인턴십 등"
+- "학력 (education)" — description: "대학교, 대학원 등"
+- "자격증 (certifications)" — description: "취득한 자격증"
+- "수상 (awards)" — description: "수상 경력"
+- "논문/출판 (publications)" — description: "논문, 기고문 등"
+- "학술 프로젝트 (academicProjects)" — description: "연구 프로젝트"
+- "강의/튜터링 (teaching)"
+- "아르바이트/파트타임 (partTimeJob)"
+- "동아리/단체 활동 (groupActivity)"
+- "멘토링 (mentoring)"
+
+선택된 항목을 `sections_selected` 배열로 저장합니다.
+각 섹션의 true/false 값은 다음 규칙으로 결정합니다:
+- 선택된 항목 → `true`
+- 선택되지 않은 항목 → `false`
+
+섹션 키 매핑:
+- "경력 (experience)" → `experience`
+- "학력 (education)" → `education`
+- "자격증 (certifications)" → `certifications`
+- "수상 (awards)" → `awards`
+- "논문/출판 (publications)" → `publications`
+- "학술 프로젝트 (academicProjects)" → `academicProjects`
+- "강의/튜터링 (teaching)" → `teaching`
+- "아르바이트/파트타임 (partTimeJob)" → `partTimeJob`
+- "동아리/단체 활동 (groupActivity)" → `groupActivity`
+- "멘토링 (mentoring)" → `mentoring`
+
+---
+
+## Step 4: 프로젝트 입력
+
+### converter_used = true (Path A)
+
+`src/config.ts`의 `projects` 배열을 읽어서 현재 내용을 보여줍니다.
+
+사용자에게 안내합니다:
+```
+컨버터가 자동으로 프로젝트를 추출했습니다.
+현재 프로젝트 목록:
+[현재 config.ts의 projects 내용을 요약해서 표시]
+
+추가하거나 수정할 프로젝트가 있나요?
+```
+
+AskUserQuestion:
+**질문:** "프로젝트를 추가할까요?"
+**header:** "프로젝트 추가"
+**options:**
+- "추가할 프로젝트가 있어요" → 아래 Path B 방식으로 프로젝트 1개씩 추가
+- "괜찮아요, 넘어갈게요" → `projects` 배열은 컨버터 결과 유지
+
+### converter_used = false (Path B)
+
+AskUserQuestion:
+
+**질문:** "몇 개의 프로젝트를 추가할까요?"
+**header:** "프로젝트 수"
+**options:**
+- "0개 (나중에 직접 추가할게요)" — description: "config.ts에서 직접 추가 가능"
+- "1개"
+- "2개"
+- "3개 이상" — description: "Other 선택 후 숫자 입력"
+
+답변이 0이면 빈 배열 `[]`로 `projects_list`를 저장하고 Step 5로 이동합니다.
+
+1개 이상이면 N번 반복합니다. 각 반복마다 아래 질문들을 순서대로 진행합니다.
+수집한 각 프로젝트를 `projects_list` 배열에 추가합니다.
+
+#### 프로젝트 1개 입력 사이클:
+
+**질문 A: 프로젝트 제목**
+"프로젝트 이름을 입력해주세요." (header: "프로젝트 제목")
+→ `proj_title`
+
+**질문 B: 프로젝트 설명**
+"프로젝트를 한 줄로 설명해주세요." (header: "프로젝트 설명")
+→ `proj_desc`
+
+**질문 C: 도메인**
+"프로젝트 분야를 선택해주세요." (header: "도메인")
+options: "AI/ML", "데이터 분석", "웹 개발", "디자인", "기타"
+→ `proj_domain`
+
+**질문 D: 태그**
+"사용한 기술이나 키워드를 입력해주세요. (쉼표로 구분, 예: Python, Tableau, SQL)" (header: "태그")
+→ `proj_tags` (쉼표로 split해서 배열로 저장)
+
+**질문 E: 링크**
+"프로젝트 링크가 있나요?" (header: "링크")
+options:
+- "라이브 링크 있어요" → Other로 URL 입력, `proj_live`로 저장
+- "GitHub 링크 있어요" → Other로 URL 입력, `proj_github`로 저장
+- "없어요" → 빈 links 객체
+
+**질문 F: 보호 여부**
+"이 프로젝트를 비밀번호로 보호할까요?" (header: "보호 여부")
+options:
+- "공개" — description: "누구나 링크 접근 가능"
+- "보호" — description: "비밀번호 입력해야 링크 접근 가능"
+→ `proj_protected` (true/false)
