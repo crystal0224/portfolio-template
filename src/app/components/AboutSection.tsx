@@ -4,28 +4,28 @@ import { GraduationCap, Briefcase, BookOpen, Award, Target, Lightbulb } from "lu
 export function AboutSection() {
   const experiences = [
     {
-      period: "2023.05 - Present",
-      title: "SK Group - SK Academy",
-      role: "Research Fellow",
-      description: "Leadership Assessment Team | 리더십 진단 및 분석 연구, People Analytics 기반 조직 효과성 향상, 심리학·데이터 분석 기반 진단 도구 개발"
+      period: "2023.01 - Present",
+      title: "예시 회사 B",
+      role: "시니어 분석가",
+      description: "데이터 분석팀 | 조직 효과성 연구, People Analytics 기반 의사결정 지원, 진단 도구 개발"
     },
     {
-      period: "2018.08 - 2023.05",
-      title: "Samsung Global Research (전 삼성경제연구소)",
-      role: "Research Fellow",
-      description: "People Analytics Team | HR 데이터 기반 조직 분석 및 인사 의사결정 지원, 심리학·데이터 분석 기반 HR 솔루션 개발"
+      period: "2019.03 - 2022.12",
+      title: "예시 회사 A",
+      role: "주임 연구원",
+      description: "HR 솔루션팀 | HR 데이터 기반 조직 분석, 인사 의사결정 지원, 데이터 기반 HR 솔루션 개발"
     },
     {
-      period: "2017.03 - 2018.06",
-      title: "MIDAS IT",
-      role: "Assistant Manager",
-      description: "행복기획팀 | 긍정의 조직문화 조성, 경영철학 연구(뇌신경과학·심리학·경영학), 온오프라인 콘텐츠 기획 및 실행, 이론서·대중서 출판(사람경영)"
+      period: "2017.06 - 2019.02",
+      title: "예시 스타트업",
+      role: "어시스턴트 매니저",
+      description: "기획팀 | 조직 문화 개선, 콘텐츠 기획 및 실행, 사내 교육 프로그램 운영"
     },
     {
-      period: "2014.03 - 2016.08",
-      title: "서울대학교 심리학과",
-      role: "대학원 조교 & 연구소 조교",
-      description: "학사 및 학술행사 관리, 청소년을 위한 심리학교실 운영, 연구소 행정업무"
+      period: "2015.03 - 2017.02",
+      title: "예시 대학교",
+      role: "대학원 조교",
+      description: "연구 보조 및 학사 관리, 세미나 운영, 행정 업무"
     }
   ];
 

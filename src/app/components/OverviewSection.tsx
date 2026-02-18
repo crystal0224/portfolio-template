@@ -17,10 +17,9 @@ export function OverviewSection() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-6" />
           <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            10년 이상 심리학과 데이터 분석을 결합하여 리더십 진단, People
-            Analytics, HR 솔루션 개발 분야에서 전문성을 쌓아 왔습니다. SK,
-            삼성 등 대기업에서 조직 효과성 향상을 위한 연구와 프로젝트를
-            수행하고 있습니다.
+            데이터 분석과 현업 경험을 바탕으로 다양한 프로젝트를 수행해
+            왔습니다. 문제를 정의하고, 데이터로 인사이트를 도출하며,
+            실질적인 변화를 만드는 일을 해왔습니다.
           </p>
         </motion.div>
       </div>

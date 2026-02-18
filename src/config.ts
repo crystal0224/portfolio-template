@@ -14,6 +14,7 @@ export const profile = {
   github: "https://github.com/your-id",
   linkedin: "https://linkedin.com/in/your-id",
   heroDescription: "안녕하세요! 데이터와 사람을 연결하는 분석가입니다.",
+  protectedPassword: "1234", // protected 프로젝트 링크 비밀번호
 };
 
 // ============================================================

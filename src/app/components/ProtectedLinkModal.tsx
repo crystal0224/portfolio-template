@@ -8,8 +8,9 @@ interface ProtectedLinkModalProps {
   projectTitle: string;
 }
 
-// Simple hash for client-side verification (not cryptographically secure)
-const PASSWORD_HASH = "sk1234"; // 실제 비밀번호
+// 비밀번호를 변경하려면 src/config.ts의 protectedPassword를 수정하세요
+import { profile } from "../../config";
+const PASSWORD_HASH = (profile as any).protectedPassword ?? "1234";
 
 export function ProtectedLinkModal({
   isOpen,
