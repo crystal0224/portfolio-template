@@ -2,7 +2,9 @@ import { motion } from "motion/react";
 import { Briefcase, GraduationCap, Linkedin, Mail } from "lucide-react";
 import { profile } from "../../config";
 
-const profileImage = import.meta.env.BASE_URL + "profile.png";
+// profile.png 또는 profile.svg 중 존재하는 파일 사용
+// 본인 사진으로 교체하려면 public/profile.png를 덮어쓰세요
+const profileImage = import.meta.env.BASE_URL + "profile.svg";
 
 export function HeroSection() {
   return (

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="533" viewBox="0 0 400 533">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e7ff"/>
+      <stop offset="100%" style="stop-color:#f0fdf4"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+    <clipPath id="frame">
+      <rect width="400" height="533" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <rect width="400" height="533" fill="url(#bg)" rx="20"/>
+
+  <!-- Body / Shoulders -->
+  <ellipse cx="200" cy="480" rx="160" ry="120" fill="url(#body)"/>
+  <rect x="60" y="400" width="280" height="133" fill="url(#body)"/>
+
+  <!-- Neck -->
+  <rect x="175" y="295" width="50" height="60" fill="url(#skin)" rx="5"/>
+
+  <!-- Head -->
+  <ellipse cx="200" cy="240" rx="85" ry="95" fill="url(#skin)"/>
+
+  <!-- Hair -->
+  <ellipse cx="200" cy="165" rx="85" ry="55" fill="#1e293b"/>
+  <ellipse cx="125" cy="210" rx="18" ry="40" fill="#1e293b"/>
+  <ellipse cx="275" cy="210" rx="18" ry="40" fill="#1e293b"/>
+
+  <!-- Eyes -->
+  <ellipse cx="170" cy="245" rx="12" ry="13" fill="white"/>
+  <ellipse cx="230" cy="245" rx="12" ry="13" fill="white"/>
+  <circle cx="172" cy="246" r="7" fill="#1e293b"/>
+  <circle cx="232" cy="246" r="7" fill="#1e293b"/>
+  <circle cx="174" cy="243" r="2.5" fill="white"/>
+  <circle cx="234" cy="243" r="2.5" fill="white"/>
+
+  <!-- Eyebrows -->
+  <path d="M155 228 Q170 220 185 226" stroke="#1e293b" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M215 226 Q230 220 245 228" stroke="#1e293b" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Nose -->
+  <path d="M197 255 Q193 272 185 278 Q200 283 215 278 Q207 272 203 255" fill="#f59e0b" opacity="0.6"/>
+
+  <!-- Smile -->
+  <path d="M175 295 Q200 315 225 295" stroke="#c2410c" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Collar -->
+  <path d="M150 355 L200 390 L250 355" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
