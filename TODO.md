@@ -1,178 +1,96 @@
-# Portfolio Platform - TODO List
+# Portfolio Template - TODO List
 
 ## 🎯 프로젝트 목표
-GitHub + Hugging Face 프로젝트를 통합한 포트폴리오 플랫폼 구축 및 GitHub Pages 배포
+누구나 자기 정보로 포트폴리오를 만들 수 있는 GitHub Template Repository 제공.
+README 없이 `/portfolio-setup` 스킬 하나로 온보딩 완료.
 
 ---
 
 ## ✅ 완료된 작업
 
-- [x] GitHub 저장소 조사 (33개)
-- [x] Hugging Face Spaces 조사 (20개)
-- [x] 포트폴리오에 주요 프로젝트 18개 추가
-- [x] 프로젝트 상태 분석 완료
+### 템플릿 변환 (feature/template-conversion)
+- [x] Firebase 완전 제거 (Firestore, Admin, MigratePage)
+- [x] `src/config.ts` 단일 설정 파일 생성
+- [x] Career 섹션 on/off 플래그 (`sections` 객체)
+- [x] 어드민 모드 제거, 비밀번호 config.ts로 이동
+- [x] App.tsx / HeroSection / PortfolioCard config.ts 연결
+- [x] 10개 Career 섹션 컴포넌트 단순화
+- [x] 개인정보 제거 (SK/삼성 레퍼런스, sk1234 비밀번호, Firebase 프로젝트 ID)
+- [x] 프로필 이미지 SVG 플레이스홀더로 교체
+- [x] `converter/convert_resume.py` — PDF/CSV → config.ts 자동 변환기
+- [x] 한국어 README 온보딩 가이드 (5단계)
+
+### 배포
+- [x] GitHub Template Repository 설정 (crystal0224/portfolio-template)
+- [x] GitHub Pages 배포 성공
+  - 라이브: https://crystal0224.github.io/portfolio-template/
+  - GitHub Actions 자동 배포 (deploy.yml)
+  - vite.config.ts base: `/portfolio-template/`
+
+### 온보딩 스킬
+- [x] `.claude/skills/portfolio-setup.md` 작성 (625줄)
+  - Step 0: 환영 인사
+  - Step 1: 이력서 파일 유무 분기 (Path A: 컨버터 / Path B: 수동)
+  - Step 2: 프로필 정보 7개 필드 수집
+  - Step 3: Career 섹션 on/off 멀티셀렉트
+  - Step 4: 프로젝트 입력 루프
+  - Step 5: config.ts Write 도구로 자동 작성
+  - Step 6: 미리보기 안내 (npm install + npm run dev)
+  - Step 7: 수정 가이드 (Cmd+F 검색 안내)
+  - Step 8: 배포 안내 (vite.config.ts + GitHub Pages)
+- [x] 스펙 검토 통과 (모든 항목 완전 일치)
+- [x] 품질 검토 통과 (4개 이슈 수정 완료)
+- [x] 스모크 테스트 통과 (vite build ✓, config.ts 정상 생성 확인)
 
 ---
 
-## 🔄 진행 중인 작업
+## 🔄 남은 작업
 
-### Phase 1: Hugging Face Spaces 수정
+### 우선순위 높음
 
-#### 1.1 PandasAI 수정 (RUNTIME_ERROR) ✅ 완료
-- [x] 에러 로그 확인
-- [x] requirements.txt 의존성 버전 확인
-- [x] Agent → SmartDataframe으로 변경
-- [x] 패키지 버전 고정
-- [x] 테스트 및 재배포
-- [ ] 포트폴리오 설명 업데이트
+- [ ] **실제 사용자 테스트** — 비개발자 1명에게 템플릿을 fork하고 `/portfolio-setup` 실행해보게 하기
+  - 스킬 질문 흐름이 자연스러운지 확인
+  - 컨버터 Path A 실제 PDF 파일로 테스트
 
-**상태**: ✅ 완료 (2026-02-16)
-**우선순위**: 🔴 High (⭐ 2개, 가장 인기)
+- [ ] **converter Path A 통합 테스트** — 실제 PDF/CSV 파일로 컨버터 + 스킬 Path A 흐름 검증
+  - 컨버터 실행 → config.ts 초안 생성 → 스킬 Path A에서 플레이스홀더 필드만 물어보는지 확인
 
-#### 1.2 academy 수정 (BUILD_ERROR) ✅ 완료
-- [x] 빌드 에러 로그 확인
-- [x] requirements.txt 패키지 설정 확인
-- [x] streamlit 1.40.2 → 1.32.0 다운그레이드
-- [x] 의존성 버전 HF Spaces 호환으로 조정
-- [x] 재배포
-- [ ] 포트폴리오 설명 업데이트
+### 우선순위 중간
 
-**상태**: ✅ 완료 (2026-02-16)
-**우선순위**: 🟡 Medium
+- [ ] **프로필 이미지 업로드 안내 추가** — 스킬 또는 README에 `public/profile.svg` 교체 방법 안내
+  - 현재 스킬은 사진 업로드 커버 안 함 (Out of Scope)
+  - README에 간단한 안내 추가 검토
 
----
+- [ ] **careerData 입력 가이드** — 스킬이 careerData(경력/학력 상세)는 수동 편집 안내만 하는데,
+  컨버터 결과로 careerData가 채워졌을 때 검토/수정 플로우 검토
 
-### Phase 2: 포트폴리오 설명 보강
+- [ ] **docs/plans 정리** — 구현 완료 후 내부 설계 문서 삭제 여부 결정
+  - `docs/plans/2026-02-18-portfolio-onboarding-skill-design.md`
+  - `docs/plans/2026-02-18-portfolio-setup-skill.md`
+  - 공개 레포에 내부 문서 노출 여부 판단
 
-#### 2.1 GitHub 프로젝트 설명 추가
-- [ ] my-day1 - README 내용 반영
-- [ ] work-redesign-platform - README 내용 반영
-- [ ] organizational-effectiveness-report - 설명 수집 및 반영
-- [ ] leadership-report - 설명 수집 및 반영
-- [ ] llama2 - README 내용 반영
-- [ ] py-hanspell - 설명 수집 및 반영
-- [ ] streamlit-folium - 설명 수집 및 반영
-- [ ] leadership - 설명 수집 및 반영
+### 우선순위 낮음
 
-**상태**: ⏳ 대기 중
-**우선순위**: 🟢 Medium
-
-#### 2.2 Hugging Face Spaces 설명 보강
-- [ ] topicmodelingadv - 상세 설명 추가
-- [ ] Leaders - 상세 설명 추가
-- [ ] workredesign - 상세 설명 추가
-- [ ] analysiss - 상세 설명 추가
-- [ ] hybridRAG - 상세 설명 추가
-- [ ] sunispell - 상세 설명 추가
-- [ ] summarize - 상세 설명 추가
-- [ ] rasch - 상세 설명 추가
-
-**상태**: ⏳ 대기 중
-**우선순위**: 🟢 Medium
-
----
-
-### Phase 3: GitHub Pages 배포
-
-#### 3.1 포트폴리오 사이트 준비
-- [ ] 빌드 테스트 (Figma asset 문제 해결 완료)
-- [ ] 프로덕션 빌드 최적화
-- [ ] 환경 변수 설정 확인
-- [ ] 이미지 최적화
-
-**상태**: ⏳ 대기 중
-**우선순위**: 🔴 High
-
-#### 3.2 GitHub Pages 설정
-- [ ] GitHub 저장소 생성 (portfolio-website)
-- [ ] gh-pages 브랜치 설정
-- [ ] GitHub Actions workflow 작성
-- [ ] 자동 배포 설정
-- [ ] 커스텀 도메인 설정 (선택사항)
-
-**상태**: ⏳ 대기 중
-**우선순위**: 🔴 High
-
-#### 3.3 배포 및 검증
-- [ ] GitHub Pages 첫 배포
-- [ ] 모든 링크 작동 확인
-- [ ] 반응형 디자인 확인
-- [ ] 성능 최적화 확인
-- [ ] SEO 메타 태그 추가
-
-**상태**: ⏳ 대기 중
-**우선순위**: 🟡 Medium
-
----
-
-## 📋 추가 작업 (선택사항)
-
-### 기능 개선
-- [ ] 프로젝트 검색 기능 강화
-- [ ] 다크모드 지원
-- [ ] 프로젝트 상세 페이지 추가
-- [ ] 애니메이션 효과 개선
-- [ ] README 자동 업데이트 스크립트
-
-### 콘텐츠 추가
-- [ ] About 페이지 작성
-- [ ] Contact 정보 업데이트
-- [ ] 기술 스택 섹션 추가
-- [ ] 경력 타임라인 추가
+- [ ] **영어 README 추가** — 한국어 외 글로벌 사용자를 위한 영어 버전
+- [ ] **스킬 다국어 지원** — 영어 사용자를 위한 영어 버전 스킬
+- [ ] **커스텀 도메인 설정 안내** — Step 8에 GitHub Pages 커스텀 도메인 옵션 추가
 
 ---
 
 ## 🐛 알려진 이슈
 
-1. **Figma asset import 문제** ✅ 해결됨 (placeholder 이미지로 교체)
-2. **PandasAI RUNTIME_ERROR** ⚠️ 진행 필요
-3. **academy BUILD_ERROR** ⚠️ 진행 필요
+1. **Step 7 라인 번호 안내** — config.ts 라인 번호가 실제 사용 시 달라질 수 있음 (이미 Cmd+F 검색어로 개선됨)
+2. **vite.config.ts 주석** — Step 8 base 경로 수정 후 "배포 시 변경하세요" 주석이 남음 (기능상 무해)
 
 ---
 
-## 📝 메모
+## 📝 참고
 
-### 작업 진행 순서
-1. ✅ 프로젝트 데이터 수집 및 포트폴리오 추가
-2. 🔄 PandasAI 수정
-3. ⏳ academy 수정
-4. ⏳ 포트폴리오 설명 보강
-5. ⏳ GitHub Pages 배포
-
-### 참고 링크
-- GitHub 저장소: https://github.com/crystal0224
-- Hugging Face: https://huggingface.co/soojeongcrystal
-- 로컬 개발 서버: http://localhost:5174/
+- **레포**: https://github.com/crystal0224/portfolio-template
+- **라이브**: https://crystal0224.github.io/portfolio-template/
+- **스킬 호출**: 템플릿 clone 후 `claude` 실행 → `/portfolio-setup`
 
 ---
 
-**마지막 업데이트**: 2026-02-16 15:30
-**작성자**: Claude + Crystal
-**진행률**: 100% ✅ (모든 주요 작업 완료)
-
----
-
-## ✅ 주요 성과
-
-1. ✅ **Hugging Face Spaces 수정 완료**
-   - PandasAI RUNTIME_ERROR 해결
-   - academy BUILD_ERROR 해결
-
-2. ✅ **GitHub Pages 배포 성공**
-   - 저장소: https://github.com/crystal0224/portfolio-website
-   - **라이브 사이트**: https://crystal0224.github.io/portfolio-website/
-   - GitHub Actions 자동 배포 설정 완료
-
-3. ✅ **프로젝트 통합 완료**
-   - GitHub 33개 프로젝트 조사
-   - Hugging Face 20개 Spaces 조사
-   - **Vercel 10개 프로젝트 조사**
-   - **총 25개 프로젝트 포트폴리오에 추가**
-     - HuggingFace: 10개
-     - GitHub: 8개
-     - Vercel: 7개
-
-4. ✅ **콘텐츠 강화**
-   - 프로젝트 설명 보강 (README 기반 상세 설명)
-   - About 섹션 추가 (경력, 전문성, 성과, 기술 스택)
-   - SEO 최적화 (메타 태그, Open Graph, Schema.org)
+**마지막 업데이트**: 2026-02-18
+**진행률**: 핵심 기능 완료. 실사용자 테스트 및 세부 개선 남음.
