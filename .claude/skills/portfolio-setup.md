@@ -297,3 +297,211 @@ options:
 - "공개" — description: "누구나 링크 접근 가능"
 - "보호" — description: "비밀번호 입력해야 링크 접근 가능"
 → `proj_protected` (true/false)
+
+---
+
+## Step 5: config.ts 작성
+
+수집된 모든 값을 사용해서 `src/config.ts`를 **Write 도구로 완전히 덮어씁니다**.
+절대로 코드만 출력하지 마세요. 반드시 Write 도구를 사용해야 합니다.
+
+아래 템플릿에서 `[변수명]`을 수집한 값으로 교체한 후 Write 도구로 씁니다.
+
+`profile_github`이 빈 문자열이면 `github: "",`으로,
+`profile_linkedin`이 빈 문자열이면 `linkedin: "",`으로 씁니다.
+
+`projects_list`가 비어있으면 `projects` 배열에 아래 예시 항목 하나를 포함합니다:
+
+  {
+    id: "1",
+    title: "예시 프로젝트",
+    description: "프로젝트 설명을 입력하세요.",
+    domain: "AI",
+    tags: ["Python", "Claude"],
+    links: { live: "https://example.com" },
+    protected: false,
+    date: "2025.01",
+  },
+
+`sections_selected`에서 선택된 항목은 `true`, 나머지는 `false`로 씁니다.
+
+---
+
+**Write 도구에 넣을 완성된 config.ts 내용 (템플릿):**
+
+// ============================================================
+// config.ts — 포트폴리오 설정 파일
+// 이 파일만 수정하면 포트폴리오가 업데이트됩니다.
+// convert_resume.py를 실행하면 자동으로 채워집니다.
+// ============================================================
+
+// ============================================================
+// 👤 기본 정보
+// ============================================================
+export const profile = {
+  name: "[profile_name]",
+  title: "[profile_title]",
+  email: "[profile_email]",
+  github: "[profile_github]",
+  linkedin: "[profile_linkedin]",
+  heroDescription: "[profile_hero]",
+  protectedPassword: "[profile_password]",
+};
+
+// ============================================================
+// 📁 프로젝트 목록
+// ============================================================
+export interface Project {
+  id: string;
+  code?: string;
+  title: string;
+  description: string;
+  domain: string;
+  tags: string[];
+  links: {
+    live?: string;
+    github?: string;
+    external?: string;
+  };
+  protected: boolean;
+  image?: string;
+  date?: string;
+  problemStatement?: string;
+  technicalDetails?: string[];
+  impact?: string;
+  futureImprovements?: string[];
+}
+
+export const projects: Project[] = [
+[projects_list의 각 항목을 아래 형식으로 삽입:]
+  {
+    id: "[순번]",
+    title: "[proj_title]",
+    description: "[proj_desc]",
+    domain: "[proj_domain]",
+    tags: [proj_tags 배열을 "tag1", "tag2" 형식으로],
+    links: { [proj_live가 있으면 live: "url", proj_github가 있으면 github: "url"] },
+    protected: [proj_protected],
+  },
+];
+
+// ============================================================
+// 📋 섹션 on/off 설정
+// false로 바꾸면 해당 섹션이 Career 페이지에서 사라집니다.
+// ============================================================
+export const sections = {
+  experience: [sections.experience],
+  education: [sections.education],
+  certifications: [sections.certifications],
+  publications: [sections.publications],
+  awards: [sections.awards],
+  academicProjects: [sections.academicProjects],
+  teaching: [sections.teaching],
+  partTimeJob: [sections.partTimeJob],
+  groupActivity: [sections.groupActivity],
+  mentoring: [sections.mentoring],
+};
+
+// ============================================================
+// 💼 Career 데이터 타입 정의
+// ============================================================
+export interface Position {
+  company: string;
+  title: string;
+  description: string;
+  location: string;
+  startDate: string;
+  endDate: string | null;
+  highlights?: string[];
+}
+
+export interface Education {
+  school: string;
+  degree: string;
+  field: string;
+  startYear: number;
+  endYear: number;
+  notes?: string;
+}
+
+export interface Certification {
+  name: string;
+  authority: string;
+  date: string;
+  url?: string;
+}
+
+export interface Award {
+  title: string;
+  organization: string;
+  date: string;
+  description?: string;
+}
+
+export interface Publication {
+  title: string;
+  journal?: string;
+  date: string;
+  url?: string;
+  description?: string;
+}
+
+export interface AcademicProject {
+  title: string;
+  institution: string;
+  period: string;
+  description: string;
+  role?: string;
+}
+
+export interface TeachingExperience {
+  course: string;
+  institution: string;
+  period: string;
+  description?: string;
+}
+
+export interface PartTimeJob {
+  company: string;
+  role: string;
+  period: string;
+  description?: string;
+}
+
+export interface GroupActivity {
+  name: string;
+  role: string;
+  period: string;
+  description?: string;
+}
+
+export interface MentoringExperience {
+  title: string;
+  organization: string;
+  period: string;
+  description?: string;
+}
+
+// ============================================================
+// 💼 Career 데이터 — sections에서 true인 항목만 표시됩니다
+// ============================================================
+export const careerData = {
+  experience: [] as Position[],
+  education: [] as Education[],
+  certifications: [] as Certification[],
+  publications: [] as Publication[],
+  awards: [] as Award[],
+  academicProjects: [] as AcademicProject[],
+  teaching: [] as TeachingExperience[],
+  partTimeJobs: [] as PartTimeJob[],
+  groupActivities: [] as GroupActivity[],
+  mentoring: [] as MentoringExperience[],
+};
+
+---
+
+Write 도구 실행 후, 다음 메시지를 출력합니다:
+
+✅ config.ts 작성이 완료됐습니다!
+
+이제 포트폴리오 미리보기를 실행해볼 수 있습니다.
