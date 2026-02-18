@@ -54,9 +54,11 @@ npm run dev
 
 2. GitHub 레포 → **Settings** → **Pages** → Source: **GitHub Actions** 선택
 
-3. 배포 실행:
+3. 변경사항을 push하면 GitHub Actions가 자동으로 배포합니다:
    ```bash
-   npm run deploy
+   git add .
+   git commit -m "feat: set up my portfolio"
+   git push
    ```
 
 라이브 주소: `https://내아이디.github.io/내레포이름/`
