@@ -14,7 +14,7 @@ description: >
 
 - 질문은 **반드시 하나씩** AskUserQuestion으로 수행
 - 수집한 값을 대화 메모리에 유지하면서 다음 단계로 이동
-- `src/config.ts` 작성 시 Write 도구 사용 (코드만 출력하면 안 됨)
+- `src/config.ts` 작성 시: **Path B(converter_used=false)** → Write 도구로 전체 작성, **Path A(converter_used=true)** → Edit 도구로 부분 업데이트 (Write로 덮어쓰면 careerData 소실)
 - `vite.config.ts` 수정 시 Edit 도구 사용
 - 사용자에게 실행할 터미널 명령어를 텍스트로 안내 (직접 실행 X)
 
@@ -433,17 +433,19 @@ export const projects: Project[] = [
 // 📋 섹션 on/off 설정
 // false로 바꾸면 해당 섹션이 Career 페이지에서 사라집니다.
 // ============================================================
+// Step 3 sections_selected 결과를 기반으로 아래 값을 채웁니다.
+// sections_selected에 포함된 항목 → true, 포함되지 않은 항목 → false
 export const sections = {
-  experience: [sections.experience],       // true 또는 false
-  education: [sections.education],
-  certifications: [sections.certifications],
-  publications: [sections.publications],
-  awards: [sections.awards],
-  academicProjects: [sections.academicProjects],
-  teaching: [sections.teaching],
-  partTimeJob: [sections.partTimeJob],
-  groupActivity: [sections.groupActivity],
-  mentoring: [sections.mentoring],
+  experience: EXPERIENCE_ON,
+  education: EDUCATION_ON,
+  certifications: CERTIFICATIONS_ON,
+  publications: PUBLICATIONS_ON,
+  awards: AWARDS_ON,
+  academicProjects: ACADEMIC_PROJECTS_ON,
+  teaching: TEACHING_ON,
+  partTimeJob: PART_TIME_JOB_ON,
+  groupActivity: GROUP_ACTIVITY_ON,
+  mentoring: MENTORING_ON,
 };
 
 // ============================================================
