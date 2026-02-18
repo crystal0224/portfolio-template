@@ -1,7 +1,5 @@
-import { motion } from "motion/react";
 import { NavigationBar, careerNavLinks } from "../components/NavigationBar";
 import { ExperienceSection } from "../components/ExperienceSection";
-import { WorkProjectsSection } from "../components/WorkProjectsSection";
 import { EducationSection } from "../components/EducationSection";
 import { CertificationsSection } from "../components/CertificationsSection";
 import { PublicationsSection } from "../components/PublicationsSection";
@@ -12,13 +10,13 @@ import { PartTimeJobSection } from "../components/PartTimeJobSection";
 import { GroupActivitySection } from "../components/GroupActivitySection";
 import { MentoringSection } from "../components/MentoringSection";
 import { ArrowLeft } from "lucide-react";
+import { sections } from "../../config";
 
 export function CareerPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <NavigationBar navLinks={careerNavLinks} />
 
-      {/* Page Header */}
       <section className="py-4 bg-white border-b border-gray-200">
         <div className="container mx-auto px-4">
           <a
@@ -31,26 +29,23 @@ export function CareerPage() {
         </div>
       </section>
 
-      {/* Career Sections */}
       <div className="container mx-auto px-4 py-12">
-        <ExperienceSection />
-        <WorkProjectsSection />
-        <EducationSection />
-        <CertificationsSection />
-        <PublicationsSection />
-        <AwardsSection />
-        <AcademicProjectsSection />
-        <TeachingSection />
-        <PartTimeJobSection />
-        <GroupActivitySection />
-        <MentoringSection />
+        {sections.experience && <ExperienceSection />}
+        {sections.education && <EducationSection />}
+        {sections.certifications && <CertificationsSection />}
+        {sections.publications && <PublicationsSection />}
+        {sections.awards && <AwardsSection />}
+        {sections.academicProjects && <AcademicProjectsSection />}
+        {sections.teaching && <TeachingSection />}
+        {sections.partTimeJob && <PartTimeJobSection />}
+        {sections.groupActivity && <GroupActivitySection />}
+        {sections.mentoring && <MentoringSection />}
       </div>
 
-      {/* Footer */}
       <footer className="bg-gray-900 text-white py-8 mt-12">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-xs text-gray-500">
-            Last Updated: {new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+          <p className="text-gray-400 text-sm">
+            {new Date().getFullYear()} Portfolio. All rights reserved.
           </p>
         </div>
       </footer>
