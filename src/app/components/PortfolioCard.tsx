@@ -1,49 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ExternalLink, Github, Globe, Lock, Edit2, ChevronDown } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { ExternalLink, Github, Globe, Lock, ChevronDown } from "lucide-react";
 import { ProtectedLinkModal } from "./ProtectedLinkModal";
-import { EditProjectModal } from "./EditProjectModal";
-import { useAdmin } from "../contexts/AdminContext";
-
-export type ProjectDomain =
-  | "hr-analytics"      // HR Analytics & Diagnostics
-  | "assessment"        // Assessment & Coaching
-  | "ai-tools"          // AI Tools & Automation
-  | "workshop"          // Workshop & Collaboration
-  | "education";        // Education & Knowledge Sharing
-
-export interface PortfolioItem {
-  id: string;
-  code?: string; // 프로젝트 코드 번호 (예: P001, P002)
-  title: string;
-  description: string;
-  category: "projects" | "lectures" | "publications" | "articles";
-  platform?: string;
-  domain?: ProjectDomain;
-  image: string;
-  tags: string[];
-  links: {
-    live?: string;
-    github?: string;
-    external?: string;
-  };
-  date: string;
-  protected?: boolean; // 유료 API 키 사용 프로젝트 보호
-  problemStatement?: string; // 왜 만들었나?
-  technicalDetails?: string[]; // 기술적 구현 포인트
-  impact?: string; // 성과/영향
-  futureImprovements?: string[]; // 향후 계획
-}
+import { Project } from "../../config";
 
 interface PortfolioCardProps {
-  item: PortfolioItem;
+  item: Project;
   index: number;
-  onEdit?: (updatedProject: PortfolioItem) => void;
-  onDelete?: (projectId: string) => void;
 }
 
-const domainConfig = {
+const domainConfig: Record<string, { label: string; color: string }> = {
   "hr-analytics": { label: "진단/분석", color: "bg-blue-100 text-blue-700" },
   "assessment": { label: "평가/코칭", color: "bg-green-100 text-green-700" },
   "ai-tools": { label: "AI 도구", color: "bg-purple-100 text-purple-700" },
@@ -51,13 +17,11 @@ const domainConfig = {
   "education": { label: "교육", color: "bg-teal-100 text-teal-700" }
 };
 
-export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardProps) {
+export function PortfolioCard({ item, index }: PortfolioCardProps) {
   const domainInfo = item.domain ? domainConfig[item.domain] : null;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { isAdmin } = useAdmin();
 
   const hasDetails = item.problemStatement || (item.technicalDetails && item.technicalDetails.length > 0) || item.impact || (item.futureImprovements && item.futureImprovements.length > 0);
 
@@ -112,7 +76,7 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
             <span className="text-xs text-gray-500">{item.date}</span>
             <div className="flex items-center gap-1">
             {item.links.live && (
-              item.protected && !isAuthenticated && !isAdmin ? (
+              item.protected && !isAuthenticated ? (
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
@@ -133,7 +97,7 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
               )
             )}
             {item.links.github && (
-              item.protected && !isAuthenticated && !isAdmin ? (
+              item.protected && !isAuthenticated ? (
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
@@ -154,7 +118,7 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
               )
             )}
             {item.links.external && (
-              item.protected && !isAuthenticated && !isAdmin ? (
+              item.protected && !isAuthenticated ? (
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="p-1.5 text-amber-600 hover:bg-amber-50 rounded-md transition-colors"
@@ -173,15 +137,6 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
                   <ExternalLink className="w-4 h-4" />
                 </a>
               )
-            )}
-            {isAdmin && (
-              <button
-                onClick={() => setIsEditModalOpen(true)}
-                className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                title="편집"
-              >
-                <Edit2 className="w-4 h-4" />
-              </button>
             )}
             </div>
           </div>
@@ -284,17 +239,6 @@ export function PortfolioCard({ item, index, onEdit, onDelete }: PortfolioCardPr
           onClose={() => setIsModalOpen(false)}
           onSuccess={handleAuthSuccess}
           projectTitle={item.title}
-        />
-      )}
-
-      {/* Edit Project Modal */}
-      {isAdmin && onEdit && (
-        <EditProjectModal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          project={item}
-          onSave={onEdit}
-          onDelete={onDelete}
         />
       )}
     </motion.div>

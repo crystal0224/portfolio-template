@@ -21,17 +21,23 @@ export const profile = {
 // ============================================================
 export interface Project {
   id: string;
+  code?: string;
   title: string;
   description: string;
   domain: string;
   tags: string[];
-  link: string;
+  links: {
+    live?: string;
+    github?: string;
+    external?: string;
+  };
   protected: boolean;
   image?: string;
   date?: string;
   problemStatement?: string;
   technicalDetails?: string[];
   impact?: string;
+  futureImprovements?: string[];
 }
 
 export const projects: Project[] = [
@@ -41,7 +47,7 @@ export const projects: Project[] = [
     description: "프로젝트 설명을 입력하세요.",
     domain: "AI",
     tags: ["Python", "Claude"],
-    link: "https://example.com",
+    links: { live: "https://example.com" },
     protected: false,
     date: "2025.01",
   },
