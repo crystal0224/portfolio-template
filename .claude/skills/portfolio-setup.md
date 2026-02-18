@@ -22,7 +22,7 @@ description: >
 
 ## Step 0: 환영 인사
 
-다음 내용을 사용자에게 출력하세요:
+다음 내용을 응답 메시지로 출력하세요 (어떤 도구도 사용하지 않습니다):
 
 ```
 안녕하세요! 포트폴리오 셋업 마법사를 시작합니다.
@@ -76,10 +76,17 @@ CSV인 경우:
 - "완료됐어요" — description: "config.ts가 생성되었습니다."
 - "오류가 났어요" — description: "오류 메시지를 알려주세요."
 
-오류가 난 경우: 사용자에게 오류 메시지를 물어보고, 일반적인 해결책을 안내하세요:
-- `ModuleNotFoundError`: `pip install -r converter/requirements.txt` 실행
-- `FileNotFoundError`: 파일 경로를 다시 확인하도록 안내
-- 그 외: Path B (수동 입력)로 전환
+오류가 난 경우: AskUserQuestion으로 오류 내용을 확인합니다:
+
+**질문:** "어떤 오류가 발생했나요?"
+**header:** "오류 내용"
+**options:**
+- "ModuleNotFoundError (모듈 없음)" — description: "pip install -r converter/requirements.txt 를 실행하세요."
+- "FileNotFoundError (파일 없음)" — description: "파일 경로를 다시 확인하세요. converter/ 폴더 안에 있어야 합니다."
+- "기타 오류" — description: "수동 입력으로 전환합니다."
+
+"기타 오류" 선택 시:
+→ **converter_used = false** 로 기억하고 Step 2 Path B로 이동합니다.
 
 컨버터 완료 후: `Read` 도구로 `src/config.ts`를 읽어서 현재 값을 파악합니다.
 → **converter_used = true** 로 기억하고 Step 2 Path A로 이동합니다.
