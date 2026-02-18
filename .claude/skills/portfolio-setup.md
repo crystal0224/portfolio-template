@@ -251,6 +251,25 @@ AskUserQuestion:
 - "추가할 프로젝트가 있어요" → Path B의 프로젝트 수 질문부터 시작해서 1개씩 추가
 - "괜찮아요, 넘어갈게요" → `projects` 배열은 컨버터 결과 유지
 
+프로젝트 확인이 끝나면, careerData도 확인합니다:
+
+AskUserQuestion:
+**질문:** "컨버터가 경력/학력 데이터(careerData)도 자동으로 채웠습니다. 내용을 확인해드릴까요?"
+**header:** "careerData 확인"
+**options:**
+- "네, 보여주세요" — description: "경력, 학력 등 채워진 내용을 요약해서 보여드립니다."
+- "괜찮아요, 넘어갈게요" — description: "Step 5로 이동합니다."
+
+"네, 보여주세요" 선택 시:
+`Read` 도구로 `src/config.ts`의 `careerData` 부분을 읽어서 각 섹션의 항목 수와 주요 내용을 요약합니다.
+예: "경력 2건 (ABC회사 2023.03~현재, DEF회사 2021.01~2023.02), 학력 1건 (OO대학교)"
+그 다음 AskUserQuestion:
+**질문:** "내용이 맞나요? 수정이 필요하면 Step 7에서 config.ts를 직접 편집하거나 컨버터를 다시 실행할 수 있습니다."
+**header:** "careerData 검토"
+**options:**
+- "맞아요, 계속 진행할게요" → Step 5로 이동
+- "수정이 필요해요" — description: "Step 7 수정 가이드를 참고하세요. 지금은 Step 5로 진행합니다."
+
 ### converter_used = false (Path B)
 
 AskUserQuestion:
@@ -561,6 +580,10 @@ src/config.ts 파일을 직접 열어서 수정하면 됩니다.
 
 💡 파일을 저장하면 브라우저가 자동으로 새로고침됩니다.
    npm run dev를 다시 실행할 필요 없습니다.
+
+프로필 사진을 바꾸려면:
+  • `public/profile.png` 파일을 내 사진으로 교체하세요. (권장 비율 3:4)
+  • 파일명을 반드시 `profile.png`로 유지해야 합니다.
 
 Career 상세 데이터(직장 경력, 학력 등)를 추가하려면:
   • config.ts 하단 careerData 객체를 직접 수정하거나
