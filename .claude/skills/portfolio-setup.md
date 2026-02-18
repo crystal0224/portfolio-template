@@ -94,3 +94,94 @@ CSV인 경우:
 ### Path B (파일 없음)
 
 → **converter_used = false** 로 기억하고 Step 2 Path B로 이동합니다.
+
+## Step 2: 프로필 정보 수집
+
+**converter_used = true (Path A):**
+
+`src/config.ts`를 읽어서 아직 플레이스홀더 값인 필드를 찾습니다.
+플레이스홀더 판별 기준:
+- name이 "홍길동" 이면 플레이스홀더
+- email이 "hong@example.com" 또는 "@example.com"을 포함하면 플레이스홀더
+- github가 "your-id"를 포함하면 플레이스홀더
+- linkedin이 "your-id"를 포함하면 플레이스홀더
+
+플레이스홀더인 필드만 아래 질문 목록에서 골라서 물어봅니다.
+
+**converter_used = false (Path B):**
+
+아래 모든 질문을 순서대로 진행합니다.
+
+---
+
+아래 질문들을 하나씩 AskUserQuestion으로 물어봅니다.
+각 답변을 내부 변수로 기억합니다.
+
+### 질문 2-1: 이름
+
+**질문:** "이름이 무엇인가요? (포트폴리오에 표시될 이름)"
+**header:** "이름"
+**options:**
+- "직접 입력할게요" — description: "Other 선택 후 이름을 입력하세요."
+
+→ 답변을 `profile_name`으로 저장
+
+### 질문 2-2: 직함
+
+**질문:** "직함 또는 포지션을 입력해주세요. (예: 데이터 분석가, 프론트엔드 개발자, UX 디자이너)"
+**header:** "직함"
+**options:**
+- "데이터 분석가"
+- "개발자 / 엔지니어"
+- "디자이너"
+- "직접 입력할게요"
+
+→ 답변을 `profile_title`으로 저장
+
+### 질문 2-3: 이메일
+
+**질문:** "연락받을 이메일 주소를 입력해주세요."
+**header:** "이메일"
+**options:**
+- "직접 입력할게요" — description: "Other 선택 후 이메일 주소를 입력하세요."
+
+→ 답변을 `profile_email`으로 저장
+
+### 질문 2-4: GitHub
+
+**질문:** "GitHub 프로필 URL을 입력해주세요. (없으면 건너뛰어도 됩니다)"
+**header:** "GitHub URL"
+**options:**
+- "있어요 (직접 입력)" — description: "Other 선택 후 https://github.com/아이디 형식으로 입력"
+- "없어요, 건너뜁니다" — description: "GitHub 링크가 표시되지 않습니다."
+
+→ 있으면 `profile_github`으로 저장, 없으면 빈 문자열 `""`
+
+### 질문 2-5: LinkedIn
+
+**질문:** "LinkedIn 프로필 URL을 입력해주세요. (없으면 건너뛰어도 됩니다)"
+**header:** "LinkedIn URL"
+**options:**
+- "있어요 (직접 입력)" — description: "Other 선택 후 https://linkedin.com/in/아이디 형식으로 입력"
+- "없어요, 건너뜁니다"
+
+→ 있으면 `profile_linkedin`으로 저장, 없으면 빈 문자열 `""`
+
+### 질문 2-6: 한 줄 소개
+
+**질문:** "포트폴리오 메인 화면에 표시될 한 줄 소개를 입력해주세요. (예: 데이터로 세상을 읽는 분석가입니다.)"
+**header:** "한줄 소개"
+**options:**
+- "직접 입력할게요" — description: "Other 선택 후 소개글을 입력하세요."
+
+→ 답변을 `profile_hero`으로 저장
+
+### 질문 2-7: 비밀번호
+
+**질문:** "보호된 프로젝트 링크의 비밀번호를 설정하세요. (모르는 사람이 볼 수 없는 프로젝트 링크 보호용)"
+**header:** "비밀번호"
+**options:**
+- "기본값 사용 (1234)" — description: "나중에 config.ts에서 변경 가능합니다."
+- "직접 설정할게요" — description: "Other 선택 후 원하는 비밀번호 입력"
+
+→ 답변을 `profile_password`으로 저장 (기본값이면 `"1234"`)
