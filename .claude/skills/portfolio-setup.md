@@ -324,6 +324,27 @@ options:
 
 ## Step 5: config.ts 작성
 
+### converter_used = true (Path A)
+
+Write 도구로 덮어쓰지 않습니다. converter가 채운 `projects`와 `careerData`를 보존하기 위해 **Edit 도구**로 부분 업데이트합니다.
+
+Step 2에서 수집한 프로필 필드를 Edit 도구로 기존 값과 교체합니다:
+- `name`, `title`, `email`, `github`, `linkedin`, `heroDescription`, `protectedPassword`
+
+Step 3 결과에 따라 `sections` 객체 전체를 Edit 도구로 업데이트합니다.
+
+Step 4에서 추가된 프로젝트가 있으면 `projects` 배열 마지막 `]` 앞에 삽입합니다.
+
+업데이트 완료 후 다음 메시지를 출력합니다:
+
+✅ config.ts 업데이트가 완료됐습니다!
+
+Step 6으로 이동합니다.
+
+---
+
+### converter_used = false (Path B)
+
 수집된 모든 값을 사용해서 `src/config.ts`를 **Write 도구로 완전히 덮어씁니다**.
 절대로 코드만 출력하지 마세요. 반드시 Write 도구를 사용해야 합니다.
 
