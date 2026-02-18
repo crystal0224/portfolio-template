@@ -59,18 +59,18 @@ export function AboutSection() {
   const achievements = [
     {
       icon: BookOpen,
-      title: "『HR테크혁명』 공저",
-      description: "HR 분야의 디지털 전환과 기술 활용에 대한 전문서적 집필"
+      title: "주요 성과 1",
+      description: "config.ts에서 내용을 설정하세요"
     },
     {
       icon: Award,
-      title: "서울대학교 인지심리학 박사 (통합과정)",
-      description: "2011-2017 | GPA 4.20/4.30 | 학습자 질문 및 측정 방법론 전문성"
+      title: "학력 사항",
+      description: "config.ts에서 내용을 설정하세요"
     },
     {
       icon: Briefcase,
-      title: "20+ AI/데이터 프로젝트",
-      description: "HuggingFace Spaces 및 GitHub를 통한 실전 프로젝트 구현"
+      title: "프로젝트 실적",
+      description: "config.ts에서 내용을 설정하세요"
     }
   ];
 

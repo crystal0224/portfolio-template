@@ -15,15 +15,15 @@ README 없이 `/portfolio-setup` 스킬 하나로 온보딩 완료.
 - [x] 어드민 모드 제거, 비밀번호 config.ts로 이동
 - [x] App.tsx / HeroSection / PortfolioCard config.ts 연결
 - [x] 10개 Career 섹션 컴포넌트 단순화
-- [x] 개인정보 제거 (SK/삼성 레퍼런스, sk1234 비밀번호, Firebase 프로젝트 ID)
+- [x] 개인정보 제거 (회사 레퍼런스, 비밀번호, Firebase 프로젝트 ID)
 - [x] 프로필 이미지 SVG 플레이스홀더로 교체
 - [x] `converter/convert_resume.py` — PDF/CSV → config.ts 자동 변환기
 - [x] 한국어 README 온보딩 가이드 (5단계)
 
 ### 배포
-- [x] GitHub Template Repository 설정 (crystal0224/portfolio-template)
+- [x] GitHub Template Repository 설정 (your-username/portfolio-template)
 - [x] GitHub Pages 배포 성공
-  - 라이브: https://crystal0224.github.io/portfolio-template/
+  - 라이브: https://your-username.github.io/portfolio-template/
   - GitHub Actions 자동 배포 (deploy.yml)
   - vite.config.ts base: `/portfolio-template/`
 
@@ -86,8 +86,8 @@ README 없이 `/portfolio-setup` 스킬 하나로 온보딩 완료.
 
 ## 📝 참고
 
-- **레포**: https://github.com/crystal0224/portfolio-template
-- **라이브**: https://crystal0224.github.io/portfolio-template/
+- **레포**: https://github.com/your-username/portfolio-template
+- **라이브**: https://your-username.github.io/portfolio-template/
 - **스킬 호출**: 템플릿 clone 후 `claude` 실행 → `/portfolio-setup`
 
 ---

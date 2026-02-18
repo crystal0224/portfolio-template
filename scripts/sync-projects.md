@@ -18,12 +18,12 @@
 
 2. **GitHub 프로젝트 스캔**
    ```bash
-   gh repo list crystal0224 --limit 100 --json name,description,url,pushedAt,stargazerCount
+   gh repo list your-username --limit 100 --json name,description,url,pushedAt,stargazerCount
    ```
 
 3. **HuggingFace Spaces 스캔**
    ```bash
-   huggingface-cli list-spaces soojeongcrystal
+   huggingface-cli list-spaces your-hf-username
    ```
 
 4. **Vercel 프로젝트 스캔**
@@ -69,14 +69,14 @@ localStorage.removeItem("portfolio_last_sync");
 
 ### GitHub
 ```bash
-gh repo list crystal0224 --limit 100 --json name,description,url,pushedAt,stargazerCount --jq '.[] | select(.pushedAt > "2026-02-16")'
+gh repo list your-username --limit 100 --json name,description,url,pushedAt,stargazerCount --jq '.[] | select(.pushedAt > "2026-02-16")'
 ```
 
 ### HuggingFace
 ```python
 from huggingface_hub import HfApi
 api = HfApi()
-spaces = api.list_spaces(author="soojeongcrystal")
+spaces = api.list_spaces(author="your-hf-username")
 for space in spaces:
     print(f"{space.id}: {space.lastModified}")
 ```
